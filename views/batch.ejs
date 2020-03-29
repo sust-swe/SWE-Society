@@ -1,0 +1,108 @@
+<%- include ('partials/nav.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>SWE-SOCIETY,SUST</title>
+
+    <!-- Main Stylesheet File -->
+    <link href="public/batch/style.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+</head>
+
+
+<body>
+
+    <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+        <header id="head">
+           
+            <section id="team" class="pb-5">
+                <div class="container">
+                    <h5 class="section-title h2">BATCH NAME</h5>
+                    <div class="mb-5" id="searchbar">
+                        
+                        <form action="#" method="post" class="footer-search-form">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control border-secondary text-balck bg-transparent" id="Search" onkeyup="myFunction()" placeholder="Search Batch" title="Type in a name">
+                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="card"><a style="text-decoration: none;" href="batchlist.html">
+                                <img src="/public/image/3.jpg" alt="praromvik" style="width:100%">
+                                <h1>প্রারম্ভিক</h1>
+                                <p class="title">1ST BATCH<br> Session : 2016-17</p></a>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="card">
+                                <img src="/public/image/3.jpg" alt="utthan" style="width:100%">
+                                <h1>উত্থান</h1>
+                                <p class="title">2ND BATCH<br> Session : 2017-18</p>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="card">
+                                <img src="/public/image/3.jpg" alt="trimik" style="width:100%">
+                                <h1>ত্রিমিক</h1>
+                                <p class="title">3RD BATCH<br> Session : 2018-19</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </section>
+           
+                
+
+            
+
+                  <script>
+                  function myFunction() {
+  var input = document.getElementById("Search");
+  var filter = input.value.toLowerCase();
+  var nodes = document.getElementsByClassName('card');
+
+  for (i = 0; i < nodes.length; i++) {
+    if (nodes[i].innerText.toLowerCase().includes(filter)) {
+      nodes[i].style.display = "block";
+    } else {
+      nodes[i].style.display = "none";
+    }
+  }
+}</script>
+
+
+</header>
+
+<%- include ('partials/footer.ejs') %>
+
+
+    </body>
+    </html>

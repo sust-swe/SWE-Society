@@ -1,0 +1,161 @@
+<%- include ('partials/nav.ejs') %>
+<!DOCTYPE html>
+<html>
+<title></title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'>
+</script>
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+</style>
+</head>
+<body class="w3-light-grey">
+
+  <div class="container-fluid">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3 bg-success">1 of 2</div>
+        <div class="col bg-warning">2 of 2</div>
+      </div>  
+    </div>
+  </div>
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding" style="margin-top: 5%;">
+  
+    <!-- Left Column -->
+    <div class="w3-third" >
+    
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-display-container">
+          <img src="/public/faculty/faculty pic/demo.png" style="width:100%" alt="Avatar">
+          <div class="w3-display-bottomleft w3-container w3-text-black">
+          </div>        
+        </div>  
+        <div class="w3-container" style="margin-top: 3%">
+          <h2 style="margin-left: 10%;font:10%;color:teal" ><%= myinfo.username %></h2>
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>{{user.profile.profession}}</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>{{user.profile.village}}, {{user.profile.postOffice}}</p>
+          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i><%= myinfo.email %></p>
+          <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>{{user.profile.phone}}</p>
+          <hr>
+
+          <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Skills</b></p>
+          <p>Adobe Photoshop</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90%</div>
+          </div>
+          <p>Photography</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:80%">
+              <div class="w3-center w3-text-white">80%</div>
+            </div>
+          </div>
+          <p>Illustrator</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:75%">75%</div>
+          </div>
+          <p>Media</p>
+          <div class="w3-light-grey w3-round-xlarge w3-small">
+            <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:50%">50%</div>
+          </div>
+          <br>
+
+          <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i>Languages</b></p>
+          <p>English</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-round-xlarge w3-teal" style="height:24px;width:100%"></div>
+          </div>
+          <p>Spanish</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-round-xlarge w3-teal" style="height:24px;width:55%"></div>
+          </div>
+          <p>German</p>
+          <div class="w3-light-grey w3-round-xlarge">
+            <div class="w3-round-xlarge w3-teal" style="height:24px;width:25%"></div>
+          </div>
+          <br>
+        </div>
+      </div><br>
+
+    <!-- End Left Column -->
+    </div>
+
+    <!-- Right Column -->
+    <div class="w3-twothird" >
+    
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <div class="w3-right w3-opacity">
+          <button style="margin-top: 20%;" class="w3-button w3-xlarge w3-circle w3-black" data-toggle="modal" data-target="#myModal">+</button>
+        </div>
+        
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Work Experience</h2>
+        
+        {% for w in work %}
+        <div class="w3-container">
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>{{w.companyName}}</p>
+          <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>{{w.joiningDate}} - 
+            {% if w.leavingDate %}
+            {{w.leavingDate}}
+            {% else %}
+            <span class="w3-tag w3-teal w3-round">Current</span>
+            {% endif %}
+         </h6>
+           {{w.position}}
+          <p>{{w.description}}</p>
+          <hr>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="modal fade" id="myModal" role="dialog">	
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Work Experience</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <input type="text" style="width: 100%;" placeholder="Company Name"><br>
+              <input type="text" placeholder="Position" style="margin-top: 2%;width:100%"><br>
+              Joining Date: <input type="date"  style="margin-top: 2%;"><br>
+              Leaving Date: <input type="date" placeholder="Leaving date, dd/mm/yy" style="margin-top: 2%;"><br>
+              <textarea name="" id="" style="width: 100%;margin-top:2%" placeholder="Description...">
+
+              </textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+  <!-- End Page Container -->
+</div>
+<%- include ('partials/footer.ejs') %>
+
+</body>
+</html>
