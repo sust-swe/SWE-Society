@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
-const expressMongoSanitize = require('express-mongo-sanitize');
 const xssClean = require('xss-clean');
 const compression = require('compression');
 
@@ -24,8 +23,7 @@ app.use(compression());
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 
-// Sanitizing user data
-app.use(expressMongoSanitize());
+
 
 // Prevent XSS attacks
 app.use(xssClean());
