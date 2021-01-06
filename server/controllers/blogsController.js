@@ -3,7 +3,8 @@ const catchAsync = require('./../utils/catchAsync');
 const formidabel = require("formidable");
 const client = require('../db');
 const fs = require('fs');
-const path = require('path') 
+const path = require('path'); 
+const { response } = require('express');
 
 exports.getAll = catchAsync(async(req, res , next) => {
     const query = {
@@ -62,7 +63,12 @@ exports.post = catchAsync(async(req, res , next) => {
 });
 
 exports.getOne = catchAsync(async(req, res , next) => {
-    const id = req.params.blogId;
+    const id = req.params.blog_id;
+    const query = {
+      text : `SELECT * FROM blog WHERE blog_id=${id};`
+    }
+    const response= await client.query(query);
+    res.send(response.rows);
 });
 
 exports.patch = catchAsync(async(req, res , next) => {
@@ -70,6 +76,11 @@ exports.patch = catchAsync(async(req, res , next) => {
 });
 
 exports.delete = catchAsync(async(req, res , next) => {
-    const id = req.body.blogId;
+  const id = req.params.blog_id;
+  const query = {
+    text : `DELETE FROM blog WHERE blog_id=${id};`
+  }
+  const response= await client.query(query);
+  res.status(200).send('Successfull');
 });
 
