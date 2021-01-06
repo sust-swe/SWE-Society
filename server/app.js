@@ -14,7 +14,7 @@ const compression = require('compression');
 
 // Creating the express app
 const app = express();
-
+require('dotenv').config();
 // Security Middleware
 app.use(helmet());
 
@@ -25,8 +25,6 @@ app.use(compression());
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 
-
-
 // Prevent XSS attacks
 app.use(xssClean());
 
@@ -36,7 +34,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Testing a route
 app.use('/blogs', blogRoutes);
+
 app.use('/user', userRoutes);
+
 app.get('/', (req, res) => {
   res.send('Hello');
 });
