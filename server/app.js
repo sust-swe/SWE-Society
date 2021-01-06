@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const router = require('./routes');
 const blogRoutes = require('./routes/blogRoutes');
+const userRoutes = require('./routes/userRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 const xssClean = require('xss-clean');
@@ -35,6 +36,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Testing a route
 app.use('/blogs', blogRoutes);
+app.use('/user', userRoutes);
 app.get('/', (req, res) => {
   res.send('Hello');
 });
