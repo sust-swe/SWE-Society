@@ -5,6 +5,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const router = require('./routes');
+const blogRoutes = require('./routes/blogRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 const xssClean = require('xss-clean');
@@ -33,12 +34,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Testing a route
+app.use('/blogs', blogRoutes);
 app.get('/', (req, res) => {
   res.send('Hello');
 });
 
 // Register the routers
 app.use(router);
+
 
 // Using the errorHandler middleware
 app.use(errorHandler);
