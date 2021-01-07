@@ -21,8 +21,8 @@ exports.getAllBlogs = catchAsync(async (req, res, next) => {
   }
 
 
-  const response = await client.query(query)
-  res.send(response.rows);
+  const result = await client.query(query)
+  res.send(result.rows);
 });
 
 
@@ -70,8 +70,8 @@ exports.getOneBlog = catchAsync(async (req, res, next) => {
   const query = {
     text: `SELECT * FROM blog WHERE blog_id=${id};`
   }
-  const response = await client.query(query);
-  res.send(response.rows);
+  const result = await client.query(query);
+  res.send(result.rows);
 });
 
 exports.updateBlog = catchAsync(async (req, res, next) => {
@@ -80,8 +80,8 @@ exports.updateBlog = catchAsync(async (req, res, next) => {
   const query = {
     text: `UPDATE blog SET title = '${req.body.title}', content= '${req.body.content}' WHERE blog_id =${id} RETURNING *;`
   }
-  const response = await client.query(query);
-  res.send(response.rows)
+  const result = await client.query(query);
+  res.send(result.rows)
 });
 
 exports.approveBlog = catchAsync(async (req, res, next) => {
@@ -92,7 +92,7 @@ exports.approveBlog = catchAsync(async (req, res, next) => {
 
 exports.deleteBlog = catchAsync(async (req, res, next) => {
   const id = req.params.blog_id;
-  const response = await client.query(`DELETE FROM blog WHERE blog_id=${id};`);
+  const result = await client.query(`DELETE FROM blog WHERE blog_id=${id};`);
   res.status(200).send('Successfull');
 });
 
