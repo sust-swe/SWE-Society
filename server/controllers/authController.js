@@ -1,0 +1,100 @@
+const catchAsync = require('./../utils/catchAsync');
+const AppError = require('./../utils/appError');
+const formidabel = require("formidable");
+const client = require('../db');
+const { response } = require('express');
+const { notify } = require('../routes/blogRoutes');
+const generator = require('generate-password');
+const bcrypt = require('bcryptjs');
+const jwtGenerator = require('../utils/jwtGenerator');
+const { promisify } = require('util');
+const jwt = require('jsonwebtoken');
+
+exports.register = catchAsync(async (req, res, next) => {
+    const {email,reg_no,name} = req.body;
+    const user = await client.query(`SELECT * FROM member where reg_no=${reg_no};`);
+    if(user.rows.length>0)
+        return res.status(401).json("User Already Exist!");
+    else
+    {
+        const password = generator.generate({
+            length: 10,
+            numbers: true
+        });
+        //send this password to the emaail of the new user
+        const salt = await bcrypt.genSalt(10);
+        const bcryptPassword = await bcrypt.hash(password,salt);
+        const batch = reg_no.substring(0, 4);
+        console.log(batch);
+        const newUser = await client.query(
+            `INSERT INTO member (name,email,password,reg_no,batch) VALUES 
+            ('${name}','${email}','${bcryptPassword}',${reg_no},${batch}) RETURNING *;`
+        );
+       
+        res.json({
+            pass : password,
+            hpass: bcryptPassword
+        });
+    }
+  });
+  
+
+exports.login = catchAsync(async (req, res, next) => {
+    const { email, password } = req.body;
+    const user = await client.query(`SELECT * FROM member WHERE email='${email}';`);
+    if(user.rows.length==0)
+         return res.status(401).json("Invalid Email");
+    const validPass= await bcrypt.compare(password,user.rows[0].password);
+    if(!validPass)
+        return res.status(401).json("Wrong Password");
+    console.log(user.rows[0].reg_no);
+    const jwtToken = jwtGenerator(user.rows[0].reg_no);
+    return res.json({token:jwtToken});
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+    // 1) Getting token and check of it's there
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer')
+    ) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+  
+    if (!token) {
+      return next(
+        new AppError('You are not logged in! Please log in to get access.', 401)
+      );
+    }
+    // 2) Verification token
+    const decoded = await promisify(jwt.verify)(token, process.env.jwtSecret);
+  
+    // 3) Check if user still exists
+    const currentUser = decoded.user;
+    if (!currentUser) {
+      return next(
+        new AppError(
+          'The user belonging to this token does no longer exist.',
+          401
+        )
+      );
+    }
+    const user = await client.query(
+        `SELECT reg_no,role FROM member WHERE reg_no = ${currentUser.id}`);
+    req.user = user.rows[0];
+    next();
+  });
+
+  exports.restrictTo = (...roles) => {
+    return (req, res, next) => {
+      // roles ['admin', 'moderator']
+      if (!roles.includes(req.user.role)) {
+        return next(
+          new AppError('You do not have permission to perform this action', 403)
+        );
+      }
+      next();
+    };
+  };
+  
