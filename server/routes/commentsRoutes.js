@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const commentsController = require('../controllers/blogsController');
+const commentsController = require('../controllers/commentsController');
 
 
 router.get('/', blogsController.getAll);
