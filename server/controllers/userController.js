@@ -36,10 +36,10 @@ exports.updateUser = catchAsync(async(req, res, next) => {
   
   const query = {
     text: `Update member set fb_link='${req.body.fb_link}', linkedin_link='${req.body.linkedin_link}', git_link='${req.body.git_link}', phone='${req.body.phone}',
-    date_of_birth='${req.body.date_of_birth}', skills=${req.body.skills} where reg_no=${reg_no};`
+    date_of_birth='${req.body.date_of_birth}', skills=${req.body.skills} where reg_no=${reg_no} RETURING *;`
   }
 
   const result = await client.query(query);
-  res.send("Successfully updated");
+  res.send(result.rows);
 });
 
