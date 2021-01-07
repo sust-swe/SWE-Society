@@ -98,3 +98,41 @@ exports.protect = catchAsync(async (req, res, next) => {
     };
   };
   
+  exports.forgotPassword = catchAsync(async (req, res, next) => {
+    // 1) Get user based on POSTed email
+    const {email} = req.body;
+    const user = await client.query(`SELECT * FROM member WHERE email='${email}';`);
+    if(user.rows.length==0)
+         return res.status(401).json("No user found");
+
+    const password = generator.generate({
+        length: 10,
+        numbers: true
+    });
+    //send this password to the emaail of the new user
+    const salt = await bcrypt.genSalt(10);
+    const bcryptPassword = await bcrypt.hash(password,salt);
+    await client.query(`UPDATE member SET password = '${bcryptPassword}';`);
+    res.json({
+        pass : password,
+        hpass: bcryptPassword
+    });
+  
+  });
+
+  exports.updatePassword = catchAsync(async (req, res, next) => {
+    const {oldPass,newPass} = req.body;
+    console.log(oldPass,newPass,req.user);
+    const user = await client.query(`SELECT password FROM member WHERE reg_no=${req.user.reg_no};`);
+    const realPass = user.rows[0].password;
+    const truePass= await bcrypt.compare(oldPass,realPass);
+    if(!truePass)
+         return res.status(401).json("Wrong Password");
+    const salt = await bcrypt.genSalt(10);
+    const bcryptPassword = await bcrypt.hash(newPass,salt);
+    await client.query(`UPDATE member SET password = '${bcryptPassword}';`);
+    const jwtToken = jwtGenerator(req.user.reg_no);
+    return res.json({token:jwtToken}); 
+  
+  });
+  
