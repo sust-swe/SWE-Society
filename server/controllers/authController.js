@@ -37,11 +37,14 @@ exports.register = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
-  
-    // 1) Check if email and password exist
-    if (!email || !password) {
-      return next(new AppError('Please provide email and password!', 400));
-    }
+    const user = await client.query(`SELECT * FROM member WHERE email='${email}';`);
+    if(user.rows.length==0)
+         return res.status(401).json("Invalid Email");
+    const validPass= await bcrypt.compare(password,user.rows[0].password);
+    if(!validPass)
+        return res.status(401).json("Wrong Password");
+    
+    return res.send("Succesfully Logged In!");
     // 2) Check if user exists && password is correct
     // const user = await User.findOne({ email }).select('+password');
   
