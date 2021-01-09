@@ -21,7 +21,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
   const { name, email, password } = req.body;
 });
 
-exports.getSinleUser = catchAsync(async(req, res, next) => {
+exports.getSingleUser = catchAsync(async(req, res, next) => {
   const reg_no = req.params.reg_no;
   const query = {
     text: `select reg_no, name, batch, image, fb_link, linkedin_link, git_link, phone, email, date_of_birth from member where reg_no=${reg_no};`
@@ -32,11 +32,12 @@ exports.getSinleUser = catchAsync(async(req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async(req, res, next) => {
-  const reg_no = req.params.reg_no;
+  const reg_no = req.user.reg_no;
   
   const query = {
     text: `Update member set fb_link='${req.body.fb_link}', linkedin_link='${req.body.linkedin_link}', git_link='${req.body.git_link}', phone='${req.body.phone}',
-    date_of_birth='${req.body.date_of_birth}', skills=${req.body.skills} where reg_no=${reg_no} RETURING *;`
+    date_of_birth='${req.body.date_of_birth}' where reg_no=${reg_no} RETURNING *;`
+
   }
 
   const result = await client.query(query);

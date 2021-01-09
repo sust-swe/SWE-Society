@@ -8,6 +8,8 @@ const router = require('./routes');
 const blogRoutes = require('./routes/blogRoutes');
 const userRoutes = require('./routes/userRoutes');
 const commentsRoutes = require('./routes/commentsRoutes');
+const workExpRoutes = require('./routes/workExpRoutes');
+const achievementRoutes = require('./routes/achievementRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 const xssClean = require('xss-clean');
@@ -37,6 +39,8 @@ if (process.env.NODE_ENV !== 'production') {
 app.use('/blogs', blogRoutes);
 app.use('/comments', commentsRoutes);
 app.use('/user', userRoutes);
+app.use('/workExp', workExpRoutes);
+app.use('/achievements', achievementRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello');
