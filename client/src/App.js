@@ -3,19 +3,18 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import MyNavbar from "./components/generic/navbar";
 import NotFound from "./pages/404";
-import Home from "./pages/home";
-import Other from "./pages/other";
+import Landing from "./pages/landing";
 
 function App() {
   return (
     <Router>
+      <MyNavbar/>
+
       <Switch>
         <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/otherSide">
-          <Other />
+          <Landing />
         </Route>
         <Route path="*">
           <NotFound />
