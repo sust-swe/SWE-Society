@@ -10,6 +10,7 @@ const userRoutes = require('./routes/userRoutes');
 const commentsRoutes = require('./routes/commentsRoutes');
 const workExpRoutes = require('./routes/workExpRoutes');
 const achievementRoutes = require('./routes/achievementRoutes');
+const gallaryRoutes = require('./routes/gallaryRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 const xssClean = require('xss-clean');
@@ -41,7 +42,7 @@ app.use('/comments', commentsRoutes);
 app.use('/user', userRoutes);
 app.use('/workExp', workExpRoutes);
 app.use('/achievements', achievementRoutes);
-
+app.use('/gallary', gallaryRoutes);
 app.get('/', (req, res) => {
   res.send('Hello');
 });
