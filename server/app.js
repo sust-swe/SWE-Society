@@ -19,6 +19,8 @@ const xssClean = require('xss-clean');
 const compression = require('compression');
 const AppError = require('./utils/appError');
 
+const association = require('./association/association');
+
 // Creating the express app
 const app = express();
 require('dotenv').config();
