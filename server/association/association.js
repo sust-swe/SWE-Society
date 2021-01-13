@@ -12,6 +12,7 @@ const Achievement = require('../models/AchievementModel');
 // User Relations
 User.hasMany(Blog, { foreignKey: {name:'reg_no', allowNull: false } })
 //Blog.belongsTo(User , { foreignKey: { allowNull: false } })
+User.hasMany(Comment, { foreignKey: {name:'reg_no', allowNull: false } })
 
 Blog.hasMany(Comment,  {foreignKey: { allowNull: false } })
 
