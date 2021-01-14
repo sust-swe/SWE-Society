@@ -1,30 +1,16 @@
 const sequelize = require('../db');
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
-const User =  sequelize.define('user', {
-    reg_no:{
+const User = sequelize.define('user', {
+
+    name: {
+        type: DataTypes.STRING,
+        noUpdate: true
+    },
+    reg_no: {
         type: DataTypes.BIGINT,
         allowNull: false,
         primaryKey: true
-    },
-
-    role:{
-        type: DataTypes.STRING,
-        defaultValue: "user"
-    },
-
-    name: {
-        type: DataTypes.STRING
-    },
-
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-
-    batch: {
-        type: DataTypes.BIGINT,
-        allowNull: false
     },
     image: {
         type: DataTypes.STRING
@@ -35,6 +21,11 @@ const User =  sequelize.define('user', {
         validate: {
             isUrl: true
         }
+    },
+    batch: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        noUpdate: true
     },
     linkedin_link: {
         type: DataTypes.STRING,
@@ -51,14 +42,6 @@ const User =  sequelize.define('user', {
     phone: {
         type: DataTypes.STRING
     },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            isEmail: true,
-        }
-    },
     date_of_birth: {
         type: DataTypes.DATE
     },
@@ -69,7 +52,6 @@ const User =  sequelize.define('user', {
         type: DataTypes.BOOLEAN,
         defaultValue: true
     }
-  });
+});
 
-
-  module.exports = User;
+module.exports = User;
