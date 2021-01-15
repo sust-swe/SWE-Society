@@ -13,6 +13,7 @@ const achievementRoutes = require('./routes/achievementRoutes');
 const gallaryRoutes = require('./routes/gallaryRoutes');
 const committeeRoutes = require('./routes/committeRoutes');
 const roleRoutes = require('./routes/roleRoutes');
+const credentialRoutes = require('./routes/credentialRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 const xssClean = require('xss-clean');
@@ -42,8 +43,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Testing a route
-  app.use('/blogs', blogRoutes);
+app.use('/blogs', blogRoutes);
 app.use('/comments', commentsRoutes);
+app.use('/user/password', credentialRoutes);
+app.use('/user/email', credentialRoutes);
 app.use('/user', userRoutes);
 app.use('/workExp', workExpRoutes);
 app.use('/achievements', achievementRoutes);
@@ -53,8 +56,8 @@ app.use('/committee', committeeRoutes);
 app.get('/', (req, res) => {
   res.send('Hello');
 });
-app.all('*',(req,res,next)=>{
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`,404));
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 // Register the routers
