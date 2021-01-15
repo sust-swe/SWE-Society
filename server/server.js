@@ -1,7 +1,11 @@
 'use strict';
 
 // Importing packages
-
+process.on('uncaughtException', err => {
+  console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
+  console.log(err.name, err.message);
+  process.exit(1);
+});
 
 // Confuguring the environment variables
 require('dotenv').config();
@@ -21,8 +25,9 @@ const server = app.listen(PORT, HOST, () => {
 // Handle Unhandled Rejections
 process.on('unhandledRejection', (err) => {
   console.log('Unhandled Rejection! Shutting down the server...');
-  console.error(err);
+  console.error(err.name, err.message);
   server.close(() => {
     process.exit(1);
   });
 });
+console.log(x);
