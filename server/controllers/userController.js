@@ -17,7 +17,7 @@ exports.registerUser = catchAsync(async (req, res, next) => {
     }
   });
   if (user)
-    return res.status(401).json("User Already Exist!");
+    return next(new AppError('User Already Exist!', 405));
   const randompassword = generator.generate({
     length: 10,
     numbers: true
@@ -25,23 +25,24 @@ exports.registerUser = catchAsync(async (req, res, next) => {
   const message = `<div>Hey ${name}, Your account is created for Swe Society.Your first time password is <h1>${randompassword}</h1><br> 
                           Please change this password after first login.</div>`;
 
-  sendEmail(email, 'Greetings from Swe Society', message);
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(randompassword, salt);
   const batch = reg_no.substring(0, 4);
-  user = await User.create({
-    name,
-    reg_no,
-    batch,
-  });
   const credential = await Credential.create({
     reg_no,
     email,
     password
   });
-  res.json({
+  user = await User.create({
+    name,
+    reg_no,
+    batch,
+  });
+  sendEmail(email, 'Greetings from Swe Society', message);
+  res.status(201).json({
+    status: 'success',
     pass: randompassword,
-    hpass: password
+    user
   });
 });
 
@@ -53,21 +54,27 @@ exports.login = catchAsync(async (req, res, next) => {
       email
     }
   });
-  console.log(user);
+  // console.log(user);
   if (user == null)
-    return res.status(401).json("Invalid Email");
+    return next(new AppError('Wrong Email', 404));
   const validPass = await bcrypt.compare(password, user.password);
   if (!validPass)
-    return res.status(401).json("Wrong Password");
+    return next(new AppError('Wrong Password', 401));
   const jwtToken = jwtGenerator({ reg_no: user.reg_no }, process.env.jwtSessionTokenExpire);
-  return res.json({ token: jwtToken });
+  res.status(200).json({
+    status: 'success',
+    token: jwtToken
+  });
 });
 
 exports.getAllUser = catchAsync(async (req, res, next) => {
   const user = await User.findAll();
   if (user.length == 0)
     next(new AppError(`No user found!`, 404));
-  res.json(user);
+  res.status(200).json({
+    status: 'success',
+    user
+  });
 });
 
 
@@ -79,8 +86,12 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
     }
   });
   if (user == null)
-    next(new AppError(`User with Registration number : ${reg_no} not found!`, 404));
-  res.json(user);
+    return next(new AppError(`User with Registration number : ${reg_no} not found!`, 404));
+
+  res.status(200).json({
+    status: 'success',
+    user
+  });
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
@@ -90,27 +101,50 @@ exports.updateUser = catchAsync(async (req, res, next) => {
       where: { reg_no },
       returning: true
     });
-  res.json(user[1][0]);
+  res.status(200).json({
+    status: 'success',
+    user: user[1][0]
+  });
 });
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
   const reg_no = req.params.reg_no;
+  const user = await User.findOne({
+    where: {
+      reg_no
+    }
+  });
+  if (user == null)
+    return next(new AppError(`User does not exist`, 404));
   User.destroy({
     where: {
       reg_no
     }
   });
-  res.json("DELETED");
+  res.status(200).json({
+    status: 'success',
+    message: 'User deleted'
+  });
 });
 
 exports.setAdmin = catchAsync(async (req, res, next) => {
   const { role, reg_no } = req.body;
-  const user = await Credential.update({ role },
+  let user = await User.findOne({
+    where: {
+      reg_no
+    }
+  });
+  if (user == null)
+    return next(new AppError(`User does not exist`, 404));
+  user = await Credential.update({ role },
     {
       where: { reg_no },
       returning: true
     });
-  res.json(user[1][0]);
+  res.status(200).json({
+    status: 'success',
+    message: `User has been made ${role}`
+  });
 });
 
 

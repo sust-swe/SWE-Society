@@ -19,7 +19,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
         include: [User]
     });
     if (user == null)
-        return res.status(401).json("No user found");
+        return next(new AppError('No User Found!', 404));
 
     const password = generator.generate({
         length: 10,
@@ -30,7 +30,10 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     const message = `<h3>Hey ${user.user.name},Click here and reset your password within 5 minutes</h3>
                     <p>${url}</p>`;
     sendEmail(email, 'Reset Password', message);
-    res.send("Reset Token Sent to email");
+    res.status(200).json({
+        status: 'success',
+        message: 'Reset link sent to email!'
+    });
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
@@ -44,7 +47,10 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
             where: { reg_no }
         }
     );
-    res.send("Password Resetted");
+    res.status(200).json({
+        status: 'success',
+        message: 'Password Resetted'
+    });
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -57,7 +63,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     const realPass = user.password;
     const truePass = await bcrypt.compare(oldPass, realPass);
     if (!truePass)
-        return res.status(401).json("Wrong Password");
+        return next(new AppError('Wrong Password', 401));
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(newPass, salt);
     await Credential.update({ password },
@@ -66,7 +72,11 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
         }
     );
     const jwtToken = jwtGenerator({ reg_no: req.user.reg_no }, process.env.jwtSessionTokenExpire);
-    return res.json({ token: jwtToken });
+    res.status(200).json({
+        status: 'success',
+        message: 'Password Updated',
+        token: jwtToken
+    });
 });
 
 exports.requestEmailChange = catchAsync(async (req, res, next) => {
@@ -74,7 +84,10 @@ exports.requestEmailChange = catchAsync(async (req, res, next) => {
     const message = `<div>Hey,Use this token and update your email within 5 minutes.If this is not related to you just Ignore</div>
                     <p>${jwtToken}</p>`;
     sendEmail(req.body.email, 'Update Email', message);
-    res.send("Upate Token Sent to previousemail");
+    res.status(200).json({
+        status: 'success',
+        message: 'Email Update Token Sent to new email'
+    });
 });
 
 exports.changeEmail = catchAsync(async (req, res, next) => {
@@ -86,8 +99,7 @@ exports.changeEmail = catchAsync(async (req, res, next) => {
     });
     const validPass = await bcrypt.compare(password, user.password);
     if (!validPass)
-        return res.status(401).json("Wrong Password");
-    console.log(token);
+        return next(new AppError('Wrong Password', 401));
     const decoded = await promisify(jwt.verify)(token, process.env.jwtSecret);
     const email = decoded.user.email;
     await Credential.update({ email },
@@ -95,6 +107,9 @@ exports.changeEmail = catchAsync(async (req, res, next) => {
             where: { reg_no: req.user.reg_no }
         }
     );
-    res.send("Email Updated");
+    res.status(200).json({
+        status: 'success',
+        message: 'Email Updated'
+    });
 });
 

@@ -24,7 +24,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (changedTimestamp > decoded.iat)
     return next(new AppError('Your credential changed recently.Please log in again', 401));
 
-  console.log(changedTimestamp, decoded.iat);
+  //console.log(changedTimestamp, decoded.iat);
   req.user = {
     reg_no: user.reg_no,
     role: user.role
