@@ -7,8 +7,10 @@ const authController = require('../controllers/authController');
 router.post('/register', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.registerUser);
 router.post('/login', userController.login);
 router.get('/:reg_no', userController.getSingleUser);
-router.get('/', userController.getAllUser);
+router.delete('/:reg_no', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.deleteUser)
 router.patch('/update', authController.protect, userController.updateUser);
+router.patch('/setadmin', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.setAdmin);
+router.get('/', userController.getAllUser);
 
 
 module.exports = router;

@@ -53,6 +53,7 @@ exports.login = catchAsync(async (req, res, next) => {
       email
     }
   });
+  console.log(user);
   if (user == null)
     return res.status(401).json("Invalid Email");
   const validPass = await bcrypt.compare(password, user.password);
@@ -92,5 +93,31 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   res.json(user[1][0]);
 });
 
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const reg_no = req.params.reg_no;
+  User.destroy({
+    where: {
+      reg_no
+    }
+  });
+  res.json("DELETED");
+});
+
+exports.setAdmin = catchAsync(async (req, res, next) => {
+  const { role, reg_no } = req.body;
+  const user = await Credential.update({ role },
+    {
+      where: { reg_no },
+      returning: true
+    });
+  res.json(user[1][0]);
+});
 
 
+
+
+
+// ,
+//     include: [{
+//       model: Credential,
+//     }],
