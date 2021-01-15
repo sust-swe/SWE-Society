@@ -1,28 +1,26 @@
 
 const catchAsync = require('./../utils/catchAsync');
 const formidabel = require("formidable");
-const client = require('../db');
 const fs = require('fs');
 const path = require('path');
+const Blog = require('../models/BlogModel');
 
 
 exports.getAllBlogs = catchAsync(async (req, res, next) => {
 
-  let query;
+  let result;
 
   if (req.body.isApproved) {
-    query = {
-      text: `select * from blog where isapproved=${req.body.isApproved}`
-    }
+    result = await Blog.findAll({
+      where: {
+        isApproved: req.body.isApproved
+      }
+    })
   } else {
-    query = {
-      text: 'select * from blog'
-    }
+    result = await Blog.findAll()
   }
 
-
-  const result = await client.query(query)
-  res.send(result.rows);
+  res.send(result);
 });
 
 
@@ -45,54 +43,52 @@ exports.postBlog = catchAsync(async (req, res, next) => {
     })
 
     .on('field', (fieldName, fieldValue) => {
-      console.log(fieldName + ': ' + fieldValue);
       formData[fieldName] = fieldValue;
     })
 
     .once('end', () => {
-      const query = {
-        text: 'INSERT INTO public."blog"(user_id, title, content, date, image) VALUES($1, $2, $3, $4, $5)',
-        values: [formData.user_id, formData.title, formData.content, new Date(), [filePath]],
-      }
-      client.query(query, (err, response) => {
-        if (err) {
-          console.log(err.stack);
-        } else {
-          res.send('Successfully updated');
-        }
-      });
+      console.log("On End...");
     });
 
+    const result = await Blog.create(req.body)
+    res.send(result);
 });
 
 exports.getOneBlog = catchAsync(async (req, res, next) => {
-  const id = req.params.blog_id;
-  const query = {
-    text: `SELECT * FROM blog WHERE blog_id=${id};`
-  }
-  const result = await client.query(query);
-  res.send(result.rows);
+
+  console.log(req.params.id);
+  const result = await Blog.findAll({
+    where: {
+      id: req.params.id
+    }
+  });
+
+  res.send(result);
+});
+
+exports.getSpecificUsersBlogs = catchAsync(async (req, res, next) => {
+
+  console.log(req.params.id);
+  const result = await Blog.findAll({
+    where: {
+      reg_no: req.params.reg_no
+    }
+  });
+
+  res.send(result);
 });
 
 exports.updateBlog = catchAsync(async (req, res, next) => {
-  const id = req.params.blog_id;
-
-  const query = {
-    text: `UPDATE blog SET title = '${req.body.title}', content= '${req.body.content}' WHERE blog_id =${id} RETURNING *;`
-  }
-  const result = await client.query(query);
-  res.send(result.rows)
+  const result = await Blog.update(req.body, { where: {id: req.params.id}})
+  res.send(result);
 });
 
 exports.approveBlog = catchAsync(async (req, res, next) => {
-  const id = req.params.blog_id;
-  await client.query(`UPDATE blog SET isapproved = 'true' WHERE blog_id =${id};`)
-  res.send("Blog Approved");
+  const result = await Blog.update({isApproved: true}, { where: { id: req.params.id}});
+  res.send(result);
 });
 
 exports.deleteBlog = catchAsync(async (req, res, next) => {
-  const id = req.params.blog_id;
-  const result = await client.query(`DELETE FROM blog WHERE blog_id=${id};`);
+  const result = await Blog.destroy({where: {id: req.params.id}});
   res.status(200).send('Successfull');
 });
-
