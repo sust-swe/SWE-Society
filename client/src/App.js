@@ -6,6 +6,7 @@ import {
 import MyNavbar from "./components/generic/navbar";
 import NotFound from "./pages/404";
 import Landing from "./pages/landing";
+import SignIn from "./pages/signIn";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Landing />
+        </Route>
+        <Route exact path="/signin">
+          <SignIn />
         </Route>
         <Route path="*">
           <NotFound />

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const MyNavbar = () => {
   return (
-    <Navbar variant="dark" bg="danger">
+    <Navbar variant="dark" bg="primary">
       <Container>
         <Navbar.Brand as={Link} to="/">
           SWE Society
