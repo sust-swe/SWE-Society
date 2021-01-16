@@ -147,6 +147,26 @@ exports.setAdmin = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.removeAdmin = catchAsync(async (req, res, next) => {
+  const reg_no = req.params.reg_no;
+  let user = await User.findOne({
+    where: {
+      reg_no
+    }
+  });
+  if (user == null)
+    return next(new AppError(`User does not exist`, 404));
+  user = await Credential.update({ role: 'user' },
+    {
+      where: { reg_no },
+      returning: true
+    });
+  res.status(200).json({
+    status: 'success',
+    message: `User with reg_no: ${reg_no} is removed from admin/superadmin`
+  });
+});
+
 
 
 

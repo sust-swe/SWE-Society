@@ -54,18 +54,18 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
-    const { oldPass, newPass } = req.body;
+    const { oldpassword, newpassword } = req.body;
     const user = await Credential.findOne({
         where: {
             reg_no: req.user.reg_no
         }
     });
     const realPass = user.password;
-    const truePass = await bcrypt.compare(oldPass, realPass);
+    const truePass = await bcrypt.compare(oldpassword, realPass);
     if (!truePass)
         return next(new AppError('Wrong Password', 401));
     const salt = await bcrypt.genSalt(10);
-    const password = await bcrypt.hash(newPass, salt);
+    const password = await bcrypt.hash(newpassword, salt);
     await Credential.update({ password },
         {
             where: { reg_no: req.user.reg_no }
