@@ -9,6 +9,46 @@ const sendEmail = require('./../utils/sendEmail');
 const User = require('../models/UserModel');
 const Credential = require('../models/CredentialModel');
 
+const createSendToken = (req, res, user, message) => {
+
+    const jwtToken = jwtGenerator({ reg_no: user.reg_no }, process.env.jwtSessionTokenExpire);
+
+    res.cookie('jwt', jwtToken, {
+        expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000
+        ),
+        httpOnly: true
+        //secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
+    });
+    if (process.env.NODE_ENV === 'production')
+        cookieOptions.secure = true;
+
+    res.status(200).json({
+        status: 'success',
+        token: jwtToken,
+        message
+    });
+
+    // // Remove password from output
+    // user.password = undefined;
+
+};
+
+exports.login = catchAsync(async (req, res, next) => {
+    const { email, password } = req.body;
+    const user = await Credential.findOne({
+        where: {
+            email
+        }
+    });
+    // console.log(user);
+    if (user == null)
+        return next(new AppError('Invalid Credential', 404));
+    const validPass = await bcrypt.compare(password, user.password);
+    if (!validPass)
+        return next(new AppError('Invalid Credential', 404));
+    createSendToken(req, res, user, 'Successfully Logged In!');
+});
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
     const { email } = req.body;
@@ -71,12 +111,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
             where: { reg_no: req.user.reg_no }
         }
     );
-    const jwtToken = jwtGenerator({ reg_no: req.user.reg_no }, process.env.jwtSessionTokenExpire);
-    res.status(200).json({
-        status: 'success',
-        message: 'Password Updated',
-        token: jwtToken
-    });
+    createSendToken(req, res, req.user, 'Successfully Updated Password!');
 });
 
 exports.requestEmailChange = catchAsync(async (req, res, next) => {

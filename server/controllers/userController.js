@@ -47,33 +47,15 @@ exports.registerUser = catchAsync(async (req, res, next) => {
 });
 
 
-exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = await Credential.findOne({
-    where: {
-      email
-    }
-  });
-  // console.log(user);
-  if (user == null)
-    return next(new AppError('Wrong Email', 404));
-  const validPass = await bcrypt.compare(password, user.password);
-  if (!validPass)
-    return next(new AppError('Wrong Password', 401));
-  const jwtToken = jwtGenerator({ reg_no: user.reg_no }, process.env.jwtSessionTokenExpire);
-  res.status(200).json({
-    status: 'success',
-    token: jwtToken
-  });
-});
+
 
 exports.getAllUser = catchAsync(async (req, res, next) => {
-  const user = await User.findAll();
-  if (user.length == 0)
+  const users = await User.findAll();
+  if (users.length == 0)
     next(new AppError(`No user found!`, 404));
   res.status(200).json({
     status: 'success',
-    user
+    users
   });
 });
 
