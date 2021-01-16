@@ -2,6 +2,8 @@
 
 The backend for swe society
 
+## Backend Api Calls
+
 ## Documents
 
 ### ER Diagram
