@@ -1,20 +1,110 @@
-import { Col, Row } from "react-bootstrap";
-import SignInForm from "../components/signIn/form";
+import Layout from "../components/generic/layout";
+import {
+  Box,
+  Button,
+  Center,
+  Input,
+  InputRightElement,
+  InputGroup,
+  Heading,
+  Text,
+  Link,
+  Spinner,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const SignIn = (props) => {
+  const [show, setShow] = useState(false);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [requestState, setRequestState] = useState("not-requested");
+
+  const handlePasswordShow = () => setShow(!show);
+  let history = useHistory();
+
+  const signIn = (e) => {
+    e.preventDefault();
+    setRequestState("loading");
+
+    axios
+      .post("/api/user/login", { email, password })
+      .then((res) => {
+        setRequestState("loaded");
+        history.push("/");
+      })
+      .catch((err) => {
+        setRequestState("error");
+      });
+  };
+
   return (
-    <Row>
-      <Col sm={0} md={8} style={{ overflowY: "hidden" }}>
-        {/* <Image
-          src="https://picsum.photos/1000"
-          width="100%"
-          style={{ boxSizing: "border-box" }}
-        /> */}
-      </Col>
-      <Col sm={12} md={4}>
-        <SignInForm />
-      </Col>
-    </Row>
+    <Layout>
+      <Center h={["75vh", "85vh"]}>
+        <Box
+          boxShadow="xl"
+          textAlign="center"
+          bg="white"
+          borderRadius={5}
+          p={4}
+        >
+          <Heading size="md" m={1}>
+            Welcome Back
+          </Heading>
+          <Input
+            placeholder="Email"
+            type="email"
+            isRequired="true"
+            m={1}
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <InputGroup m={1}>
+            <Input
+              type={show ? "text" : "password"}
+              placeholder="Password"
+              isRequired="true"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={handlePasswordShow}>
+                {show ? "Hide" : "Show"}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+
+          {requestState === "error" && (
+            <Text display="block" fontSize="sm" color="tomato">
+              Invalid Credentials
+            </Text>
+          )}
+          <Button
+            colorScheme="teal"
+            size="sm"
+            m={1}
+            mb={4}
+            onClick={signIn}
+            disabled={requestState === "loading"}
+          >
+            {requestState === "loading" && <Spinner mr={3} />}Sign In
+          </Button>
+
+          <hr style={{ padding: "5px" }} />
+
+          <Text fontSize="xs">
+            <Link color="teal.500" href="#" m={1}>
+              Forgot Password?
+            </Link>
+            <br />
+            <Link color="teal.500" href="#" m={1}>
+              Don't have an account?
+            </Link>
+          </Text>
+        </Box>
+      </Center>
+    </Layout>
   );
 };
 
