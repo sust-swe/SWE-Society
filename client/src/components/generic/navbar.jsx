@@ -7,7 +7,7 @@ const MyNavbar = (props) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
-  const { loggedIn, user } = useContext(AuthContext);
+  const { loggedIn, user, logoutHandler } = useContext(AuthContext);
 
   const MenuItems = (props) => (
     <Link
@@ -56,8 +56,8 @@ const MyNavbar = (props) => {
         alignItems="center"
         flexGrow={1}
       >
+        <MenuItems to="/">Home</MenuItems>
         <MenuItems to="/profile">Profile</MenuItems>
-        <MenuItems to="/404">404</MenuItems>
       </Box>
 
       <Box
@@ -67,6 +67,11 @@ const MyNavbar = (props) => {
         {!loggedIn && (
           <Button as={RouterLink} to="/signin" bg="transparent" border="1px">
             Sign In
+          </Button>
+        )}
+        {loggedIn && (
+          <Button onClick={logoutHandler} bg="transparent" border="1px">
+            Log Out
           </Button>
         )}
       </Box>

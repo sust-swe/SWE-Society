@@ -1,3 +1,6 @@
+import axios from "axios";
+import { Redirect } from "react-router-dom";
+
 const { createContext, useState } = require("react");
 
 const AuthContext = createContext();
@@ -27,8 +30,21 @@ const AuthProvider = (props) => {
     setUser(null);
   };
 
+  const logoutHandler = (e) => {
+    axios
+      .post("/api/user/logout")
+      .then((res) => {
+        console.log("logout");
+        logout();
+        return <Redirect to="/" />;
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <AuthContext.Provider value={{ loggedIn, user, login, logout, loading }}>
+    <AuthContext.Provider
+      value={{ loggedIn, user, login, logout, loading, logoutHandler }}
+    >
       {props.children}
     </AuthContext.Provider>
   );
