@@ -28,16 +28,17 @@ exports.registerUser = catchAsync(async (req, res, next) => {
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(randompassword, salt);
   const batch = reg_no.substring(0, 4);
-  const credential = await Credential.create({
-    reg_no,
-    email,
-    password
-  });
   user = await User.create({
     name,
     reg_no,
     batch,
   });
+  const credential = await Credential.create({
+    reg_no,
+    email,
+    password
+  });
+
   sendEmail(email, 'Greetings from Swe Society', message);
   res.status(201).json({
     status: 'success',
@@ -61,7 +62,7 @@ exports.getAllUser = catchAsync(async (req, res, next) => {
 
 
 exports.getSingleUser = catchAsync(async (req, res, next) => {
-  const reg_no = req.params.reg_no;
+  const reg_no = req.params.reg_no || req.user.reg_no;
   const user = await User.findOne({
     where: {
       reg_no

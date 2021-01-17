@@ -4,6 +4,8 @@ const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const credentialController = require('../controllers/credentialController');
 
+
+router.get('/me', authController.protect, userController.getSingleUser);
 router.post('/login', credentialController.login);
 router.post('/register', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.registerUser);
 router.get('/:reg_no', userController.getSingleUser);
