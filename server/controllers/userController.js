@@ -33,11 +33,13 @@ exports.registerUser = catchAsync(async (req, res, next) => {
     reg_no,
     batch,
   });
+
   const credential = await Credential.create({
     reg_no,
     email,
     password
   });
+
 
   sendEmail(email, 'Greetings from Swe Society', message);
   res.status(201).json({
@@ -66,11 +68,11 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     where: {
       reg_no
-    }
+    }, include: [Credential],
   });
   if (user == null)
     return next(new AppError(`User with Registration number : ${reg_no} not found!`, 404));
-
+  user.credential.password = undefined;
   res.status(200).json({
     status: 'success',
     user

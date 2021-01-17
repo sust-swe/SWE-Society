@@ -15,9 +15,10 @@ User.hasMany(Blog, { foreignKey: { name: 'reg_no', allowNull: false } })
 //Blog.belongsTo(User , { foreignKey: { allowNull: false } })
 User.hasMany(Comment, { foreignKey: { name: 'reg_no', allowNull: false } })
 User.hasOne(Credential, { foreignKey: { name: 'reg_no', allowNull: false } })
-Credential.hasOne(User, { foreignKey: { name: 'reg_no', allowNull: false } })
+Credential.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } })
 
-Blog.hasMany(Comment, { foreignKey: { allowNull: false } })
+Blog.hasMany(Comment, { foreignKey: { allowNull: false } });
+Comment.belongsTo(Blog, { foreignKey: { allowNull: false } });
 
 User.hasMany(Role, { foreignKey: { allowNull: false } })
 User.hasMany(Achievement, { foreignKey: { allowNull: false } })

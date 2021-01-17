@@ -22,15 +22,14 @@ const createSendToken = (req, res, user, message) => {
     });
     if (process.env.NODE_ENV === 'productin')
         cookieOptions.secure = true;
+    user.password = undefined;
 
     res.status(200).json({
         status: 'success',
         token: jwtToken,
-        message
+        message,
+        user
     });
-
-    // // Remove password from output
-    // user.password = undefined;
 
 };
 
@@ -39,7 +38,8 @@ exports.login = catchAsync(async (req, res, next) => {
     const user = await Credential.findOne({
         where: {
             email
-        }
+        },
+        include: [User]
     });
     // console.log(user);
     if (user == null)

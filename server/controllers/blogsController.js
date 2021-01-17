@@ -4,6 +4,8 @@ const formidabel = require("formidable");
 const fs = require('fs');
 const path = require('path');
 const Blog = require('../models/BlogModel');
+const AppError = require('../utils/appError');
+const Comment = require('../models/CommentModel');
 
 
 exports.getAllBlogs = catchAsync(async (req, res, next) => {
@@ -11,13 +13,9 @@ exports.getAllBlogs = catchAsync(async (req, res, next) => {
   let result;
 
   if (req.body.isApproved) {
-    result = await Blog.findAll({
-      where: {
-        isApproved: req.body.isApproved
-      }
-    })
+    result = await Blog.findAll({ where: { isApproved: req.body.isApproved }, inclue: [Comment] });
   } else {
-    result = await Blog.findAll()
+    result = await Blog.findAll({ inclue: [Comment] })
   }
 
   res.send(result);
@@ -50,8 +48,8 @@ exports.postBlog = catchAsync(async (req, res, next) => {
       console.log("On End...");
     });
 
-    const result = await Blog.create(req.body)
-    res.send(result);
+  const result = await Blog.create(req.body)
+  res.send(result);
 });
 
 exports.getOneBlog = catchAsync(async (req, res, next) => {
@@ -79,16 +77,31 @@ exports.getSpecificUsersBlogs = catchAsync(async (req, res, next) => {
 });
 
 exports.updateBlog = catchAsync(async (req, res, next) => {
-  const result = await Blog.update(req.body, { where: {id: req.params.id}})
+  const result = await Blog.update(req.body, { where: { id: req.params.id } })
   res.send(result);
 });
 
 exports.approveBlog = catchAsync(async (req, res, next) => {
-  const result = await Blog.update({isApproved: true}, { where: { id: req.params.id}});
-  res.send(result);
+  const result = await Blog.update({ isApproved: true }, { where: { id: req.params.id } });
+
+  if (!result[0])
+    return next(new AppError(`Blog Does Not found`, 404));
+
+  res.status(200).json({
+    message: "Successfully approved"
+  });
+
 });
 
 exports.deleteBlog = catchAsync(async (req, res, next) => {
-  const result = await Blog.destroy({where: {id: req.params.id}});
-  res.status(200).send('Successfull');
+  const blog = await Blog.findOne({ where: { id: req.params.id } });
+
+  if (blog == null)
+    return next(new AppError(`Blog does not exist`, 404));
+  await Blog.destroy({ where: { id: req.params.id } });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Blog deleted successfully'
+  });
 });
