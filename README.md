@@ -5,6 +5,7 @@
 ### 
 - Without any authorization
 
+
    * Show All Users : `GET /api/user/`
    * Show Specific User : `GET /api/user/:reg_no/`
    * Login User : `POST /api/user/login/`
