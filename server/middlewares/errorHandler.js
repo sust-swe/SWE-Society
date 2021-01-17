@@ -16,51 +16,45 @@ const sendErrorProd = (err, res) => {
       .status(err.statusCode)
       .json({ message: err.message, status: err.status });
   } else {
-    console.error(err);
     res.status(500).json({ status: 'error', message: 'Something went wrong!' });
   }
 };
 
-// Mongoose error handlers
-const handleCastError = err => {
-  const message = `Invalid ${err.path}: ${err.value}`;
+// Sequelize Database error handlers
+const handleSequelizeDatabaseError = err => {
+  console.log(err);
+  const message = err.message;
   return new AppError(message, 400);
 };
 
-const handleDuplicateError = err => {
-  const message = `Duplicating ${Object.keys(err.keyPattern)}`;
+const handleSequelizeUniqueConstraintError = err => {
+  const message = err.errors[0].message;
   return new AppError(message, 400);
 };
 
-const handleValidationError = err => {
-  const errMessages = Object.values(err.errors).map(el => el.message);
-
-  const message = `Validation failed on ${Object.keys(err.errors).join(
-    ', ',
-  )}. ${errMessages.join('. ')}`;
+const handleSequelizeValidationError = err => {
+  const message = err.message;
   return new AppError(message, 400);
+
 };
 
 // Handling JWT Errors
 const handleJWTError = err => new AppError('Invalid token', 401);
 const handleTokenExpiredError = err => new AppError('Token expired', 401);
 
-// The global error handling middleware
-// Call next(err) from any router to use this
+
 const errorHandler = (err, req, res, next) => {
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
-
   if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
+    error.message = err.message;
 
-    if (error.name == 'CastError') error = handleCastError(error);
-    if (error.code == 11000) error = handleDuplicateError(error);
-    if (error._message && error._message.includes('validation failed'))
-      error = handleValidationError(error);
+    if (error.name == 'SequelizeDatabaseError') error = handleSequelizeDatabaseError(error);
+    if (error.name == 'SequelizeUniqueConstraintError') error = handleSequelizeUniqueConstraintError(error);
+    if (error.name == 'SequelizeValidationError') error = handleSequelizeValidationError(error);
     if (error.name == 'JsonWebTokenError') error = handleJWTError(error);
-    if (error.name == 'TokenExpiredError')
-      error = handleTokenExpiredError(error);
+    if (error.name == 'TokenExpiredError') error = handleTokenExpiredError(error);
 
     sendErrorProd(error, res);
   } else {

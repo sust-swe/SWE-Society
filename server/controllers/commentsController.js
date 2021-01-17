@@ -1,34 +1,51 @@
 const catchAsync = require('./../utils/catchAsync');
-const client = require('../db');
+const Comment = require('../models/CommentModel');
+const Blog = require('../models/BlogModel');
+const AppError = require('../utils/appError');
 
-exports.postComment = catchAsync(async(req, res, next) => {
-    const query = {
-        text: 'INSERT INTO comments(content, date, user_id, blog_id) VALUES($1, $2, $3, $4 ) RETURNING *',
-        values: [req.body.content, new Date() , req.body.user_id, req.body.blog_id],
-    }
-    const result = await client.query(query);
-    res.send(result.rows);
+exports.postComment = catchAsync(async (req, res, next) => {
+    req.body.reg_no = req.user.reg_no;
+    const comment = await Comment.create(req.body);
+    res.status(201).json(comment);
 });
 
-exports.addReply = catchAsync(async(req, res, next) => {
-    const query = {
-        text: `Update comments Set replies =array_append(replies, '${req.body.reply}') where comment_id =${req.params.comment_id} RETURNING *;`
-    }
-    const result = await client.query(query);
-    res.send(result.rows);
+
+exports.UpdateComment = catchAsync(async (req, res, next) => {
+    const comment = await Comment.update(req.body, { returning: true, where: { id: req.params.id } })
+    if (!comment[0])
+        return next(new AppError(`Comment Does Not found`, 404));
+
+    res.status(200).json({
+        message: "Successfully updated",
+        comment
+    });
 });
 
-exports.UpdateComment = catchAsync(async(req, res, next) => {
-    const result = await client.query(`Update comments Set content='${req.body.content}' where comment_id=${req.params.comment_id} RETURNING *;`);
-    res.send(result.rows);
+exports.deleteComment = catchAsync(async (req, res, next) => {
+
+    const comment = await Comment.findOne({ where: { id: req.params.id } });
+
+    if (comment == null)
+        return next(new AppError(`Comment does not exist`, 404));
+
+    if (req.user.reg_no != comment.reg_no && req.user.role != 'admin' && req.user.role != 'superadmin')
+        return next(new AppError(`Not allowed to perform this action`, 403));
+    await Comment.destroy({ where: { id: req.params.id } });
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Comment deleted'
+    });
 });
 
-exports.deleteComment = catchAsync(async(req, res, next) => {
-    const result = await client.query(`DELETE FROM comments WHERE comment_id=${req.params.comment_id};`);
-    res.send('Successfully deleted');
-});
+exports.getCommentsOfBlog = catchAsync(async (req, res, next) => {
+    const comments = await Comment.findAll({ where: { blog_id: req.params.blog_id }, include: [{ model: Blog }] });
 
-exports.getAllComments = catchAsync(async(req, res, next) => {
-    const result = await client.query(`SELECT * from comments where blog_id=${req.params.blog_id}`);
-    res.send(result.rows);
+    if (comments == null)
+        return next(new AppError(`Comment does not exist for this blog`, 404));
+
+    res.status(200).json({
+        status: 'success',
+        comments
+    });
 })

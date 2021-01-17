@@ -4,6 +4,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const cors = require('cors');
 const router = require('./routes');
 const blogRoutes = require('./routes/blogRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -26,6 +27,7 @@ const app = express();
 require('dotenv').config();
 // Security Middleware
 app.use(helmet());
+app.use(cors());
 
 // Compression Middleware
 app.use(compression());
@@ -42,19 +44,19 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Testing a route
-  app.use('/blogs', blogRoutes);
-app.use('/comments', commentsRoutes);
-app.use('/user', userRoutes);
-app.use('/workExp', workExpRoutes);
-app.use('/achievements', achievementRoutes);
-app.use('/gallary', gallaryRoutes);
-app.use('/committee/role', roleRoutes);
-app.use('/committee', committeeRoutes);
-app.get('/', (req, res) => {
+app.use('/api/blogs', blogRoutes);
+app.use('/api/comments', commentsRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/workExp', workExpRoutes);
+app.use('/api/achievements', achievementRoutes);
+app.use('/api/gallary', gallaryRoutes);
+app.use('/api/committee/role', roleRoutes);
+app.use('/api/committee', committeeRoutes);
+app.get('/api/', (req, res) => {
   res.send('Hello');
 });
-app.all('*',(req,res,next)=>{
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`,404));
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 // Register the routers

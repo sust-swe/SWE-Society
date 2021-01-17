@@ -1,10 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-const jwtGenerator = (user_id,expire)=> {
+const jwtGenerator = (mydata, expire) => {
   const payload = {
-    user: {
-      id: user_id
-    }
+    user: mydata
   };
   return jwt.sign(payload, process.env.jwtSecret, { expiresIn: expire });
 }

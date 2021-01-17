@@ -2,11 +2,12 @@
 const express = require('express');
 const router = express.Router();
 const commentsController = require('../controllers/commentsController');
+const authController = require('../controllers/authController');
 
-router.patch('/:comment_id', commentsController.UpdateComment);
-router.post('/', commentsController.postComment);
-router.delete('/:comment_id', commentsController.deleteComment);
-router.get('/:blog_id', commentsController.getAllComments)
+router.patch('/:id',authController.protect, commentsController.UpdateComment);
+router.post('/',authController.protect, commentsController.postComment);
+router.delete('/:id',authController.protect, commentsController.deleteComment);
+router.get('/:blog_id',authController.protect, commentsController.getCommentsOfBlog)
 
 
 

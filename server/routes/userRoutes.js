@@ -2,16 +2,24 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const credentialController = require('../controllers/credentialController');
 
-router.post('/register',authController.protect,authController.restrictTo('superadmin','admin'), authController.register);
-router.post('/login', authController.login);
-router.post('/forgotpassword',authController.forgotPassword);
-router.patch('/updatepassword',authController.protect,authController.updatePassword);
-router.patch('/resetpassword/:token',authController.resetPassword);
 
+router.get('/me', authController.protect, userController.getSingleUser);
+router.post('/login', credentialController.login);
+router.get('/logout', authController.protect, credentialController.logout);
+router.post('/register', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.registerUser);
 router.get('/:reg_no', userController.getSingleUser);
+router.delete('/:reg_no', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.deleteUser)
+router.patch('/update', authController.protect, userController.updateUser);
+router.patch('/setadmin', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.setAdmin);
+router.patch('/removeadmin/:reg_no', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.removeAdmin);
 router.get('/', userController.getAllUser);
-router.patch('/',authController.protect, userController.updateUser);
+router.post('/password/forgot', credentialController.forgotPassword);
+router.patch('/password/update', authController.protect, credentialController.updatePassword);
+router.patch('/password/reset/:token', credentialController.resetPassword);
+router.post('/email/requestchange', authController.protect, credentialController.requestEmailChange);
+router.patch('/email/change', authController.protect, credentialController.changeEmail);
 
 
 module.exports = router;
