@@ -28,15 +28,16 @@ exports.registerUser = catchAsync(async (req, res, next) => {
   const salt = await bcrypt.genSalt(10);
   const password = await bcrypt.hash(randompassword, salt);
   const batch = reg_no.substring(0, 4);
-  const credential = await Credential.create({
-    reg_no,
-    email,
-    password
-  });
   user = await User.create({
     name,
     reg_no,
     batch,
+  });
+
+  const credential = await Credential.create({
+    reg_no,
+    email,
+    password
   });
   sendEmail(email, 'Greetings from Swe Society', message);
   res.status(201).json({
