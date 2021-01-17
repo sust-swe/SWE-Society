@@ -1,10 +1,13 @@
-import { Box, Button, Flex, Heading, Text, Link } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Button, Flex, Heading, Link } from "@chakra-ui/react";
+import { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import { AuthContext } from "../../contexts/authContext";
 
 const MyNavbar = (props) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
+
+  const { loggedIn, user } = useContext(AuthContext);
 
   const MenuItems = (props) => (
     <Link
@@ -54,7 +57,6 @@ const MyNavbar = (props) => {
         flexGrow={1}
       >
         <MenuItems to="/profile">Profile</MenuItems>
-        <MenuItems to="/signin">Sign In</MenuItems>
         <MenuItems to="/404">404</MenuItems>
       </Box>
 
@@ -62,9 +64,11 @@ const MyNavbar = (props) => {
         display={{ base: show ? "block" : "none", md: "block" }}
         mt={{ base: 4, md: 0 }}
       >
-        <Button bg="transparent" border="1px">
-          Create account
-        </Button>
+        {!loggedIn && (
+          <Button as={RouterLink} to="/signin" bg="transparent" border="1px">
+            Sign In
+          </Button>
+        )}
       </Box>
     </Flex>
   );

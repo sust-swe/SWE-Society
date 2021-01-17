@@ -11,15 +11,18 @@ import {
   Link,
   Spinner,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import { AuthContext } from "../contexts/authContext";
 
 const SignIn = (props) => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [requestState, setRequestState] = useState("not-requested");
+
+  const { loggedIn, login } = useContext(AuthContext);
 
   const handlePasswordShow = () => setShow(!show);
   let history = useHistory();
@@ -32,6 +35,7 @@ const SignIn = (props) => {
       .post("/api/user/login", { email, password })
       .then((res) => {
         setRequestState("loaded");
+        login(res.data.user);
         history.push("/");
       })
       .catch((err) => {
@@ -39,73 +43,75 @@ const SignIn = (props) => {
       });
   };
 
-  return (
-    <Layout>
-      <Center h={["75vh", "85vh"]}>
-        <Box
-          boxShadow="xl"
-          textAlign="center"
-          bg="white"
-          borderRadius={5}
-          p={4}
-        >
-          <Heading size="md" m={1}>
-            Welcome Back
-          </Heading>
-          <Input
-            placeholder="Email"
-            type="email"
-            isRequired="true"
-            m={1}
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <InputGroup m={1}>
-            <Input
-              type={show ? "text" : "password"}
-              placeholder="Password"
-              isRequired="true"
-              name="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handlePasswordShow}>
-                {show ? "Hide" : "Show"}
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-
-          {requestState === "error" && (
-            <Text display="block" fontSize="sm" color="tomato">
-              Invalid Credentials
-            </Text>
-          )}
-          <Button
-            colorScheme="teal"
-            size="sm"
-            m={1}
-            mb={4}
-            onClick={signIn}
-            disabled={requestState === "loading"}
+  if (loggedIn) return <Redirect to="/" />;
+  else
+    return (
+      <Layout>
+        <Center h={["75vh", "85vh"]}>
+          <Box
+            boxShadow="xl"
+            textAlign="center"
+            bg="white"
+            borderRadius={5}
+            p={4}
           >
-            {requestState === "loading" && <Spinner mr={3} />}Sign In
-          </Button>
+            <Heading size="md" m={1}>
+              Welcome Back
+            </Heading>
+            <Input
+              placeholder="Email"
+              type="email"
+              isRequired="true"
+              m={1}
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <InputGroup m={1}>
+              <Input
+                type={show ? "text" : "password"}
+                placeholder="Password"
+                isRequired="true"
+                name="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handlePasswordShow}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
 
-          <hr style={{ padding: "5px" }} />
+            {requestState === "error" && (
+              <Text display="block" fontSize="sm" color="tomato">
+                Invalid Credentials
+              </Text>
+            )}
+            <Button
+              colorScheme="teal"
+              size="sm"
+              m={1}
+              mb={4}
+              onClick={signIn}
+              disabled={requestState === "loading"}
+            >
+              {requestState === "loading" && <Spinner mr={3} />}Sign In
+            </Button>
 
-          <Text fontSize="xs">
-            <Link color="teal.500" href="#" m={1}>
-              Forgot Password?
-            </Link>
-            <br />
-            <Link color="teal.500" href="#" m={1}>
-              Don't have an account?
-            </Link>
-          </Text>
-        </Box>
-      </Center>
-    </Layout>
-  );
+            <hr style={{ padding: "5px" }} />
+
+            <Text fontSize="xs">
+              <Link color="teal.500" href="#" m={1}>
+                Forgot Password?
+              </Link>
+              <br />
+              <Link color="teal.500" href="#" m={1}>
+                Don't have an account?
+              </Link>
+            </Text>
+          </Box>
+        </Center>
+      </Layout>
+    );
 };
 
 export default SignIn;
