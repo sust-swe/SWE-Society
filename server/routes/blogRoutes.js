@@ -2,14 +2,15 @@
 const express = require('express');
 const router = express.Router();
 const blogsController = require('../controllers/blogsController');
+const authController = require('../controllers/authController');
 
-router.get('/:id', blogsController.getOneBlog);
-router.get('/user/:reg_no', blogsController.getSpecificUsersBlogs);
-router.get('/', blogsController.getAllBlogs);
-router.post('/', blogsController.postBlog);
-router.patch('/approve/:id', blogsController.approveBlog);
-router.patch('/:id', blogsController.updateBlog);
-router.delete('/:id', blogsController.deleteBlog);
+router.get('/:id',authController.protect, blogsController.getOneBlog);
+router.get('/user/:reg_no',authController.protect, blogsController.getSpecificUsersBlogs);
+router.get('/',authController.protect, blogsController.getAllBlogs);
+router.post('/',authController.protect, blogsController.postBlog);
+router.patch('/approve/:id',authController.protect,authController.restrictTo('admin', 'superadmin'), blogsController.approveBlog);
+router.patch('/:id',authController.protect, blogsController.updateBlog);
+router.delete('/:id',authController.protect, blogsController.deleteBlog);
 
 
 
