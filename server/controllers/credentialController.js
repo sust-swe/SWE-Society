@@ -24,9 +24,14 @@ const createSendToken = (req, res, user, message) => {
         cookieOptions.secure = true;
     user.password = undefined;
 
+    // res.status(200).json({
+    //     status: 'success',
+    //     token: jwtToken,
+    //     message,
+    //     user
+    // });
     res.status(200).json({
         status: 'success',
-        token: jwtToken,
         message,
         user
     });
@@ -49,6 +54,14 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new AppError('Invalid Credential', 404));
     createSendToken(req, res, user, 'Successfully Logged In!');
 });
+
+exports.logout = (req, res) => {
+    res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+    });
+    res.status(200).json({ status: 'success' });
+};
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
     const { email } = req.body;
