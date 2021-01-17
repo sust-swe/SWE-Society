@@ -31,6 +31,8 @@
 ### 
 - Authorized And Performed By User Himself
 
+   * Log Out User : `GET /api/user/logout/`
+
    * Update User Information : `PATCH /api/user/update/`
         ```json
         Request Body (Can Contain Multiple Or Any Of The Listed Field)

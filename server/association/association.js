@@ -12,17 +12,18 @@ const Credential = require('../models/CredentialModel');
 
 // User Relations
 User.hasMany(Blog, { foreignKey: { name: 'reg_no', allowNull: false } })
-//Blog.belongsTo(User , { foreignKey: { allowNull: false } })
+Blog.belongsTo(User , {  foreignKey: {name: 'reg_no', allowNull: false } })
+
 User.hasMany(Comment, { foreignKey: { name: 'reg_no', allowNull: false } })
 User.hasOne(Credential, { foreignKey: { name: 'reg_no', allowNull: false } })
 Credential.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } })
 
-Blog.hasMany(Comment, { foreignKey: { allowNull: false } });
-Comment.belongsTo(Blog, { foreignKey: { allowNull: false } });
+Blog.hasMany(Comment, { foreignKey: {name:"blog_id", allowNull: false } });
+Comment.belongsTo(Blog, { foreignKey: {name: "blog_id", allowNull: false } });
 
-User.hasMany(Role, { foreignKey: { allowNull: false } })
-User.hasMany(Achievement, { foreignKey: { allowNull: false } })
-User.hasMany(WorkExperience, { foreignKey: { allowNull: false } })
+User.hasMany(Role, { foreignKey: {name: "reg_no", allowNull: false } })
+User.hasMany(Achievement, { foreignKey: {name: "reg_no", allowNull: false } })
+User.hasMany(WorkExperience, { foreignKey: { name: "reg_no",allowNull: false } })
 
 Committee.hasMany(Role, { foreignKey: { name: 'committee_order', allowNull: false } })
 Committee.hasMany(Announcement, { foreignKey: { name: 'committee_order', allowNull: false } })
