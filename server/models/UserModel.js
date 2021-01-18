@@ -7,6 +7,12 @@ const User = sequelize.define('user', {
         type: DataTypes.STRING,
         noUpdate: true
     },
+    nick_name: {
+        type: DataTypes.STRING,
+    },
+    address: {
+        type: DataTypes.STRING,
+    },
     reg_no: {
         type: DataTypes.BIGINT,
         allowNull: false,

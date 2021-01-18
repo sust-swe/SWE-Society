@@ -11,6 +11,10 @@ const Education = sequelize.define('education', {
         type: DataTypes.STRING(50),
         allowNull: false
     },
+    subject: {
+        type: DataTypes.STRING(50),
+        allowNull: false
+    },
     location: {
         type: DataTypes.STRING(50)
     },

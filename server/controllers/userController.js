@@ -7,6 +7,8 @@ const generator = require('generate-password');
 const bcrypt = require('bcryptjs');
 const jwtGenerator = require('../utils/jwtGenerator');
 const sendEmail = require('./../utils/sendEmail');
+const Education = require('../models/EducationModel');
+const WorkExperience = require('../models/WorkExperienceModel');
 
 
 exports.registerUser = catchAsync(async (req, res, next) => {
@@ -68,7 +70,7 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     where: {
       reg_no
-    }, include: [Credential],
+    }, include: [Credential, Education, WorkExperience],
   });
   if (user == null)
     return next(new AppError(`User with Registration number : ${reg_no} not found!`, 404));
