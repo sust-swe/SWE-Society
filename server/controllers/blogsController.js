@@ -16,9 +16,7 @@ exports.getAllBlogs = catchAsync(async (req, res, next) => {
     result = await Blog.findAll({ where: { isApproved: req.body.isApproved }, include: [Comment] });
   } else {
     result = await Blog.findAll({ include: [Comment] })
-
   }
-
   res.send(result);
 });
 
@@ -80,11 +78,11 @@ exports.getSpecificUsersBlogs = catchAsync(async (req, res, next) => {
 
 exports.updateBlog = catchAsync(async (req, res, next) => {
 
-  const blog = await Blog.findOne({where: {id: req.params.id}});
+  const blog = await Blog.findOne({ where: { id: req.params.id } });
   if (blog == null)
     return next(new AppError(`Blog Does Not found`, 404));
 
-  if (req.user.reg_no != blog.reg_no )
+  if (req.user.reg_no != blog.reg_no)
     return next(new AppError(`Not allowed to perform this action`, 403));
 
   blog = await Blog.update(req.body, { returning: true, where: { id: req.params.id } });
@@ -94,7 +92,7 @@ exports.updateBlog = catchAsync(async (req, res, next) => {
 
 exports.approveBlog = catchAsync(async (req, res, next) => {
 
-  const blog = await Blog.findOne({where: {id: req.params.id}});
+  const blog = await Blog.findOne({ where: { id: req.params.id } });
   if (blog == null)
     return next(new AppError(`Blog Does Not found`, 404));
 

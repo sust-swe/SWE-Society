@@ -5,6 +5,7 @@
 ### 
 - Without any authorization
 
+
    * Show All Users : `GET /api/user/`
    * Show Specific User : `GET /api/user/:reg_no/`
    * Login User : `POST /api/user/login/`
@@ -30,6 +31,8 @@
 
 ### 
 - Authorized And Performed By User Himself
+
+   * Log Out User : `GET /api/user/logout/`
 
    * Update User Information : `PATCH /api/user/update/`
         ```json
