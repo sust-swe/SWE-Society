@@ -16,6 +16,7 @@ exports.getAllBlogs = catchAsync(async (req, res, next) => {
     result = await Blog.findAll({ where: { isApproved: req.body.isApproved }, include: [Comment] });
   } else {
     result = await Blog.findAll({ include: [Comment] })
+
   }
 
   res.send(result);

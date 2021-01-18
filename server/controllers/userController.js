@@ -39,6 +39,8 @@ exports.registerUser = catchAsync(async (req, res, next) => {
     email,
     password
   });
+
+
   sendEmail(email, 'Greetings from Swe Society', message);
   res.status(201).json({
     status: 'success',
@@ -62,15 +64,15 @@ exports.getAllUser = catchAsync(async (req, res, next) => {
 
 
 exports.getSingleUser = catchAsync(async (req, res, next) => {
-  const reg_no = req.params.reg_no;
+  const reg_no = req.params.reg_no || req.user.reg_no;
   const user = await User.findOne({
     where: {
       reg_no
-    }
+    }, include: [Credential],
   });
   if (user == null)
     return next(new AppError(`User with Registration number : ${reg_no} not found!`, 404));
-
+  user.credential.password = undefined;
   res.status(200).json({
     status: 'success',
     user

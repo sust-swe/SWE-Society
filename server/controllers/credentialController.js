@@ -20,17 +20,21 @@ const createSendToken = (req, res, user, message) => {
         httpOnly: true
         //secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
     });
-    if (process.env.NODE_ENV === 'production')
+    if (process.env.NODE_ENV === 'productin')
         cookieOptions.secure = true;
+    user.password = undefined;
 
+    // res.status(200).json({
+    //     status: 'success',
+    //     token: jwtToken,
+    //     message,
+    //     user
+    // });
     res.status(200).json({
         status: 'success',
-        token: jwtToken,
-        message
+        message,
+        user
     });
-
-    // // Remove password from output
-    // user.password = undefined;
 
 };
 
@@ -39,7 +43,8 @@ exports.login = catchAsync(async (req, res, next) => {
     const user = await Credential.findOne({
         where: {
             email
-        }
+        },
+        include: [User]
     });
     // console.log(user);
     if (user == null)
@@ -49,6 +54,14 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new AppError('Invalid Credential', 404));
     createSendToken(req, res, user, 'Successfully Logged In!');
 });
+
+exports.logout = (req, res) => {
+    res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+    });
+    res.status(200).json({ status: 'success' });
+};
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
     const { email } = req.body;
