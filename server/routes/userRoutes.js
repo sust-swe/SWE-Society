@@ -7,6 +7,7 @@ const credentialController = require('../controllers/credentialController');
 
 router.get('/me', authController.protect, userController.getSingleUser);
 router.post('/login', credentialController.login);
+router.post('/broadcast', authController.protect, userController.broadcastUser);
 router.get('/logout', authController.protect, credentialController.logout);
 router.post('/register', userController.registerUser);
 router.get('/:reg_no', userController.getSingleUser);

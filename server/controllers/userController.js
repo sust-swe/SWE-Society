@@ -64,6 +64,19 @@ exports.getAllUser = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.broadcastUser = catchAsync(async (req, res, next) => {
+  const users = await Credential.findAll({ include: [User] });
+  if (users.length == 0)
+    next(new AppError(`No user found!`, 404));
+  users.forEach((element) => {
+    const message = `Dear ${element.user.name}, ${req.body.message}`;
+    sendEmail(element.email, req.body.subject, message);
+  });
+  res.status(200).json({
+    status: 'success'
+  });
+});
+
 
 exports.getSingleUser = catchAsync(async (req, res, next) => {
   const reg_no = req.params.reg_no || req.user.reg_no;
