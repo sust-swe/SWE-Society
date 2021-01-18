@@ -20,7 +20,7 @@ const createSendToken = (req, res, user, message) => {
         httpOnly: true
         //secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
     });
-    if (process.env.NODE_ENV === 'productin')
+    if (process.env.NODE_ENV === 'proaductin')
         cookieOptions.secure = true;
     user.password = undefined;
 

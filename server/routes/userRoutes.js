@@ -8,7 +8,7 @@ const credentialController = require('../controllers/credentialController');
 router.get('/me', authController.protect, userController.getSingleUser);
 router.post('/login', credentialController.login);
 router.get('/logout', authController.protect, credentialController.logout);
-router.post('/register', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.registerUser);
+router.post('/register', userController.registerUser);
 router.get('/:reg_no', userController.getSingleUser);
 router.delete('/:reg_no', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.deleteUser)
 router.patch('/update', authController.protect, userController.updateUser);
@@ -23,4 +23,5 @@ router.patch('/email/change', authController.protect, credentialController.chang
 
 
 module.exports = router;
-//register->authController.protect,authController.restrictTo('superadmin','admin'),
+
+//authController.protect, authController.restrictTo('superadmin', 'admin'),

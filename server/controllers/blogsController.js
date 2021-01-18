@@ -1,8 +1,6 @@
 
 const catchAsync = require('./../utils/catchAsync');
 const formidabel = require("formidable");
-const fs = require('fs');
-const path = require('path');
 const Blog = require('../models/BlogModel');
 const AppError = require('../utils/appError');
 const Comment = require('../models/CommentModel');
