@@ -7,7 +7,7 @@ const MyNavbar = (props) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
-  const { loggedIn, user, logoutHandler } = useContext(AuthContext);
+  const { loggedIn, logoutHandler } = useContext(AuthContext);
 
   const MenuItems = (props) => (
     <Link

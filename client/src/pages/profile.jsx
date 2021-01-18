@@ -35,8 +35,8 @@ const Profile = (props) => {
           }}
           roundedCircle
         />
-        <h2>{user.name}</h2>
-        <p>{user.reg_no}</p>
+        {/* <h2>{user.name}</h2>
+        <p>{user.reg_no}</p> */}
       </Col>
       <Col md={8}></Col>
     </Row>

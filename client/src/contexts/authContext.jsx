@@ -31,14 +31,10 @@ const AuthProvider = (props) => {
   };
 
   const logoutHandler = (e) => {
-    axios
-      .post("/api/user/logout")
-      .then((res) => {
-        console.log("logout");
-        logout();
-        return <Redirect to="/" />;
-      })
-      .catch((err) => console.log(err));
+    axios.post("/api/user/logout").finally(() => {
+      logout();
+      return <Redirect to="/" />;
+    });
   };
 
   return (
