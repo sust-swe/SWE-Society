@@ -16,6 +16,9 @@ const User = sequelize.define('user', {
         }
 
     },
+    biography: {
+        type: DataTypes.TEXT
+    },
     image: {
         type: DataTypes.STRING
 

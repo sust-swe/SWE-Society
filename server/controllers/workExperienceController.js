@@ -9,7 +9,7 @@ exports.addWorkExp = catchAsync(async (req, res, next) => {
     res.status(200).json(workExp);
 });
 
-exports.leaveWork = catchAsync(async (req, res, next) => {
+exports.updateWork = catchAsync(async (req, res, next) => {
 
     const workExp = await WorkExperience.findOne({ where: { id: req.params.workexp_id, reg_no: req.user.reg_no } });
 
@@ -19,7 +19,7 @@ exports.leaveWork = catchAsync(async (req, res, next) => {
     if (workExp == null)
         return next(new AppError(`WorkExperience does not exist for this blog`, 404));
 
-    workExp = await WorkExperience.update({ leaving_date: Date.now() }, { returning: true, where: { id: req.params.workexp_id, reg_no: req.user.reg_no } });
+    workExp = await WorkExperience.update(req.body, { returning: true, where: { id: req.params.workexp_id, reg_no: req.user.reg_no } });
 
     res.status(200).json(workExp);
 });
@@ -38,4 +38,15 @@ exports.deleteWork = catchAsync(async (req, res, next) => {
     res.status(200).json({
         message: "Successfully deleted"
     })
+});
+
+exports.getWorkExperiences = catchAsync(async (req, res, next) => {
+    const reg_no = req.params.reg_no;
+    const workExp = await WorkExperience.findAll({ where: { reg_no}});
+    if (workExp.length == 0)
+        return next(new AppError(`Not found`, 404));
+    res.status(200).json({
+        status: 'success',
+        workExp
+    });
 });

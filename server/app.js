@@ -49,7 +49,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/comments', commentsRoutes);
 app.use('/api/education', educationRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/workExp', workExperienceRoutes);
+app.use('/api/workexp', workExperienceRoutes);
 app.use('/api/achievements', achievementRoutes);
 app.use('/api/gallary', gallaryRoutes);
 app.use('/api/committee/role', roleRoutes);
