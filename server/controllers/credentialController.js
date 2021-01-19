@@ -24,12 +24,6 @@ const createSendToken = (req, res, user, message) => {
         cookieOptions.secure = true;
     user.password = undefined;
 
-    // res.status(200).json({
-    //     status: 'success',
-    //     token: jwtToken,
-    //     message,
-    //     user
-    // });
     res.status(200).json({
         status: 'success',
         message,

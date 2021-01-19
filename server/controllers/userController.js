@@ -56,8 +56,8 @@ exports.registerUser = catchAsync(async (req, res, next) => {
 
 exports.getAllUser = catchAsync(async (req, res, next) => {
   const users = await User.findAll();
-  if (users.length == 0)
-    next(new AppError(`No user found!`, 404));
+  // if (users.length == 0)
+  //   next(new AppError(`No user found!`, 404));
   res.status(200).json({
     status: 'success',
     users
