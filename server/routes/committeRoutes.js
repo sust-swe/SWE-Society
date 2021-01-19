@@ -3,8 +3,9 @@ const router = express.Router();
 const committeeController = require('../controllers/committeeController');
 const authController = require('../controllers/authController');
 
-router.post('/', committeeController.createCommittee);
-router.get('/:id', committeeController.getSingleCommittee);
-router.patch('/:id', committeeController.updateCommittee);
+router.post('/',authController.protect, authController.restrictTo('admin', 'superadmin'), committeeController.createCommittee);
+router.get('/:committee_order',authController.protect, committeeController.getExecutiveMembersOfACommittee);
+router.patch('/:committee_order',authController.protect, authController.restrictTo('admin', 'superadmin'), committeeController.updateCommittee);
+router.delete('/:committee_order', authController.protect, authController.restrictTo('admin', 'superadmin'), committeeController.deleteCommittee);
 
 module.exports = router
