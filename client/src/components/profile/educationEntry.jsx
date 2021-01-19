@@ -6,9 +6,9 @@ const EducationEntry = ({
   subject,
   description,
   location,
-  website_link,
+  joining_date,
+  leaving_date,
 }) => {
-  console.log(institute, degree, subject, description, location, website_link);
   return (
     <Box m={3}>
       <Flex flexWrap="wrap" justifyContent="space-between">
@@ -20,9 +20,26 @@ const EducationEntry = ({
         )}
       </Flex>
       {(degree && subject && (
-        <Text fontSize="sm">{`${degree} on ${subject}`}</Text>
+        <Text
+          fontSize="sm"
+          display="inline"
+          mr={2}
+        >{`${degree} on ${subject}`}</Text>
       )) ||
-        (subject && <Text fontSize="sm">{subject}</Text>)}
+        (subject && (
+          <Text fontSize="sm" display="inline" mr={2}>
+            {subject}
+          </Text>
+        ))}
+      {joining_date && (
+        <>
+          <Text display="inline">•</Text>
+          <Text fontSize="sm" display="inline" ml={2}>
+            {new Date(joining_date).getFullYear()} -{" "}
+            {leaving_date ? new Date(leaving_date).getFullYear() : "Present"}
+          </Text>
+        </>
+      )}
       {description && (
         <Text borderLeft="2px solid #aaa" px={2} py={1} my={1} color="gray.600">
           {description}

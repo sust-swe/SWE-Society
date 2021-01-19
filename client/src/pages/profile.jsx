@@ -25,6 +25,7 @@ import { GoLocation } from "react-icons/go";
 import { AiFillCode } from "react-icons/ai";
 import EducationEntry from "../components/profile/educationEntry";
 import axios from "axios";
+import WorkEntry from "../components/profile/workEntry";
 
 const Profile = (props) => {
   const [user, setUser] = useState(null);
@@ -173,12 +174,26 @@ const Profile = (props) => {
                 ))}
               </Box>
             )}
-            <Box w="100%" bg="white" borderRadius="md" boxShadow="xl" p={3}>
-              <Heading size="md" color="teal.800">
-                <Icon as={FaLaptopCode} mr={2} />
-                Work Experience
-              </Heading>
-            </Box>
+
+            {user.workExperiences.length > 0 && (
+              <Box
+                w="100%"
+                bg="white"
+                borderRadius="md"
+                boxShadow="xl"
+                p={3}
+                mb={4}
+              >
+                <Heading size="md" color="teal.800">
+                  <Icon as={FaLaptopCode} mr={2} />
+                  Work Experiences
+                </Heading>
+
+                {user.workExperiences.map((work) => (
+                  <WorkEntry key={work.company} {...work} />
+                ))}
+              </Box>
+            )}
           </Box>
         </Grid>
       </Layout>
