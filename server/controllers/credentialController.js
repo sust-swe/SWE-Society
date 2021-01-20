@@ -20,16 +20,10 @@ const createSendToken = (req, res, user, message) => {
         httpOnly: true
         //secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
     });
-    if (process.env.NODE_ENV === 'productin')
+    if (process.env.NODE_ENV === 'prooooductin')
         cookieOptions.secure = true;
     user.password = undefined;
 
-    // res.status(200).json({
-    //     status: 'success',
-    //     token: jwtToken,
-    //     message,
-    //     user
-    // });
     res.status(200).json({
         status: 'success',
         message,

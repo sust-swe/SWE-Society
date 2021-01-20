@@ -7,10 +7,23 @@ const User = sequelize.define('user', {
         type: DataTypes.STRING,
         noUpdate: true
     },
+    nick_name: {
+        type: DataTypes.STRING,
+    },
+    address: {
+        type: DataTypes.STRING,
+    },
     reg_no: {
         type: DataTypes.BIGINT,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        validate: {
+            is: /20[1-9][0-9]831[0-9][0-9][0-9]/i
+        }
+
+    },
+    biography: {
+        type: DataTypes.TEXT
     },
     image: {
         type: DataTypes.STRING
@@ -43,7 +56,10 @@ const User = sequelize.define('user', {
         type: DataTypes.STRING
     },
     date_of_birth: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        validate: {
+            isAfter: "1950-12-30"
+        }
     },
     skills: {
         type: DataTypes.ARRAY(DataTypes.STRING)

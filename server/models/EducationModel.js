@@ -1,14 +1,17 @@
 const sequelize = require('../db');
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
+const Education = sequelize.define('education', {
 
-
-const WorkExperience =  sequelize.define('workExperience', {
-    position:{
+    degree: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    company_name: {
+    institute: {
+        type: DataTypes.STRING(50),
+        allowNull: false
+    },
+    subject: {
         type: DataTypes.STRING(50),
         allowNull: false
     },
@@ -31,7 +34,7 @@ const WorkExperience =  sequelize.define('workExperience', {
     description: {
         type: DataTypes.STRING
     }
-  
+
 });
 
-  module.exports = WorkExperience;
+module.exports = Education;

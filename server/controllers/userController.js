@@ -7,6 +7,8 @@ const generator = require('generate-password');
 const bcrypt = require('bcryptjs');
 const jwtGenerator = require('../utils/jwtGenerator');
 const sendEmail = require('./../utils/sendEmail');
+const Education = require('../models/EducationModel');
+const WorkExperience = require('../models/WorkExperienceModel');
 
 
 exports.registerUser = catchAsync(async (req, res, next) => {
@@ -54,11 +56,24 @@ exports.registerUser = catchAsync(async (req, res, next) => {
 
 exports.getAllUser = catchAsync(async (req, res, next) => {
   const users = await User.findAll();
-  if (users.length == 0)
-    next(new AppError(`No user found!`, 404));
+  // if (users.length == 0)
+  //   next(new AppError(`No user found!`, 404));
   res.status(200).json({
     status: 'success',
     users
+  });
+});
+
+exports.broadcastUser = catchAsync(async (req, res, next) => {
+  const users = await Credential.findAll({ include: [User] });
+  if (users.length == 0)
+    next(new AppError(`No user found!`, 404));
+  users.forEach((element) => {
+    const message = `Dear ${element.user.name}, ${req.body.message}`;
+    sendEmail(element.email, req.body.subject, message);
+  });
+  res.status(200).json({
+    status: 'success'
   });
 });
 
@@ -68,7 +83,7 @@ exports.getSingleUser = catchAsync(async (req, res, next) => {
   const user = await User.findOne({
     where: {
       reg_no
-    }, include: [Credential],
+    }, include: [Credential, Education, WorkExperience],
   });
   if (user == null)
     return next(new AppError(`User with Registration number : ${reg_no} not found!`, 404));
