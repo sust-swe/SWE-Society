@@ -1,46 +1,46 @@
-import axios from "axios";
+import { Box, Grid, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Col, Image, Row } from "react-bootstrap";
+import Layout from "../components/generic/layout";
+import axios from "axios";
+import ProfileBasics from "../components/profile/basics";
+import Skills from "../components/profile/skills";
+import Education from "../components/profile/education";
+import Work from "../components/profile/work";
 
 const Profile = (props) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [requestState, setRequestState] = useState("loading");
 
   useEffect(() => {
-    getUser();
+    axios.get("/api/user/me").then((res) => {
+      setUser(res.data.user);
+      console.log(res.data.user);
+      setRequestState("loaded");
+    });
   }, []);
 
-  const getUser = () => {
-    axios
-      .get("/api/user/me")
-      .then((res) => {
-        setUser(res.data.user);
-        setRequestState("loaded");
-        console.log(res.data.user);
-      })
-      .catch((err) => setRequestState("error"));
-  };
-
-  return requestState === "loading" ? (
-    <h1>"Loading"</h1>
-  ) : (
-    <Row>
-      <Col md={4} style={{ margin: "20px" }}>
-        <Image
-          src="https://picsum.photos/1000"
-          width="150px"
-          height="150px"
-          style={{
-            objectFit: "cover",
-          }}
-          roundedCircle
-        />
-        <h2>{user.name}</h2>
-        <p>{user.reg_no}</p>
-      </Col>
-      <Col md={8}></Col>
-    </Row>
-  );
+  if (requestState === "loading") return <Heading>Loading</Heading>;
+  else
+    return (
+      <Layout>
+        <Grid
+          templateColumns={["1fr", "1fr", "1fr 2fr", "1fr 3fr", "1fr 3fr"]}
+          gap={4}
+          p={3}
+        >
+          <ProfileBasics user={user} />
+          <Box>
+            {user.skills.length > 0 && <Skills skills={user.skills} />}
+            {user.education.length > 0 && (
+              <Education education={user.education} />
+            )}
+            {user.workExperiences.length > 0 && (
+              <Work works={user.workExperiences} />
+            )}
+          </Box>
+        </Grid>
+      </Layout>
+    );
 };
 
 export default Profile;
