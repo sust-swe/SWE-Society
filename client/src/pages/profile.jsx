@@ -1,4 +1,4 @@
-import { Box, Grid, Heading } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Layout from "../components/generic/layout";
 import axios from "axios";
@@ -6,7 +6,6 @@ import ProfileBasics from "../components/profile/basics";
 import Skills from "../components/profile/skills";
 import Education from "../components/profile/education";
 import Work from "../components/profile/work";
-import LoadingPage from "../components/generic/loadingPage";
 import LoadingSkeleton from "../components/profile/skeleton";
 
 const Profile = (props) => {
