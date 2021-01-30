@@ -23,7 +23,15 @@ const createSendToken = (req, res, user, message) => {
     if (process.env.NODE_ENV === 'prooooductin')
         cookieOptions.secure = true;
     user.password = undefined;
-
+    //console.log(user);
+    const credential = {
+        "id": user.id,
+        "role": user.role,
+        "reg_no": user.reg_no,
+        "email": user.email
+    }
+    user = user.user.dataValues;
+    user.credential = credential;
     res.status(200).json({
         status: 'success',
         message,
@@ -40,7 +48,7 @@ exports.login = catchAsync(async (req, res, next) => {
         },
         include: [User]
     });
-    // console.log(user);
+    //console.log(user.user.dataValues);
     if (user == null)
         return next(new AppError('Invalid Credential', 404));
     const validPass = await bcrypt.compare(password, user.password);
@@ -105,7 +113,8 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     const user = await Credential.findOne({
         where: {
             reg_no: req.user.reg_no
-        }
+        },
+        include: [User]
     });
     const realPass = user.password;
     const truePass = await bcrypt.compare(oldpassword, realPass);
@@ -118,7 +127,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
             where: { reg_no: req.user.reg_no }
         }
     );
-    createSendToken(req, res, req.user, 'Successfully Updated Password!');
+    createSendToken(req, res, user, 'Successfully Updated Password!');
 });
 
 exports.requestEmailChange = catchAsync(async (req, res, next) => {

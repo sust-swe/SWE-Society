@@ -44,6 +44,7 @@ const handleTokenExpiredError = err => new AppError('Token expired', 401);
 
 
 const errorHandler = (err, req, res, next) => {
+  //console.log(err.name);
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
   if (process.env.NODE_ENV === 'production') {
