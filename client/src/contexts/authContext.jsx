@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 
@@ -13,6 +14,7 @@ const AuthProvider = (props) => {
     JSON.parse(localStorage.getItem("user")) || null
   );
   const [loading, setLoading] = useState(false);
+  const toast = useToast();
 
   const login = (user) => {
     setUser(user);
@@ -31,15 +33,36 @@ const AuthProvider = (props) => {
   };
 
   const logoutHandler = (e) => {
+    logout();
     axios.post("/api/user/logout").finally(() => {
-      logout();
       return <Redirect to="/" />;
     });
   };
 
+  const unauthorizedHandler = (err) => {
+    if (err.response.status === 401) {
+      toast({
+        title: "Session Expired!",
+        description: "Please login again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      logoutHandler();
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ loggedIn, user, login, logout, loading, logoutHandler }}
+      value={{
+        loggedIn,
+        user,
+        login,
+        logout,
+        loading,
+        logoutHandler,
+        unauthorizedHandler,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

@@ -23,7 +23,7 @@ import { AuthContext } from "../../contexts/authContext";
 
 const BasicEditModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, login } = useContext(AuthContext);
+  const { user, login, unauthorizedHandler } = useContext(AuthContext);
   const [editedUser, setEditedUser] = useState({
     fb_link: user.fb_link,
     linkedin_link: user.linkedin_link,
@@ -33,6 +33,7 @@ const BasicEditModal = () => {
     biography: user.biography,
     nick_name: user.nick_name,
     address: user.address,
+    skills: user.skills.join(", "),
   });
   const [requestState, setRequestState] = useState("none");
   const toast = useToast();
@@ -43,7 +44,10 @@ const BasicEditModal = () => {
     setRequestState("loading");
 
     axios
-      .patch("/api/user/update", editedUser)
+      .patch("/api/user/update", {
+        ...editedUser,
+        skills: editedUser.skills.split(",").map((skill) => skill.trim()),
+      })
       .then((res) => {
         setRequestState("success");
         login(res.data.user);
@@ -51,6 +55,7 @@ const BasicEditModal = () => {
         history.go(0);
       })
       .catch((err) => {
+        unauthorizedHandler(err);
         onClose();
         toast({
           title: "Something Went Wrong",
@@ -169,13 +174,27 @@ const BasicEditModal = () => {
                   }
                 />
               </FormControl>
+
+              <FormControl mb={2} id="skills">
+                <FormLabel>Skills</FormLabel>
+                <Input
+                  type="text"
+                  value={editedUser.skills}
+                  onChange={(e) =>
+                    setEditedUser({
+                      ...editedUser,
+                      skills: e.target.value,
+                    })
+                  }
+                />
+              </FormControl>
             </ModalBody>
 
             <ModalFooter>
               <Button colorScheme="red" mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button type="submit" colorScheme="green">
+              <Button type="submit" colorScheme="green" bg="green.500">
                 {requestState === "loading" && <Spinner mr={1} />}Submit
               </Button>
             </ModalFooter>
