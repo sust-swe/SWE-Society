@@ -6,6 +6,8 @@ import ProfileBasics from "../components/profile/basics";
 import Skills from "../components/profile/skills";
 import Education from "../components/profile/education";
 import Work from "../components/profile/work";
+import LoadingPage from "../components/generic/loadingPage";
+import LoadingSkeleton from "../components/profile/skeleton";
 
 const Profile = (props) => {
   const [user, setUser] = useState(null);
@@ -19,7 +21,7 @@ const Profile = (props) => {
     });
   }, []);
 
-  if (requestState === "loading") return <Heading>Loading</Heading>;
+  if (requestState === "loading") return <LoadingSkeleton />;
   else
     return (
       <Layout>
