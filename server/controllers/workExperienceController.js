@@ -11,7 +11,7 @@ exports.addWorkExp = catchAsync(async (req, res, next) => {
 
 exports.updateWork = catchAsync(async (req, res, next) => {
 
-    const workExp = await WorkExperience.findOne({ where: { id: req.params.workexp_id, reg_no: req.user.reg_no } });
+    let workExp = await WorkExperience.findOne({ where: { id: req.params.id, reg_no: req.user.reg_no } });
 
     if (req.user.reg_no != workExp.reg_no)
         return next(new AppError(`Not allowed to perform this action`, 403));
@@ -19,13 +19,13 @@ exports.updateWork = catchAsync(async (req, res, next) => {
     if (workExp == null)
         return next(new AppError(`WorkExperience does not exist for this blog`, 404));
 
-    workExp = await WorkExperience.update(req.body, { returning: true, where: { id: req.params.workexp_id, reg_no: req.user.reg_no } });
+    workExp = await WorkExperience.update(req.body, { returning: true, where: { id: req.params.id, reg_no: req.user.reg_no } });
 
-    res.status(200).json(workExp);
+    res.status(200).json(workExp[1][0]);
 });
 
 exports.deleteWork = catchAsync(async (req, res, next) => {
-    const workExp = await WorkExperience.findOne({ where: { id: req.params.workexp_id, reg_no: req.user.reg_no } });
+    const workExp = await WorkExperience.findOne({ where: { id: req.params.id, reg_no: req.user.reg_no } });
 
     if (workExp == null)
         return next(new AppError(`WorkExperience not found`, 404));
@@ -33,7 +33,7 @@ exports.deleteWork = catchAsync(async (req, res, next) => {
     if (req.user.reg_no != workExp.reg_no)
         return next(new AppError(`Not allowed to perform this action`, 403));
 
-    await WorkExperience.destroy({ where: { id: req.params.workexp_id, reg_no: req.user.reg_no } });
+    await WorkExperience.destroy({ where: { id: req.params.id, reg_no: req.user.reg_no } });
 
     res.status(200).json({
         message: "Successfully deleted"
@@ -42,7 +42,7 @@ exports.deleteWork = catchAsync(async (req, res, next) => {
 
 exports.getWorkExperiences = catchAsync(async (req, res, next) => {
     const reg_no = req.params.reg_no;
-    const workExp = await WorkExperience.findAll({ where: { reg_no}});
+    const workExp = await WorkExperience.findAll({ where: { reg_no } });
     if (workExp.length == 0)
         return next(new AppError(`Not found`, 404));
     res.status(200).json({
