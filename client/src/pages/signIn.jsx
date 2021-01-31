@@ -61,18 +61,19 @@ const SignIn = (props) => {
             <Input
               placeholder="Email"
               type="email"
-              isRequired="true"
               m={1}
               name="email"
               onChange={(e) => setEmail(e.target.value)}
+              required
+              autoFocus
             />
             <InputGroup m={1}>
               <Input
                 type={show ? "text" : "password"}
                 placeholder="Password"
-                isRequired="true"
                 name="password"
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <InputRightElement width="4.5rem">
                 <Button h="1.75rem" size="sm" onClick={handlePasswordShow}>
@@ -92,7 +93,7 @@ const SignIn = (props) => {
               m={1}
               mb={4}
               onClick={signIn}
-              disabled={requestState === "loading"}
+              disabled={requestState === "loading" ? 1 : 0}
             >
               {requestState === "loading" && <Spinner mr={3} />}Sign In
             </Button>

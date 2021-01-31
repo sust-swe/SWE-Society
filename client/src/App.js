@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import Footer from "./components/generic/footer";
 import MyNavbar from "./components/generic/navbar";
+import ProtectedRoute from "./components/generic/protectedRoutes";
 import NotFound from "./pages/404";
 import Landing from "./pages/landing";
 import Profile from "./pages/profile";
@@ -16,18 +17,10 @@ function App() {
       <MyNavbar/>
 
       <Switch>
-        <Route exact path="/">
-          <Landing />
-        </Route>
-        <Route exact path="/signin">
-          <SignIn />
-        </Route>
-        <Route exact path="/profile">
-          <Profile />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/signin" component={SignIn} />
+        <ProtectedRoute exact path="/profile" component={Profile} />
+        <Route path="*" component={NotFound} />
       </Switch>
 
       <Footer />

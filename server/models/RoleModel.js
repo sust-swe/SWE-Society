@@ -7,6 +7,16 @@ const Role =  sequelize.define('role', {
     designation:{
         type: DataTypes.STRING,
         allowNull: false
+    },
+    reg_no:{
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        primaryKey: true
+    },
+    committee_order: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
     }
   });
 
