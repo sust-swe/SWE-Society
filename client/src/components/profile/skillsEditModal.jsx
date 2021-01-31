@@ -78,7 +78,7 @@ const SkillsEditModal = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update Profile</ModalHeader>
+          <ModalHeader>Update Skills</ModalHeader>
           <form onSubmit={handleSubmit}>
             <ModalBody>
               <FormControl mb={2} id="skills">
