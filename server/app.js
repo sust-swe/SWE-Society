@@ -15,6 +15,7 @@ const gallaryRoutes = require('./routes/gallaryRoutes');
 const committeeRoutes = require('./routes/committeRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const educationRoutes = require('./routes/educationRoutes');
+const imageUploadRoutes = require('./routes/imageUploadRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 const xssClean = require('xss-clean');
@@ -45,6 +46,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Testing a route
+app.use('/api/imageupload', imageUploadRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/comments', commentsRoutes);
 app.use('/api/education', educationRoutes);
