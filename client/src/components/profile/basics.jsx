@@ -13,8 +13,12 @@ import { FaFacebookSquare, FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import { FiPhoneCall } from "react-icons/fi";
 import { GoLocation } from "react-icons/go";
 import { IoMailOutline } from "react-icons/io5";
+import { useLocation } from "react-router-dom";
+import BasicEditModal from "./basicEditModal";
 
 const ProfileBasics = ({ user }) => {
+  const edit = useLocation().pathname.startsWith("/profile");
+
   return (
     <Box w="100%" bg="white" borderRadius="md" boxShadow="xl">
       <Image
@@ -24,9 +28,10 @@ const ProfileBasics = ({ user }) => {
         borderTopRadius="md"
       />
       <Box p={3}>
-        <Heading size="md" color="green.800">
-          {user.name} {user.nick_name && <>({user.nick_name})</>}
+        <Heading display="inline-block" size="md" color="green.800">
+          {user.name} {user.nick_name && <>({user.nick_name})</>}{" "}
         </Heading>
+        {edit && <BasicEditModal />}
 
         {user.biography && (
           <Text display="block" fontSize="sm" py={1}>
