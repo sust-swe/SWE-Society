@@ -12,14 +12,16 @@ import { useLocation, useParams } from "react-router-dom";
 import AddItemPopover from "../components/profile/addItemPopover";
 
 const Profile = ({ userId }) => {
+  const url = useLocation().pathname;
+  const ownProfile = url.startsWith("/profile");
   let { id } = useParams();
-  if (userId === "me") id = "me";
+  if (ownProfile) id = "me";
   const [user, setUser] = useState(null);
   const [requestState, setRequestState] = useState("loading");
   const { unauthorizedHandler } = useContext(AuthContext);
-  const edit = useLocation().pathname.startsWith("/profile");
 
   useEffect(() => {
+    setRequestState("loading");
     axios
       .get("/api/user/" + id)
       .then((res) => {
@@ -29,24 +31,20 @@ const Profile = ({ userId }) => {
       })
       .catch((err) => {
         unauthorizedHandler(err);
-        if (err.response?.status === 404) {
-          setRequestState("not-found");
-        }
+        if (err.response?.status === 404) setRequestState("not-found");
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [url]);
 
   if (requestState === "loading") return <LoadingSkeleton />;
   else if (requestState === "not-found")
     return (
-      <Layout>
-        <Center h="80vh">
-          <Text align="center" fontSize="4xl" color="green.800" opacity={0.4}>
-            User Not Found
-          </Text>
-        </Center>
-      </Layout>
+      <Center h="80vh">
+        <Text color="green.800" fontSize="2xl" opacity={0.5}>
+          User Not Found
+        </Text>
+      </Center>
     );
   else
     return (
@@ -81,7 +79,7 @@ const Profile = ({ userId }) => {
             </Box>
           </Grid>
 
-          {edit && <AddItemPopover />}
+          {ownProfile && <AddItemPopover />}
         </Box>
       </Layout>
     );
