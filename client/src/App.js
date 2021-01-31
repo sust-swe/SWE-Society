@@ -19,7 +19,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/signin" component={SignIn} />
-        <ProtectedRoute exact path="/profile" component={Profile} />
+        <ProtectedRoute exact path="/profile" ><Profile userId="me"/></ProtectedRoute>
+        <ProtectedRoute exact path="/user/:id" ><Profile userId="id"/></ProtectedRoute>
         <Route path="*" component={NotFound} />
       </Switch>
 
