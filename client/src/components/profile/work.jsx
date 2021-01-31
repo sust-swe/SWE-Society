@@ -11,7 +11,7 @@ const Work = ({ works }) => {
       </Heading>
 
       {works.map((work) => (
-        <WorkEntry key={work.company} {...work} />
+        <WorkEntry key={work.id} work={work} />
       ))}
     </Box>
   );

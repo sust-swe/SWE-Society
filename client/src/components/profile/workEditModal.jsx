@@ -22,18 +22,16 @@ import { AuthContext } from "../../contexts/authContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const EducationEditModal = (education) => {
+const WorkEditModal = (work) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { unauthorizedHandler } = useContext(AuthContext);
-  const [editedEducation, setEditedEducation] = useState({
-    degree: education.degree,
-    institute: education.institute,
-    joining_date: new Date(education.joining_date),
-    leaving_date: education.leaving_date
-      ? new Date(education.leaving_date)
-      : null,
-    description: education.description,
-    subject: education.subject,
+  const [editedWork, setEditedWork] = useState({
+    company: work.company,
+    position: work.position,
+    location: work.location,
+    joining_date: new Date(work.joining_date),
+    leaving_date: work.leaving_date ? new Date(work.leaving_date) : null,
+    description: work.description,
   });
   const [requestState, setRequestState] = useState("none");
   const toast = useToast();
@@ -44,7 +42,7 @@ const EducationEditModal = (education) => {
     setRequestState("loading");
 
     axios
-      .patch("/api/education/" + education.id, editedEducation)
+      .patch("/api/workexp/" + work.id, editedWork)
       .then((res) => {
         setRequestState("success");
         onClose();
@@ -80,46 +78,46 @@ const EducationEditModal = (education) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update Education</ModalHeader>
+          <ModalHeader>Update work</ModalHeader>
           <form onSubmit={handleSubmit}>
             <ModalBody>
-              <FormControl mb={2} id="institute">
-                <FormLabel>Institute</FormLabel>
+              <FormControl mb={2} id="company">
+                <FormLabel>Company</FormLabel>
                 <Input
                   type="text"
-                  value={editedEducation.institute}
+                  value={editedWork.company}
                   onChange={(e) =>
-                    setEditedEducation({
-                      ...editedEducation,
-                      institute: e.target.value,
+                    setEditedWork({
+                      ...editedWork,
+                      company: e.target.value,
                     })
                   }
                 />
               </FormControl>
 
-              <FormControl mb={2} id="degree">
-                <FormLabel>Degree</FormLabel>
+              <FormControl mb={2} id="position">
+                <FormLabel>Position</FormLabel>
                 <Input
                   type="text"
-                  value={editedEducation.degree}
+                  value={editedWork.position}
                   onChange={(e) =>
-                    setEditedEducation({
-                      ...editedEducation,
-                      degree: e.target.value,
+                    setEditedWork({
+                      ...editedWork,
+                      position: e.target.value,
                     })
                   }
                 />
               </FormControl>
 
-              <FormControl mb={2} id="subject">
-                <FormLabel>Subject</FormLabel>
+              <FormControl mb={2} id="location">
+                <FormLabel>Location</FormLabel>
                 <Input
                   type="text"
-                  value={editedEducation.subject}
+                  value={editedWork.location}
                   onChange={(e) =>
-                    setEditedEducation({
-                      ...editedEducation,
-                      subject: e.target.value,
+                    setEditedWork({
+                      ...editedWork,
+                      location: e.target.value,
                     })
                   }
                 />
@@ -129,10 +127,10 @@ const EducationEditModal = (education) => {
                 <FormLabel>Description</FormLabel>
                 <Input
                   type="text"
-                  value={editedEducation.description}
+                  value={editedWork.description}
                   onChange={(e) =>
-                    setEditedEducation({
-                      ...editedEducation,
+                    setEditedWork({
+                      ...editedWork,
                       description: e.target.value,
                     })
                   }
@@ -143,10 +141,10 @@ const EducationEditModal = (education) => {
                 <FormLabel>Joining Date</FormLabel>
                 <Input
                   as={DatePicker}
-                  selected={editedEducation.joining_date}
+                  selected={editedWork.joining_date}
                   onChange={(date) =>
-                    setEditedEducation({
-                      ...editedEducation,
+                    setEditedWork({
+                      ...editedWork,
                       joining_date: date,
                     })
                   }
@@ -157,13 +155,14 @@ const EducationEditModal = (education) => {
                 <FormLabel>Leaving Date</FormLabel>
                 <Input
                   as={DatePicker}
-                  selected={editedEducation.leaving_date}
+                  selected={editedWork.leaving_date}
                   isClearable
-                  minDate={editedEducation.joining_date}
-                  placeholderText="Currently Studying"
+                  minDate={editedWork.joining_date}
+                  maxDate={new Date()}
+                  placeholderText="Currently Working Here"
                   onChange={(date) =>
-                    setEditedEducation({
-                      ...editedEducation,
+                    setEditedWork({
+                      ...editedWork,
                       leaving_date: date,
                     })
                   }
@@ -186,4 +185,4 @@ const EducationEditModal = (education) => {
   );
 };
 
-export default EducationEditModal;
+export default WorkEditModal;
