@@ -20,8 +20,8 @@ exports.getEducationDetails = catchAsync(async (req, res, next) => {
             reg_no
         }
     });
-    if (education.length == 0)
-        return next(new AppError(`No educaton found for this user`, 404));
+    // if (education.length == 0)
+    //     return next(new AppError(`No educaton found for this user`, 404));
     res.status(200).json({
         status: 'success',
         education

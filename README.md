@@ -5,9 +5,9 @@
 ### 
 - Without any authorization
 
-
    * Show All Users : `GET /api/user/`
    * Show Specific User : `GET /api/user/:reg_no/`
+   * Show logged In User : `GET /api/user/me/`
    * Login User : `POST /api/user/login/`
         ```json
         Request Body
@@ -38,11 +38,15 @@
         ```json
         Request Body (Can Contain Multiple Or Any Of The Listed Field)
         {
-            "fb_link": "https://www.facebook.com/username/",
-            "linkedin_link": "https://www.linkedin.com/username/",
-            "git_link": "https://github.com/username/",
+            "fb_link": "https://www.facebook.com/",
+            "linkedin_link": "https://www.linkedin.com/",
+            "git_link": "https://github.com/mhRumi",
             "phone": "01932981532",
-            "date_of_birth": "2000-11-18"
+            "date_of_birth": "2000-11-18",
+            "biography": "I like to fuck",
+            "skills": ["C++","JAVA","Python","React"],
+            "nick_name":"Mobin",
+            "address":"New York, USA"
         }
         ```
    * Update User Password : `PATCH /api/user/password/update/`
@@ -72,11 +76,41 @@
 
         ```json
         Request Body
-       {
+        {
             "password" : "xxxxxxx",
             "token" : "fNx-8VLbU5ncGac.....jwttoken"
         }
         ```
+
+    * Add An Educational Info : `POST /api/education/ `
+
+         ```json
+        Request Body
+        {
+            "degree":"msc",
+            "institute":"Shahjalal University of Science & Technology",
+            "joining_date": "2017-12-30",
+            "leaving_date": "2019-12-30",
+            "description":"Sust is very popular",
+            "subject" : "English"
+        }
+        ```
+    * Delete An Educational Info : `DELETE /api/education/:id`
+    
+    * Update An Educational Info : `PATCH /api/education/:id`
+        
+        ```json
+        Request Body
+        {
+            "degree":"bsc",
+            "institute":"Shahjalal University of Science & Technology",
+            "joining_date": "2017-12-30",
+            "leaving_date": "2019-12-30",
+            "description":"Sust is not good",
+            "subject" : "EEE"
+        }
+        ```
+    * Get Educational Details of A Specific User : `GET /api/education/:reg_no/`
 
 
 ### 
@@ -104,6 +138,17 @@
         }
         ```
     * Remove An User From Admin / Superadmin : `PATCH /api/user/removeadmin/:reg_no/`
+
+    * Broadcast Email To All Users : `POST /api/user/broadcast/`
+
+      ```json
+        Request Body
+        {   
+            "subject":"Society Fee",
+            "message" : "Please pay registration fee within 20 Feb, 2021"
+        }
+        ```
+
    
 ### ER Diagram
 
