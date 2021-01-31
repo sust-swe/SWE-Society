@@ -35,7 +35,6 @@ const BasicEditModal = () => {
     biography: user.biography,
     nick_name: user.nick_name,
     address: user.address,
-    skills: user.skills.join(", "),
   });
   const [requestState, setRequestState] = useState("none");
   const toast = useToast();
@@ -46,10 +45,7 @@ const BasicEditModal = () => {
     setRequestState("loading");
 
     axios
-      .patch("/api/user/update", {
-        ...editedUser,
-        skills: editedUser.skills.split(",").map((skill) => skill.trim()),
-      })
+      .patch("/api/user/update", editedUser)
       .then((res) => {
         setRequestState("success");
         login(res.data.user);
@@ -183,20 +179,6 @@ const BasicEditModal = () => {
                     setEditedUser({
                       ...editedUser,
                       linkedin_link: e.target.value,
-                    })
-                  }
-                />
-              </FormControl>
-
-              <FormControl mb={2} id="skills">
-                <FormLabel>Skills</FormLabel>
-                <Input
-                  type="text"
-                  value={editedUser.skills}
-                  onChange={(e) =>
-                    setEditedUser({
-                      ...editedUser,
-                      skills: e.target.value,
                     })
                   }
                 />
