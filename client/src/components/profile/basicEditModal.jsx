@@ -17,9 +17,11 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext, useState } from "react";
+import DatePicker from "react-datepicker";
 import { FaRegEdit } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
+import "react-datepicker/dist/react-datepicker.css";
 
 const BasicEditModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,7 +31,7 @@ const BasicEditModal = () => {
     linkedin_link: user.linkedin_link,
     git_link: user.git_link,
     phone: user.phone,
-    date_of_birth: user.date_of_birth,
+    date_of_birth: new Date(user.date_of_birth),
     biography: user.biography,
     nick_name: user.nick_name,
     address: user.address,
@@ -135,6 +137,17 @@ const BasicEditModal = () => {
                   value={editedUser.address}
                   onChange={(e) =>
                     setEditedUser({ ...editedUser, address: e.target.value })
+                  }
+                />
+              </FormControl>
+
+              <FormControl mb={2} id="dob">
+                <FormLabel>Date of Birth</FormLabel>
+                <Input
+                  as={DatePicker}
+                  selected={editedUser.date_of_birth}
+                  onChange={(date) =>
+                    setEditedUser({ ...editedUser, date_of_birth: date })
                   }
                 />
               </FormControl>
