@@ -3,7 +3,7 @@ const client = require('../db');
 const AppError = require('../utils/appError');
 const Committee = require('../models/CommitteeModel');
 const Role = require('../models/RoleModel');
-
+const Announcement = require('../models/AnnouncementModel');
 
 exports.createCommittee = catchAsync(async(req, res, next) => {
     const committee = await Committee.create(req.body);
@@ -11,7 +11,7 @@ exports.createCommittee = catchAsync(async(req, res, next) => {
 });
 
 exports.getExecutiveMembersOfACommittee = catchAsync(async(req, res, next) => {
-    const committee = await Committee.findOne({where: {committee_order: req.params.committee_order}, include: [Role]});
+    const committee = await Committee.findOne({where: {committee_order: req.params.committee_order}, include: [Role, Announcement]});
     if(committee == null)
         return next(new AppError(`Not found`, 404));
 
