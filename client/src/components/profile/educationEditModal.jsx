@@ -36,6 +36,7 @@ const EducationEditModal = (education) => {
     subject: education.subject,
   });
   const [requestState, setRequestState] = useState("none");
+  const [deleteRequestState, setDeleteRequestState] = useState("none");
   const toast = useToast();
   const history = useHistory();
 
@@ -61,6 +62,30 @@ const EducationEditModal = (education) => {
         });
         setRequestState("error");
       });
+  };
+
+  const deleteItem = () => {
+    setDeleteRequestState("loading");
+    window.confirm("Are you sure?")
+      ? axios
+          .delete("/api/education/" + education.id)
+          .then((res) => {
+            setDeleteRequestState("success");
+            onClose();
+            history.go(0);
+          })
+          .catch((err) => {
+            unauthorizedHandler(err);
+            onClose();
+            toast({
+              title: "Something Went Wrong",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
+            setDeleteRequestState("error");
+          })
+      : setDeleteRequestState("none");
   };
 
   return (
@@ -174,6 +199,9 @@ const EducationEditModal = (education) => {
             <ModalFooter>
               <Button colorScheme="red" mr={3} onClick={onClose}>
                 Close
+              </Button>
+              <Button colorScheme="red" mr={3} onClick={deleteItem}>
+                {deleteRequestState === "loading" && <Spinner mr={1} />}Delete
               </Button>
               <Button type="submit" colorScheme="green" bg="green.500">
                 {requestState === "loading" && <Spinner mr={1} />}Submit
