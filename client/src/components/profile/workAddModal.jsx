@@ -2,7 +2,6 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Icon,
   Input,
   Modal,
   ModalBody,
@@ -16,25 +15,24 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext, useState } from "react";
-import { FaRegEdit } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { AddIcon } from "@chakra-ui/icons";
 
-const WorkEditModal = (work) => {
+const WorkAddModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { unauthorizedHandler } = useContext(AuthContext);
-  const [editedWork, setEditedWork] = useState({
-    company: work.company,
-    position: work.position,
-    location: work.location,
-    joining_date: new Date(work.joining_date),
-    leaving_date: work.leaving_date ? new Date(work.leaving_date) : null,
-    description: work.description,
+  const [newWork, setNewWork] = useState({
+    company: "",
+    position: "",
+    location: "",
+    joining_date: new Date(),
+    leaving_date: null,
+    description: "",
   });
   const [requestState, setRequestState] = useState("none");
-  const [deleteRequestState, setDeleteRequestState] = useState("none");
   const toast = useToast();
   const history = useHistory();
 
@@ -43,7 +41,7 @@ const WorkEditModal = (work) => {
 
     setRequestState("loading");
     axios
-      .patch("/api/workexp/" + work.id, editedWork)
+      .post("/api/workexp/", newWork)
       .then((res) => {
         setRequestState("success");
         onClose();
@@ -62,58 +60,26 @@ const WorkEditModal = (work) => {
       });
   };
 
-  const deleteItem = () => {
-    setDeleteRequestState("loading");
-    window.confirm("Are you sure?")
-      ? axios
-          .delete("/api/workexp/" + work.id)
-          .then((res) => {
-            setDeleteRequestState("success");
-            onClose();
-            history.go(0);
-          })
-          .catch((err) => {
-            unauthorizedHandler(err);
-            onClose();
-            toast({
-              title: "Something Went Wrong",
-              status: "error",
-              duration: 3000,
-              isClosable: true,
-            });
-            setDeleteRequestState("error");
-          })
-      : setDeleteRequestState("none");
-  };
-
   return (
     <>
-      <Icon
-        ml={2}
-        onClick={onOpen}
-        cursor="pointer"
-        fontSize="xl"
-        color="green.800"
-        opacity="0.6"
-        transition="ease 0.3s"
-        _hover={{ opacity: 1 }}
-        as={FaRegEdit}
-      />
+      <Button mx={2} onClick={onOpen} colorScheme="green">
+        <AddIcon mr={2} /> Work
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update work</ModalHeader>
+          <ModalHeader>Add Work Experience</ModalHeader>
           <form onSubmit={handleSubmit}>
             <ModalBody>
               <FormControl mb={2} id="company">
                 <FormLabel>Company</FormLabel>
                 <Input
                   type="text"
-                  value={editedWork.company}
+                  value={newWork.company}
                   onChange={(e) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setNewWork({
+                      ...newWork,
                       company: e.target.value,
                     })
                   }
@@ -124,10 +90,10 @@ const WorkEditModal = (work) => {
                 <FormLabel>Position</FormLabel>
                 <Input
                   type="text"
-                  value={editedWork.position}
+                  value={newWork.position}
                   onChange={(e) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setNewWork({
+                      ...newWork,
                       position: e.target.value,
                     })
                   }
@@ -138,10 +104,10 @@ const WorkEditModal = (work) => {
                 <FormLabel>Location</FormLabel>
                 <Input
                   type="text"
-                  value={editedWork.location}
+                  value={newWork.location}
                   onChange={(e) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setNewWork({
+                      ...newWork,
                       location: e.target.value,
                     })
                   }
@@ -152,10 +118,10 @@ const WorkEditModal = (work) => {
                 <FormLabel>Description</FormLabel>
                 <Input
                   type="text"
-                  value={editedWork.description}
+                  value={newWork.description}
                   onChange={(e) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setNewWork({
+                      ...newWork,
                       description: e.target.value,
                     })
                   }
@@ -166,10 +132,10 @@ const WorkEditModal = (work) => {
                 <FormLabel>Joining Date</FormLabel>
                 <Input
                   as={DatePicker}
-                  selected={editedWork.joining_date}
+                  selected={newWork.joining_date}
                   onChange={(date) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setNewWork({
+                      ...newWork,
                       joining_date: date,
                     })
                   }
@@ -180,14 +146,14 @@ const WorkEditModal = (work) => {
                 <FormLabel>Leaving Date</FormLabel>
                 <Input
                   as={DatePicker}
-                  selected={editedWork.leaving_date}
+                  selected={newWork.leaving_date}
                   isClearable
-                  minDate={editedWork.joining_date}
+                  minDate={newWork.joining_date}
                   maxDate={new Date()}
                   placeholderText="Currently Working Here"
                   onChange={(date) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setNewWork({
+                      ...newWork,
                       leaving_date: date,
                     })
                   }
@@ -199,11 +165,8 @@ const WorkEditModal = (work) => {
               <Button colorScheme="red" mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button colorScheme="red" mr={3} onClick={deleteItem}>
-                {deleteRequestState === "loading" && <Spinner mr={1} />}Delete
-              </Button>
               <Button type="submit" colorScheme="green" bg="green.500">
-                {requestState === "loading" && <Spinner mr={1} />}Submit
+                {requestState === "loading" && <Spinner mr={1} />}Add
               </Button>
             </ModalFooter>
           </form>
@@ -213,4 +176,4 @@ const WorkEditModal = (work) => {
   );
 };
 
-export default WorkEditModal;
+export default WorkAddModal;

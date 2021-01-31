@@ -2,7 +2,6 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Icon,
   Input,
   Modal,
   ModalBody,
@@ -16,34 +15,33 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext, useState } from "react";
-import { FaRegEdit } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { AddIcon } from "@chakra-ui/icons";
 
-const WorkEditModal = (work) => {
+const EducationAddModal = (education) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { unauthorizedHandler } = useContext(AuthContext);
-  const [editedWork, setEditedWork] = useState({
-    company: work.company,
-    position: work.position,
-    location: work.location,
-    joining_date: new Date(work.joining_date),
-    leaving_date: work.leaving_date ? new Date(work.leaving_date) : null,
-    description: work.description,
+  const [editedEducation, setEditedEducation] = useState({
+    degree: "",
+    institute: "",
+    joining_date: new Date(),
+    leaving_date: null,
+    description: "",
+    subject: "",
   });
   const [requestState, setRequestState] = useState("none");
-  const [deleteRequestState, setDeleteRequestState] = useState("none");
   const toast = useToast();
   const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setRequestState("loading");
+
     axios
-      .patch("/api/workexp/" + work.id, editedWork)
+      .post("/api/education/", editedEducation)
       .then((res) => {
         setRequestState("success");
         onClose();
@@ -62,87 +60,55 @@ const WorkEditModal = (work) => {
       });
   };
 
-  const deleteItem = () => {
-    setDeleteRequestState("loading");
-    window.confirm("Are you sure?")
-      ? axios
-          .delete("/api/workexp/" + work.id)
-          .then((res) => {
-            setDeleteRequestState("success");
-            onClose();
-            history.go(0);
-          })
-          .catch((err) => {
-            unauthorizedHandler(err);
-            onClose();
-            toast({
-              title: "Something Went Wrong",
-              status: "error",
-              duration: 3000,
-              isClosable: true,
-            });
-            setDeleteRequestState("error");
-          })
-      : setDeleteRequestState("none");
-  };
-
   return (
     <>
-      <Icon
-        ml={2}
-        onClick={onOpen}
-        cursor="pointer"
-        fontSize="xl"
-        color="green.800"
-        opacity="0.6"
-        transition="ease 0.3s"
-        _hover={{ opacity: 1 }}
-        as={FaRegEdit}
-      />
+      <Button mx={2} onClick={onOpen} colorScheme="green">
+        <AddIcon mr={2} /> Education
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update work</ModalHeader>
+          <ModalHeader>Add Education</ModalHeader>
           <form onSubmit={handleSubmit}>
             <ModalBody>
-              <FormControl mb={2} id="company">
-                <FormLabel>Company</FormLabel>
+              <FormControl mb={2} id="institute">
+                <FormLabel>Institute</FormLabel>
                 <Input
                   type="text"
-                  value={editedWork.company}
+                  value={editedEducation.institute}
                   onChange={(e) =>
-                    setEditedWork({
-                      ...editedWork,
-                      company: e.target.value,
+                    setEditedEducation({
+                      ...editedEducation,
+                      institute: e.target.value,
                     })
                   }
                 />
               </FormControl>
 
-              <FormControl mb={2} id="position">
-                <FormLabel>Position</FormLabel>
+              <FormControl mb={2} id="degree">
+                <FormLabel>Degree</FormLabel>
                 <Input
                   type="text"
-                  value={editedWork.position}
+                  value={editedEducation.degree}
                   onChange={(e) =>
-                    setEditedWork({
-                      ...editedWork,
-                      position: e.target.value,
+                    setEditedEducation({
+                      ...editedEducation,
+                      degree: e.target.value,
                     })
                   }
                 />
               </FormControl>
 
-              <FormControl mb={2} id="location">
-                <FormLabel>Location</FormLabel>
+              <FormControl mb={2} id="subject">
+                <FormLabel>Subject</FormLabel>
                 <Input
                   type="text"
-                  value={editedWork.location}
+                  value={editedEducation.subject}
                   onChange={(e) =>
-                    setEditedWork({
-                      ...editedWork,
-                      location: e.target.value,
+                    setEditedEducation({
+                      ...editedEducation,
+                      subject: e.target.value,
                     })
                   }
                 />
@@ -152,10 +118,10 @@ const WorkEditModal = (work) => {
                 <FormLabel>Description</FormLabel>
                 <Input
                   type="text"
-                  value={editedWork.description}
+                  value={editedEducation.description}
                   onChange={(e) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setEditedEducation({
+                      ...editedEducation,
                       description: e.target.value,
                     })
                   }
@@ -166,10 +132,10 @@ const WorkEditModal = (work) => {
                 <FormLabel>Joining Date</FormLabel>
                 <Input
                   as={DatePicker}
-                  selected={editedWork.joining_date}
+                  selected={editedEducation.joining_date}
                   onChange={(date) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setEditedEducation({
+                      ...editedEducation,
                       joining_date: date,
                     })
                   }
@@ -180,14 +146,13 @@ const WorkEditModal = (work) => {
                 <FormLabel>Leaving Date</FormLabel>
                 <Input
                   as={DatePicker}
-                  selected={editedWork.leaving_date}
+                  selected={editedEducation.leaving_date}
                   isClearable
-                  minDate={editedWork.joining_date}
-                  maxDate={new Date()}
-                  placeholderText="Currently Working Here"
+                  minDate={editedEducation.joining_date}
+                  placeholderText="Currently Studying"
                   onChange={(date) =>
-                    setEditedWork({
-                      ...editedWork,
+                    setEditedEducation({
+                      ...editedEducation,
                       leaving_date: date,
                     })
                   }
@@ -198,9 +163,6 @@ const WorkEditModal = (work) => {
             <ModalFooter>
               <Button colorScheme="red" mr={3} onClick={onClose}>
                 Close
-              </Button>
-              <Button colorScheme="red" mr={3} onClick={deleteItem}>
-                {deleteRequestState === "loading" && <Spinner mr={1} />}Delete
               </Button>
               <Button type="submit" colorScheme="green" bg="green.500">
                 {requestState === "loading" && <Spinner mr={1} />}Submit
@@ -213,4 +175,4 @@ const WorkEditModal = (work) => {
   );
 };
 
-export default WorkEditModal;
+export default EducationAddModal;
