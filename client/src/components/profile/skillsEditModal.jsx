@@ -1,3 +1,4 @@
+import { AddIcon } from "@chakra-ui/icons";
 import {
   Button,
   FormControl,
@@ -21,7 +22,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
 
-const SkillsEditModal = () => {
+const SkillsEditModal = ({ isFloating }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, login, unauthorizedHandler } = useContext(AuthContext);
   const [skills, setSkills] = useState(user.skills.join(", "));
@@ -63,22 +64,28 @@ const SkillsEditModal = () => {
 
   return (
     <>
-      <Icon
-        float="right"
-        onClick={onOpen}
-        cursor="pointer"
-        fontSize="xl"
-        color="green.800"
-        opacity="0.6"
-        transition="ease 0.3s"
-        _hover={{ opacity: 1 }}
-        as={FaRegEdit}
-      />
+      {isFloating ? (
+        <Button mx={1} onClick={onOpen} size="sm" colorScheme="green">
+          <AddIcon mr={1} /> Skills
+        </Button>
+      ) : (
+        <Icon
+          float="right"
+          onClick={onOpen}
+          cursor="pointer"
+          fontSize="xl"
+          color="green.800"
+          opacity="0.6"
+          transition="ease 0.3s"
+          _hover={{ opacity: 1 }}
+          as={FaRegEdit}
+        />
+      )}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update Profile</ModalHeader>
+          <ModalHeader>Update Skills</ModalHeader>
           <form onSubmit={handleSubmit}>
             <ModalBody>
               <FormControl mb={2} id="skills">

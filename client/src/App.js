@@ -22,6 +22,7 @@ function App() {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/administrator" component={Administrator} />
         <ProtectedRoute exact path="/profile" component={Profile} />
+        <ProtectedRoute exact path="/user/:id" component={Profile}/>
         <Route path="*" component={NotFound} />
       </Switch>
 
