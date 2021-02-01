@@ -12,42 +12,66 @@ const WorkExperience = require('../models/WorkExperienceModel');
 
 
 exports.registerUser = catchAsync(async (req, res, next) => {
-  const { email, reg_no, name } = req.body;
-  let user = await User.findOne({
-    where: {
-      reg_no
+  let newuser = [];
+  let alreadyexist = [];
+  for (const element of req.body) {
+    const { email, reg_no, name } = element;
+    let user = await User.findOne({
+      where: {
+        reg_no
+      }
+    });
+    let duplicateemail = await Credential.findOne({
+      where: {
+        email
+      }
+    });
+    if (duplicateemail || user) {
+      alreadyexist.push(
+        {
+          reg_no,
+          email
+        }
+      )
+      continue;
     }
-  });
-  if (user)
-    return next(new AppError('User Already Exist!', 405));
-  const randompassword = generator.generate({
-    length: 10,
-    numbers: true
-  });
-  const message = `<div>Hey ${name}, Your account is created for Swe Society.Your first time password is <h1>${randompassword}</h1><br> 
+    const randompassword = generator.generate({
+      length: 10,
+      numbers: true
+    });
+    const message = `<div>Hey ${name}, Your account is created for Swe Society.Your first time password is <h1>${randompassword}</h1><br> 
                           Please change this password after first login.</div>`;
 
-  const salt = await bcrypt.genSalt(10);
-  const password = await bcrypt.hash(randompassword, salt);
-  const batch = reg_no.substring(0, 4);
-  user = await User.create({
-    name,
-    reg_no,
-    batch,
-  });
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(randompassword, salt);
+    const batch = reg_no.substring(0, 4);
+    user = await User.create({
+      name,
+      reg_no,
+      batch,
+    });
 
-  const credential = await Credential.create({
-    reg_no,
-    email,
-    password
-  });
+    const credential = await Credential.create({
+      reg_no,
+      email,
+      password
+    });
 
+    sendEmail(email, 'Greetings from Swe Society', message);
+    newuser.push(
+      {
+        name,
+        reg_no,
+        email,
+        password: randompassword
+      }
+    )
 
-  sendEmail(email, 'Greetings from Swe Society', message);
+  }
   res.status(201).json({
-    status: 'success',
-    pass: randompassword,
-    user
+    status: 'Completed',
+    newuser,
+    alreadyexist
   });
 });
 

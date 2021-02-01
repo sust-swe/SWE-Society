@@ -146,15 +146,22 @@
 ### 
 - Authorized By Admin / Superadmin
 
-    * Register New User : `POST /api/user/register/`
+    * Register New Users : `POST /api/user/register/`
 
         ```json
         Request Body
-        {
-            "email":"username@email.com",
-            "reg_no":"20**831***",
-            "name":"certificatename"
-        }
+        [
+            {
+                "email":"username@email.com",
+                "reg_no":"20**831***",
+                "name":"certificatename"
+            },
+            {
+                "email":"username@email.com",
+                "reg_no":"20**831***",
+                "name":"certificatename"
+            }
+        ]
         ```
     * Delete User : `DELETE /api/user/:reg_no/`
 
