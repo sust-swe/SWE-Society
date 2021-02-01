@@ -11,7 +11,7 @@ const Education = ({ education }) => {
       </Heading>
 
       {education.map((edu) => (
-        <EducationEntry key={edu.institute} {...edu} />
+        <EducationEntry key={edu.id} education={edu} />
       ))}
     </Box>
   );

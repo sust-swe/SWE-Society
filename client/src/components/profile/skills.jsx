@@ -14,9 +14,9 @@ const Skills = ({ skills }) => {
         Skills
       </Heading>
 
-      <Stack direction="row" my={2}>
+      <Stack direction="row" wrap="wrap" my={2}>
         {skills.map((skill) => (
-          <Badge key={skill} colorScheme="green" variant="solid" p={1}>
+          <Badge key={skill} colorScheme="green" variant="solid" p={1} mb={2}>
             {skill}
           </Badge>
         ))}

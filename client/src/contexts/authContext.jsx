@@ -40,7 +40,7 @@ const AuthProvider = (props) => {
   };
 
   const unauthorizedHandler = (err) => {
-    if (err.response.status === 401) {
+    if (err.response?.status === 401) {
       toast({
         title: "Session Expired!",
         description: "Please login again.",
