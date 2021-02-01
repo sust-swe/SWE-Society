@@ -62,8 +62,8 @@ const EducationAddModal = (education) => {
 
   return (
     <>
-      <Button mx={2} onClick={onOpen} colorScheme="green">
-        <AddIcon mr={2} /> Education
+      <Button mx={1} onClick={onOpen} size="sm" colorScheme="green">
+        <AddIcon mr={1} /> Education
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>

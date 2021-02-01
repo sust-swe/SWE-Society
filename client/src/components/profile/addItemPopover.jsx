@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import EducationAddModal from "./educationAddModal";
 import WorkAddModal from "./workAddModal";
+import SkillsEditModal from "./skillsEditModal";
 
 const AddItemPopover = (props) => {
   return (
@@ -33,6 +34,7 @@ const AddItemPopover = (props) => {
           <PopoverBody>
             <EducationAddModal />
             <WorkAddModal />
+            <SkillsEditModal isFloating />
           </PopoverBody>
         </PopoverContent>
       </Portal>

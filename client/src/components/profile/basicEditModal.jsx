@@ -43,6 +43,7 @@ const BasicEditModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setRequestState("loading");
+    console.log(editedUser);
 
     axios
       .patch("/api/user/update", editedUser)
