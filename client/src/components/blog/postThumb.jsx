@@ -6,7 +6,6 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import SinglePostModal from "./singlePostModal";
 
 const PostThumb = (post) => {
