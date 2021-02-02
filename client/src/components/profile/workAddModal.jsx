@@ -62,7 +62,7 @@ const WorkAddModal = () => {
 
   return (
     <>
-      <Button onClick={onOpen} size="sm" colorScheme="green">
+      <Button mx={1} onClick={onOpen} size="sm" colorScheme="green">
         <AddIcon mr={1} /> Work
       </Button>
 

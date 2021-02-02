@@ -58,6 +58,7 @@ const MyNavbar = (props) => {
       >
         <MenuItems to="/">Home</MenuItems>
         <MenuItems to="/profile">Profile</MenuItems>
+        <MenuItems to="/blog">Blog</MenuItems>
       </Box>
 
       <Box
