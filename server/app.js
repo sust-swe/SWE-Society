@@ -35,7 +35,7 @@ app.use(cors());
 app.use(compression());
 
 // Parsing JSON and Cookies
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '1000kb' }));
 app.use(cookieParser());
 
 // Prevent XSS attacks

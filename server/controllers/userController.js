@@ -9,79 +9,47 @@ const jwtGenerator = require('../utils/jwtGenerator');
 const sendEmail = require('./../utils/sendEmail');
 const Education = require('../models/EducationModel');
 const WorkExperience = require('../models/WorkExperienceModel');
+const Sequelize = require('sequelize');
 
 
 exports.registerUser = catchAsync(async (req, res, next) => {
-  let newuser = [];
-  let alreadyexist = [];
-  for (const element of req.body) {
-    const { email, reg_no, name } = element;
-    let user = await User.findOne({
-      where: {
-        reg_no
-      }
-    });
-    let duplicateemail = await Credential.findOne({
-      where: {
-        email
-      }
-    });
-    if (duplicateemail || user) {
-      alreadyexist.push(
-        {
-          reg_no,
-          email
-        }
-      )
-      continue;
+  const Op = Sequelize.Op;
+  const { email, reg_no, name } = req.body;
+  let user = await Credential.findOne({
+    where: {
+      [Op.or]: [{ reg_no }, { email }]
     }
-    const randompassword = generator.generate({
-      length: 10,
-      numbers: true
-    });
-    const message = `<div>Hey ${name}, Your account is created for Swe Society.Your first time password is <h1>${randompassword}</h1><br> 
+  });
+  if (user)
+    return next(new AppError('User Already Exist!', 405));
+  const randompassword = generator.generate({
+    length: 10,
+    numbers: true
+  });
+  const message = `<div>Hey ${name}, Your account is created for Swe Society.Your first time password is <h1>${randompassword}</h1><br> 
                           Please change this password after first login.</div>`;
 
-    const salt = await bcrypt.genSalt(10);
-    const password = await bcrypt.hash(randompassword, salt);
-    const batch = reg_no.substring(0, 4);
-    user = await User.create({
-      name,
-      reg_no,
-      batch,
-    });
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(randompassword, salt);
+  const batch = reg_no.substring(0, 4);
+  user = await User.create({ name, reg_no, batch });
 
-    const credential = await Credential.create({
-      reg_no,
-      email,
-      password
-    });
+  await Credential.create({ reg_no, email, password }).catch(err => {
+    User.destroy({ where: { reg_no } })
+    return res.status(405).send({ message: 'Not a Valid Email' });
+  });
 
-    sendEmail(email, 'Greetings from Swe Society', message);
-    newuser.push(
-      {
-        name,
-        reg_no,
-        email,
-        password: randompassword
-      }
-    )
-
-  }
+  sendEmail(email, 'Greetings from Swe Society', message);
   res.status(201).json({
-    status: 'Completed',
-    newuser,
-    alreadyexist
+    status: 'success',
+    pass: randompassword,
+    user
   });
 });
 
 
-
-
 exports.getAllUser = catchAsync(async (req, res, next) => {
   const users = await User.findAll();
-  // if (users.length == 0)
-  //   next(new AppError(`No user found!`, 404));
   res.status(200).json({
     status: 'success',
     users

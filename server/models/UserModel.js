@@ -31,9 +31,6 @@ const User = sequelize.define('user', {
     },
     fb_link: {
         type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        }
     },
     batch: {
         type: DataTypes.BIGINT,
@@ -42,15 +39,9 @@ const User = sequelize.define('user', {
     },
     linkedin_link: {
         type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        }
     },
     git_link: {
         type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        }
     },
     phone: {
         type: DataTypes.STRING

@@ -16,10 +16,7 @@ const WorkExperience = sequelize.define('workExperience', {
         type: DataTypes.STRING(50)
     },
     website_link: {
-        type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        }
+        type: DataTypes.STRING
     },
     joining_date: {
         type: DataTypes.DATE,
