@@ -7,6 +7,7 @@ import Footer from "./components/generic/footer";
 import MyNavbar from "./components/generic/navbar";
 import ProtectedRoute from "./components/generic/protectedRoutes";
 import NotFound from "./pages/404";
+import Blog from "./pages/blog";
 import Landing from "./pages/landing";
 import Profile from "./pages/profile";
 import SignIn from "./pages/signIn";
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/signin" component={SignIn} />
         <ProtectedRoute exact path="/profile" component={Profile}/>
         <ProtectedRoute exact path="/user/:id" component={Profile}/>
+        <ProtectedRoute exact path="/blog" component={Blog}/>
         <Route path="*" component={NotFound} />
       </Switch>
 
