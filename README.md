@@ -112,6 +112,36 @@
         ```
     * Get Educational Details of A Specific User : `GET /api/education/:reg_no/`
 
+    * Add A Work Experience  : `POST /api/workexp/ `
+
+         ```json
+        Request Body
+       {
+        "company": "Selise",
+        "position": "Software Engineer",
+        "joining_date": "2021-01-08",
+        "leaving_date": "2022-01-08",
+        "description": "Selise is very reknown It farm in Bangladesh",
+        "location" : "Dhaka, Bangladesh"
+        }
+        ```
+    * Delete A Work Experience : `DELETE /api/workexp/:id`
+    
+    * Update A Work Experience : `PATCH /api/workexp/:id`
+        
+        ```json
+        Request Body
+        {
+            "company": "Sel",
+            "position": "Software Engineer",
+            "location": "Dhaka, Bangladesh",
+            "joining_date": "2021-01-08",
+            "leaving_date": "2022-01-08",
+            "description": "Selise is very reknown It farm in Bangladesh"
+        }
+        ```
+    * Get Detailed Work Experiences of A Specific User : `GET /api/workexp/:reg_no/`
+
 
 ### 
 - Authorized By Admin / Superadmin

@@ -22,31 +22,6 @@ exports.getAllBlogs = catchAsync(async (req, res, next) => {
 exports.postBlog = catchAsync(async (req, res, next) => {
 
   req.body.reg_no = req.user.reg_no
-
-  let formData = {};
-
-  const prefixPath = "/../public/blog/";
-  let filePath = "/blog/";
-  new formidabel.IncomingForm()
-    .parse(req)
-    .on("fileBegin", (image, file) => {
-      const randPath = file.path.split("_")[1] + "." + file.type.split("/")[1];
-      file.path = __dirname + prefixPath + randPath;
-      filePath += randPath;
-    })
-    .on("file", (name, file) => {
-      formData[name] = filePath;
-
-    })
-
-    .on('field', (fieldName, fieldValue) => {
-      formData[fieldName] = fieldValue;
-    })
-
-    .once('end', () => {
-      console.log("On End...");
-    });
-
   const blog = await Blog.create(req.body)
   res.status(200).json(blog);
 });
