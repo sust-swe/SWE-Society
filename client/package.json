@@ -19,6 +19,7 @@
     "react-data-table-component": "^7.0.0-alpha-5",
     "react-datepicker": "^3.4.1",
     "react-dom": "^17.0.1",
+    "react-dropzone": "^11.3.0",
     "react-icons": "^4.1.0",
     "react-images-upload": "^1.2.8",
     "react-pro-sidebar": "^0.5.0",

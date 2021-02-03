@@ -29,7 +29,7 @@ const ProfileBasics = ({ user }) => {
       />
       <Box p={3}>
         <Heading display="inline-block" size="md" color="green.800">
-          {user.name} {user.nick_name && <>({user.nick_name})</>}{" "}
+          {user.name} {user.nick_name && <>({user.nick_name})</>}
         </Heading>
         {edit && <BasicEditModal />}
 
@@ -47,7 +47,7 @@ const ProfileBasics = ({ user }) => {
             {user.batch}
           </Badge>
           <Badge colorScheme="green" variant="outline">
-            {user.isStudent ? "Student" : "Alumni"}
+            {user.credential.status}
           </Badge>
         </Stack>
 
