@@ -14,27 +14,25 @@ const Message = ({ message }) => (
 const Admin = () => {
   return (
     <Layout>
-      <Flex>
-        <Router>
-          <Switch>
-            <Route exact path="/admin">
-              <Dashboard />
-            </Route>
-            <Route exact path="/admin/students">
-              <Students />
-            </Route>
-            <Route exact path="/admin/adduser">
-              <AddUser />
-            </Route>
-            <Route exact path="/admin/hello">
-              <Message message="hello" />
-            </Route>
-            <Route exact path="/admin/hi">
-              <Message message="hi" />
-            </Route>
-          </Switch>
-        </Router>
-      </Flex>
+      <Router>
+        <Switch>
+          <Route exact path="/admin">
+            <Dashboard />
+          </Route>
+          <Route exact path="/admin/students">
+            <Students />
+          </Route>
+          <Route exact path="/admin/adduser">
+            <AddUser />
+          </Route>
+          <Route exact path="/admin/hello">
+            <Message message="hello" />
+          </Route>
+          <Route exact path="/admin/hi">
+            <Message message="hi" />
+          </Route>
+        </Switch>
+      </Router>
     </Layout>
   );
 };
