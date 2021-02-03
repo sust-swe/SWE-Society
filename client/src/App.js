@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <MyNavbar/>
-
+      
       <Switch>
         <Route exact path="/">
           <Landing />
