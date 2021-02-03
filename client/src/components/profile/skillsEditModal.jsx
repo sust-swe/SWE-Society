@@ -25,7 +25,7 @@ import { AuthContext } from "../../contexts/authContext";
 const SkillsEditModal = ({ isFloating }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, login, unauthorizedHandler } = useContext(AuthContext);
-  const [skills, setSkills] = useState(user.skills.join(", "));
+  const [skills, setSkills] = useState(user.skills?.join(", "));
   const [requestState, setRequestState] = useState("none");
   const toast = useToast();
   const history = useHistory();

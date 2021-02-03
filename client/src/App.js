@@ -11,7 +11,7 @@ import Blog from "./pages/blog";
 import Landing from "./pages/landing";
 import Profile from "./pages/profile";
 import SignIn from "./pages/signIn";
-import Administrator from "./pages/administrator";
+import Admin from "./pages/admin";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/administrator" component={Administrator} />
+        <Route path="/admin" component={Admin} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/user/:id" component={Profile}/>
         <ProtectedRoute exact path="/blog" component={Blog}/>
