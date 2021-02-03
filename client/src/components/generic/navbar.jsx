@@ -7,7 +7,7 @@ const MyNavbar = (props) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
-  const { loggedIn, logoutHandler } = useContext(AuthContext);
+  const { loggedIn, logoutHandler, user } = useContext(AuthContext);
 
   const MenuItems = (props) => (
     <Link
@@ -57,9 +57,16 @@ const MyNavbar = (props) => {
         flexGrow={1}
       >
         <MenuItems to="/">Home</MenuItems>
-        <MenuItems to="/profile">Profile</MenuItems>
-        <MenuItems to="/blog">Blog</MenuItems>
-        <MenuItems to="/admin">Admin</MenuItems>
+        {loggedIn && (
+          <>
+            <MenuItems to="/profile">Profile</MenuItems>
+            <MenuItems to="/blog">Blog</MenuItems>
+            {(user.credential.role === "admin" ||
+              user.credential.role === "superadmin") && (
+              <MenuItems to="/admin">Admin</MenuItems>
+            )}
+          </>
+        )}
       </Box>
 
       <Box

@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Layout from "../components/generic/layout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "../components/admin/dashboard";
