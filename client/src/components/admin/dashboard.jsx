@@ -4,7 +4,12 @@ import ShowData from "./showData";
 
 const Dashboard = () => {
   return (
-    <Flex direction={["row", "row", "column", "column"]} p={4} width="100%">
+    <Flex
+      direction={["row", "row", "column", "column"]}
+      p={4}
+      minH="70vh"
+      width="100%"
+    >
       <ShowData />
       <DashboardButtons />
     </Flex>

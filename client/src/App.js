@@ -23,10 +23,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/signin" component={SignIn} />
-
         <Route exact path="/gallary" component={Gallary}/>
         <Route exact path="/administrator" component={Administrator} />
         <Route path="/admin" component={Admin} />
+        <ProtectedRoute path="/admin" restrictedTo={["admin", "superadmin"]} component={Admin} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/user/:id" component={Profile}/>
         <ProtectedRoute exact path="/blog" component={Blog}/>
