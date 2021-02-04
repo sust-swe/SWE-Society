@@ -18,7 +18,7 @@ const User = sequelize.define('user', {
         allowNull: false,
         primaryKey: true,
         validate: {
-            is: /20[1-9][0-9]831[0-9][0-9][0-9]/i
+            is: /[1-2][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]/i
         }
 
     },
@@ -31,9 +31,6 @@ const User = sequelize.define('user', {
     },
     fb_link: {
         type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        }
     },
     batch: {
         type: DataTypes.BIGINT,
@@ -42,15 +39,9 @@ const User = sequelize.define('user', {
     },
     linkedin_link: {
         type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        }
     },
     git_link: {
         type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        }
     },
     phone: {
         type: DataTypes.STRING
@@ -63,10 +54,6 @@ const User = sequelize.define('user', {
     },
     skills: {
         type: DataTypes.ARRAY(DataTypes.STRING)
-    },
-    isStudent: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true
     }
 });
 

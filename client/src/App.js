@@ -13,6 +13,8 @@ import Profile from "./pages/profile";
 import SignIn from "./pages/signIn";
 import Administrator from "./pages/administrator";
 import Gallary  from "./pages/gallary";
+import Admin from "./pages/admin";
+
 function App() {
   return (
     <Router>
@@ -21,8 +23,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/signin" component={SignIn} />
+
         <Route exact path="/gallary" component={Gallary}/>
         <Route exact path="/administrator" component={Administrator} />
+        <Route path="/admin" component={Admin} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/user/:id" component={Profile}/>
         <ProtectedRoute exact path="/blog" component={Blog}/>

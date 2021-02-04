@@ -13,7 +13,6 @@ const workExperienceRoutes = require('./routes/workExperienceRoutes');
 const achievementRoutes = require('./routes/achievementRoutes');
 const gallaryRoutes = require('./routes/gallaryRoutes');
 const committeeRoutes = require('./routes/committeRoutes');
-const roleRoutes = require('./routes/roleRoutes');
 const educationRoutes = require('./routes/educationRoutes');
 const imageUploadRoutes = require('./routes/imageUploadRoutes');
 const errorHandler = require('./middlewares/errorHandler');
@@ -35,7 +34,7 @@ app.use(cors());
 app.use(compression());
 
 // Parsing JSON and Cookies
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '1000kb' }));
 app.use(cookieParser());
 
 // Prevent XSS attacks
@@ -54,7 +53,6 @@ app.use('/api/user', userRoutes);
 app.use('/api/workexp', workExperienceRoutes);
 app.use('/api/achievements', achievementRoutes);
 app.use('/api/gallary', gallaryRoutes);
-app.use('/api/committee/role', roleRoutes);
 app.use('/api/committee', committeeRoutes);
 app.get('/api/', (req, res) => {
   res.send('Hello');
