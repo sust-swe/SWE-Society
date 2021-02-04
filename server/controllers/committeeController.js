@@ -33,6 +33,12 @@ exports.getExecutiveMembersOfACommittee = catchAsync(async (req, res, next) => {
     res.status(200).json(committee);
 });
 
+exports.getExecutiveMembersOfCurrentCommittee = catchAsync(async (req, res, next) => {
+    const committee_order = await Committee.count();
+    req.params.committee_order = committee_order;
+    this.getExecutiveMembersOfACommittee(req, res, next);
+});
+
 exports.updateCommittee = catchAsync(async (req, res, next) => {
     const committee_order = await Committee.count();
     const committee = await Committee.update(req.body, { returning: true, where: { committee_order } })
