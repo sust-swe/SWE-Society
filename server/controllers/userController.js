@@ -5,7 +5,6 @@ const User = require('../models/UserModel');
 const Credential = require('../models/CredentialModel');
 const generator = require('generate-password');
 const bcrypt = require('bcryptjs');
-const jwtGenerator = require('../utils/jwtGenerator');
 const sendEmail = require('./../utils/sendEmail');
 const Education = require('../models/EducationModel');
 const WorkExperience = require('../models/WorkExperienceModel');
@@ -34,10 +33,13 @@ exports.registerUser = catchAsync(async (req, res, next) => {
   const batch = reg_no.substring(0, 4);
   user = await User.create({ name, reg_no, batch });
 
+  let er = false;
   await Credential.create({ reg_no, email, password }).catch(err => {
     User.destroy({ where: { reg_no } })
-    return res.status(405).send({ message: 'Not a Valid Email' });
+    er = true;
   });
+  if (er)
+    return next(new AppError('Not A Valid Email!', 405));
 
   sendEmail(email, 'Greetings from Swe Society', message);
   res.status(201).json({
