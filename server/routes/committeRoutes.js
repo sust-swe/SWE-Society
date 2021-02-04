@@ -13,6 +13,7 @@ router.post('/role', committeeController.addMemberToCommittee);
 router.delete('/role', committeeController.removeMember);
 router.patch('/role', committeeController.updateRole);
 router.post('/', committeeController.createCommittee);
+router.get('/current', committeeController.getExecutiveMembersOfCurrentCommittee);
 router.get('/:committee_order', committeeController.getExecutiveMembersOfACommittee);
 router.get('/', committeeController.getCommittees);
 router.patch('/', committeeController.updateCommittee);

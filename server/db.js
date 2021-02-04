@@ -20,7 +20,7 @@ const sequelize = new Sequelize(
 (async () => {
   try {
     await sequelize.authenticate();
-    //await sequelize.sync({ force: true });
+    // await sequelize.sync({ force: true });
     //await sequelize.sync();
     console.log('Connection has been established successfully.');
   } catch (error) {

@@ -199,7 +199,7 @@
             "end_date" : "2021-02-08"
         }
         ```
-    * Update The Current / Last Committee : `PATCH /api/committee/`
+    * Update The Current Committee : `PATCH /api/committee/`
         ```json
         Request Body
         {
@@ -209,23 +209,21 @@
         }
         ```
 
-    * Add Members To The Current / Last Committee : `POST /api/committee/role`
+    * Add Members To The Current Committee : `POST /api/committee/role`
         ```json
         Request Body
         [
             {
                 "designation":"president",
-                "reg_no": "2017831034",
-                "committee_order":"1"
+                "reg_no": "2017831034"
             },
             {
                 "designation":"vice president",
-                "reg_no": "2017831036",
-                "committee_order":"1"
+                "reg_no": "2017831036"
             }
         ]
         ```
-    * Update Role Of Members Of The Current / Last Committee : `PATCH /api/committee/role`
+    * Update Role Of Members Of The Current Committee : `PATCH /api/committee/role`
         ```json
         Request Body
         [
@@ -239,17 +237,17 @@
             }
         ]
         ```
-    * Remove A Member From The Last / Current Committee : `DELETE /api/committee/role/`
+    * Remove A Member From The Current Committee : `DELETE /api/committee/role/`
         ```json
         Request Body
         {
-            "reg_no": "2017831036",
-            "committee_order": 3 
+            "reg_no": "2017831036"
         }
         ```
 - With User Authorization
 
     * Show All Committees : `GET /api/committee/`
+    * Show Current Committee With All Of Its Members  : `GET /api/committee/current`
 
     * Show A Specific Committee With All Of Its Members  : `GET /api/committee/:committee_order`
     
