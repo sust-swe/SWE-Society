@@ -19,10 +19,7 @@ const Education = sequelize.define('education', {
         type: DataTypes.STRING(50)
     },
     website_link: {
-        type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        }
+        type: DataTypes.STRING
     },
     joining_date: {
         type: DataTypes.DATE,

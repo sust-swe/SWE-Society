@@ -146,15 +146,22 @@
 ### 
 - Authorized By Admin / Superadmin
 
-    * Register New User : `POST /api/user/register/`
+    * Register New Users : `POST /api/user/register/`
 
         ```json
         Request Body
-        {
-            "email":"username@email.com",
-            "reg_no":"20**831***",
-            "name":"certificatename"
-        }
+        [
+            {
+                "email":"username@email.com",
+                "reg_no":"20**831***",
+                "name":"certificatename"
+            },
+            {
+                "email":"username@email.com",
+                "reg_no":"20**831***",
+                "name":"certificatename"
+            }
+        ]
         ```
     * Delete User : `DELETE /api/user/:reg_no/`
 
@@ -178,7 +185,77 @@
             "message" : "Please pay registration fee within 20 Feb, 2021"
         }
         ```
+## Committee related
 
+### 
+- With Admin/Superadmin Authorization
+
+   * Add A New Committee : `POST /api/committee/`
+        ```json
+        Request Body
+        {
+            "session" : [[2017],[2018]],
+            "start_date" : "2021-01-08",
+            "end_date" : "2021-02-08"
+        }
+        ```
+    * Update The Current / Last Committee : `PATCH /api/committee/`
+        ```json
+        Request Body
+        {
+            "session" : [[2017],[2018]],
+            "start_date" : "2021-01-08",
+            "end_date" : "2021-02-08"
+        }
+        ```
+
+    * Add Members To The Current / Last Committee : `POST /api/committee/role`
+        ```json
+        Request Body
+        [
+            {
+                "designation":"president",
+                "reg_no": "2017831034",
+                "committee_order":"1"
+            },
+            {
+                "designation":"vice president",
+                "reg_no": "2017831036",
+                "committee_order":"1"
+            }
+        ]
+        ```
+    * Update Role Of Members Of The Current / Last Committee : `PATCH /api/committee/role`
+        ```json
+        Request Body
+        [
+            {
+                "designation":"muchi",
+                "reg_no": "2017831034"
+            },
+            {
+                "designation":"darowan",
+                "reg_no": "2017831036"
+            }
+        ]
+        ```
+    * Remove A Member From The Last / Current Committee : `DELETE /api/committee/role/`
+        ```json
+        Request Body
+        {
+            "reg_no": "2017831036",
+            "committee_order": 3 
+        }
+        ```
+- With User Authorization
+
+    * Show All Committees : `GET /api/committee/`
+
+    * Show A Specific Committee With All Of Its Members  : `GET /api/committee/:committee_order`
+    
+    
+    
+    
    
 ### ER Diagram
 

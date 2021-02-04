@@ -12,6 +12,10 @@ const Credential = sequelize.define('credential', {
         type: DataTypes.STRING,
         defaultValue: "user"
     },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: "student"
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,

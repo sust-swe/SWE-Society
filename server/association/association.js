@@ -34,7 +34,13 @@ User.hasMany(WorkExperience, { foreignKey: { name: "reg_no", allowNull: false } 
 WorkExperience.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } });
 
 Committee.hasMany(Role, { foreignKey: { name: 'committee_order', allowNull: false } })
+Role.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } })
+Role.belongsTo(Committee, { foreignKey: { name: 'committee_order', allowNull: false } })
+
+
 Committee.hasMany(Announcement, { foreignKey: { name: 'committee_order', allowNull: false } })
 Committee.hasMany(Event, { foreignKey: { name: 'committee_order', allowNull: false } })
+Committee.hasMany(Event, { foreignKey: { name: 'committee_order', allowNull: false } })
+
 
 
