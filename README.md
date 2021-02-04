@@ -43,7 +43,7 @@
             "git_link": "https://github.com/mhRumi",
             "phone": "01932981532",
             "date_of_birth": "2000-11-18",
-            "biography": "I like to fuck",
+            "biography": "I like to code",
             "skills": ["C++","JAVA","Python","React"],
             "nick_name":"Mobin",
             "address":"New York, USA"
@@ -78,7 +78,7 @@
         Request Body
         {
             "password" : "xxxxxxx",
-            "token" : "fNx-8VLbU5ncGac.....jwttoken"
+            "token" : "jwttoken"
         }
         ```
 
@@ -106,11 +106,41 @@
             "institute":"Shahjalal University of Science & Technology",
             "joining_date": "2017-12-30",
             "leaving_date": "2019-12-30",
-            "description":"Sust is not good",
+            "description":"Sust is the best",
             "subject" : "EEE"
         }
         ```
     * Get Educational Details of A Specific User : `GET /api/education/:reg_no/`
+
+    * Add A Work Experience  : `POST /api/workexp/ `
+
+         ```json
+        Request Body
+       {
+        "company": "DZIT",
+        "position": "Software Engineer",
+        "joining_date": "2021-01-08",
+        "leaving_date": "2022-01-08",
+        "description": "DZIT is very reknown It farm in Bangladesh",
+        "location" : "Dhaka, Bangladesh"
+        }
+        ```
+    * Delete A Work Experience : `DELETE /api/workexp/:id`
+    
+    * Update A Work Experience : `PATCH /api/workexp/:id`
+        
+        ```json
+        Request Body
+        {
+            "company": "DZIT",
+            "position": "Software Engineer",
+            "location": "Dhaka, Bangladesh",
+            "joining_date": "2021-01-08",
+            "leaving_date": "2022-01-08",
+            "description": "DZIT is very reknown It farm in Bangladesh"
+        }
+        ```
+    * Get Detailed Work Experiences of A Specific User : `GET /api/workexp/:reg_no/`
 
 
 ### 

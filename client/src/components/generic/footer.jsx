@@ -21,12 +21,7 @@ const Footer = (props) => {
           <Spacer />
           <Box p={3} m={2} minW={200}>
             <Text fontSize="md">We are available on:</Text>
-            <Text fontSize="sm">
-              <ul>
-                <li>Youtube</li>
-                <li>Facebook</li>
-              </ul>
-            </Text>
+            <Text fontSize="sm">Social Links will go here</Text>
           </Box>
         </Flex>
       </Center>

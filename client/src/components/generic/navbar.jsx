@@ -7,7 +7,7 @@ const MyNavbar = (props) => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
-  const { loggedIn, user, logoutHandler } = useContext(AuthContext);
+  const { loggedIn, logoutHandler } = useContext(AuthContext);
 
   const MenuItems = (props) => (
     <Link
@@ -58,6 +58,8 @@ const MyNavbar = (props) => {
       >
         <MenuItems to="/">Home</MenuItems>
         <MenuItems to="/profile">Profile</MenuItems>
+        <MenuItems to="/blog">Blog</MenuItems>
+        <MenuItems to="/gallary">Gallary</MenuItems>
       </Box>
 
       <Box
