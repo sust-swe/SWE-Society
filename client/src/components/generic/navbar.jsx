@@ -71,7 +71,6 @@ const MyNavbar = (props) => {
             )}
           </>
         )}
->>>>>>> 57ad42c881ccef905c8d6f712ca180c5face2276
       </Box>
 
       <Box
