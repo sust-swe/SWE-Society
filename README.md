@@ -225,7 +225,7 @@
             }
         ]
         ```
-    * Update Members Of The Current / Last Committee : `PATCH /api/committee/role`
+    * Update Role Of Members Of The Current / Last Committee : `PATCH /api/committee/role`
         ```json
         Request Body
         [
