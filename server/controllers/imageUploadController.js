@@ -17,11 +17,9 @@ exports.UpdateImage = catchAsync(async(req, res, next) => {
         formData[name] = filePath;
   
       })
-  
       .on('field', (fieldName, fieldValue) => {
         formData[fieldName] = fieldValue;
       })
-  
       .once('end', () => {
         res.status(200).json({imageUrl: filePath});
       });
