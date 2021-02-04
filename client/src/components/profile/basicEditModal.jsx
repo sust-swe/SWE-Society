@@ -49,7 +49,7 @@ const BasicEditModal = () => {
       .patch("/api/user/update", editedUser)
       .then((res) => {
         setRequestState("success");
-        login(res.data.user);
+        login({ ...user, ...res.data.user });
         onClose();
         history.go(0);
       })
