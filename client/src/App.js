@@ -14,6 +14,7 @@ import SignIn from "./pages/signIn";
 // import Administrator from "./pages/administrator";
 import Gallary  from "./pages/gallary";
 import Admin from "./pages/admin";
+import Committee from "./pages/committee";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <ProtectedRoute path="/admin" restrictedTo={["admin", "superadmin"]} component={Admin} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/user/:id" component={Profile}/>
+        <ProtectedRoute exact path="/committee" component={Committee}/>
         <ProtectedRoute exact path="/blog" component={Blog}/>
         <Route path="*" component={NotFound} />
       </Switch>
