@@ -57,10 +57,6 @@ const MyNavbar = (props) => {
         flexGrow={1}
       >
         <MenuItems to="/">Home</MenuItems>
-        <MenuItems to="/profile">Profile</MenuItems>
-        <MenuItems to="/blog">Blog</MenuItems>
-        <MenuItems to="/gallary">Gallary</MenuItems>
-
         {loggedIn && (
           <>
             <MenuItems to="/profile">Profile</MenuItems>
@@ -71,6 +67,7 @@ const MyNavbar = (props) => {
             )}
           </>
         )}
+        <MenuItems to="/gallary">Gallary</MenuItems>
       </Box>
 
       <Box

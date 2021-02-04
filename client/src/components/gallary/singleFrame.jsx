@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, Button, Flex, Img, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Img, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 
 const SingleFrame = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [scrollBehavior, setScrollBehavior] = React.useState("inside")
+    const [scrollBehavior] = React.useState("inside")
     return (
         <Flex justifyContent="center" align="center" flexWrap="wrap" >
             <Box onClick={onOpen} onClose={onClose} margin="3" width="lg" _hover={{ boxShadow: "dark-lg" }}cursor="pointer">
