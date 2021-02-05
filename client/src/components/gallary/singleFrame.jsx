@@ -15,7 +15,7 @@ const SingleFrame = () => {
                         <ModalHeader>Gallary Image</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                        <Img src="https://assets.imgix.net/tutorials/forest4.webp" />
+                        <Img marginBottom="2" src="https://assets.imgix.net/tutorials/forest4.webp" />
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident vero id eligendi rem illum consectetur temporibus cumque sed quas? Reprehenderit sequi ea perspiciatis reiciendis similique doloribus quis nesciunt saepe consequatur.
                             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque fugiat blanditiis quasi ex, suscipit dignissimos ipsa laboriosam sequi odit maiores, similique eligendi nobis autem modi asperiores quia perferendis excepturi debitis.
                         </ModalBody>

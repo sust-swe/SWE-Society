@@ -14,6 +14,8 @@ import SignIn from "./pages/signIn";
 // import Administrator from "./pages/administrator";
 import Gallary  from "./pages/gallary";
 import Admin from "./pages/admin";
+import NoticeBoard from "./pages/notice";
+import NoticeView from "./pages/noticeFullView"
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route exact path="/" component={Landing} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/gallary" component={Gallary}/>
+        <Route exact path="/notice/fullview" component={NoticeView}/>
+        <Route exact path="/noticeboard" component={NoticeBoard}/>
         {/* <Route exact path="/administrator" component={Administrator} /> */}
         <Route path="/admin" component={Admin} />
         <ProtectedRoute path="/admin" restrictedTo={["admin", "superadmin"]} component={Admin} />
