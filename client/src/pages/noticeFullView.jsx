@@ -1,6 +1,6 @@
 import { Box, Button, Center, Text } from "@chakra-ui/react"
 
-const NoticeFullView = () => {
+const NoticeFullView = (notice) => {
     return (
         <Center bg="grey" minH="75vh">
             <Box bg="white" w="50%" p={4} marginTop="5" marginBottom="5"> 
