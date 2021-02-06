@@ -29,6 +29,9 @@ const posts = [
 ];
 
 const Blog = ({ userId }) => {
+
+
+
   return (
     <Layout>
       <Container p={3} maxW="4xl" centerContent minH="70vh">

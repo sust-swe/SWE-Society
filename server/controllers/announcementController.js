@@ -24,6 +24,6 @@ exports.deleteAnnouncement = catchAsync(async(req, res, next) => {
 });
 
 exports.getAllAnnouncements = catchAsync(async(req, res, next) => {
-    const announcements = await Announcement.findAll({where: {committee_order: req.params.committee_order}});
+    const announcements = await Announcement.findAll();
     res.status(200).json(announcements);
 })

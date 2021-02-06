@@ -15,6 +15,7 @@ const gallaryRoutes = require('./routes/gallaryRoutes');
 const committeeRoutes = require('./routes/committeRoutes');
 const educationRoutes = require('./routes/educationRoutes');
 const imageUploadRoutes = require('./routes/imageUploadRoutes');
+const AnnouncementRoutes = require('./routes/announcementRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 const cookieParser = require('cookie-parser');
 const xssClean = require('xss-clean');
@@ -53,6 +54,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/workexp', workExperienceRoutes);
 app.use('/api/achievements', achievementRoutes);
 app.use('/api/gallary', gallaryRoutes);
+app.use('/api/committee/announcement', AnnouncementRoutes);
 app.use('/api/committee', committeeRoutes);
 app.get('/api/', (req, res) => {
   res.send('Hello');

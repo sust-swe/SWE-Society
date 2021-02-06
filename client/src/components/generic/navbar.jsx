@@ -69,6 +69,8 @@ const MyNavbar = (props) => {
           </>
         )}
         <MenuItems to="/gallary">Gallary</MenuItems>
+        <MenuItems to="/noticeboard">Notice</MenuItems>
+
       </Box>
 
       <Box
