@@ -45,7 +45,7 @@ const SkillsEditModal = ({ isFloating }) => {
       })
       .then((res) => {
         setRequestState("success");
-        login(res.data.user);
+        login(...user, ...res.data.user);
         onClose();
         history.go(0);
       })

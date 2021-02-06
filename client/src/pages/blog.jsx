@@ -29,21 +29,14 @@ const posts = [
 ];
 
 const Blog = ({ userId }) => {
-  // useEffect(() => {
-  //   setRequestState("loading");
-  //   axios
-  //     .get("/api/user/")
-  //     .then((res) => {})
-  //     .catch((err) => unauthorizedHandler(err));
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+
 
   return (
     <Layout>
       <Container p={3} maxW="4xl" centerContent minH="70vh">
         {posts.map((post) => (
-          <PostThumb {...post} />
+          <PostThumb {...post} key={post.title} />
         ))}
       </Container>
     </Layout>
