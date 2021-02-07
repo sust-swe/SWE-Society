@@ -10,7 +10,7 @@ const SingleNotice = (notice) => {
                 <Center minW="20" bg="blue" textColor="white">{months[new Date(notice.createdAt).getUTCMonth()]} {new Date(notice.createdAt).getUTCFullYear()}</Center>
                 </Box>
                 <Center bg="white"marginLeft="5" >
-                    <Link  to={{pathname: 'notice/fullview'}}>
+                    <Link  to={{pathname: 'notice/fullview', notice: notice}}>
                         <Text fontFamily="serif"
                             fontSize="xl"
                         >{notice.title}</Text>
