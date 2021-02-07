@@ -1,8 +1,8 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, FormLabel, Input, InputGroup, InputLeftAddon, InputRightAddon, Select, Stack, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
+import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, FormLabel, Image, Input, InputGroup, InputLeftAddon, InputRightAddon, Select, Stack, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
 import React from "react";
 import DatePicker from "react-datepicker";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -21,12 +21,17 @@ const EventAddDrawer = (event) => {
 
     });
 
+    useEffect(() => {
+
+    },[editedEvent])
+
     const [requestState, setRequestState] = useState("none");
     const toast = useToast();
     const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(editedEvent);
         setRequestState("loading");
 
         axios
@@ -53,7 +58,7 @@ const EventAddDrawer = (event) => {
         <>
             <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpen}>
                 Event
-            </Button>
+          </Button>
             <Drawer
                 size="md"
                 isOpen={isOpen}
@@ -61,69 +66,82 @@ const EventAddDrawer = (event) => {
                 initialFocusRef={firstField}
                 onClose={onClose}
             >
-                <DrawerOverlay>
-                    <DrawerContent>
-                        <DrawerCloseButton />
-                        <DrawerHeader borderBottomWidth="1px">
-                            Create a new event
-              </DrawerHeader>
-                        <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
+                    <DrawerOverlay>
+                        <DrawerContent>
+                            <DrawerCloseButton />
+                            <DrawerHeader borderBottomWidth="1px">
+                                Create a new event
+                            </DrawerHeader>
 
                             <DrawerBody>
                                 <Stack spacing="24px">
+                                    <Box>
+                                        <Input type="file"
+                                        onChange={(e) => setEditedEvent({
+                                            ...editedEvent,
+                                            image: URL.createObjectURL(e.target.files[0]),
+                                        })}
+                                         />
+                                    </Box>
+
+                                    <Box>
+                                        <Image src={editedEvent.image} />
+                                    </Box>
 
                                     <Box>
                                         <FormLabel htmlFor="username">Title</FormLabel>
                                         <Input
                                             ref={firstField}
                                             id="title"
-                                            placeholder="Please enter a title"
-                                        />
-                                    </Box>
-
-                                    <Box>
-
-                                        <FormLabel>Event Date</FormLabel>
-                                        <Input
-                                            as={DatePicker}
-                                            selected={editedEvent.event_date}
-                                            isClearable
-                                            placeholder="Event date"
-                                            onChange={(date) =>
-                                                setEditedEvent({
-                                                    ...editedEvent,
-                                                    event_date: date,
-                                                })
-                                            }
-                                        />
-
-                                    </Box>
-
-                                    <Box>
-                                        <FormLabel htmlFor="url">Image Url</FormLabel>
-                                        <Input
-                                            type="url"
-                                            id="url"
-                                            placeholder="Please enter image url"
+                                            placeholder="Please enter event title"
+                                            value={editedEvent.title}
+                                            onChange={(e) => setEditedEvent({
+                                               ...editedEvent,
+                                               title: e.target.value
+                                           })}
                                         />
                                     </Box>
 
                                     <Box>
                                         <FormLabel htmlFor="desc">Description</FormLabel>
-                                        <Textarea id="desc" />
+                                        <Textarea
+                                         id="desc"
+                                         value={editedEvent.description}
+                                         onChange={(e) => setEditedEvent({
+                                            ...editedEvent,
+                                            description: e.target.value
+                                        })} 
+                                          />
                                     </Box>
+
+                                    <Box>
+                                        <FormLabel>Deadline</FormLabel>
+                                        <Input
+                                            as={DatePicker}
+                                            isClearable
+                                            placeholder="Event date"
+                                            selected={editedEvent.event_date}
+                                            onChange={(date) => setEditedEvent({
+                                                ...editedEvent,
+                                                event_date: date
+                                            })
+                                            }
+                                        />
+                                    </Box>
+
                                 </Stack>
                             </DrawerBody>
 
                             <DrawerFooter borderTopWidth="1px">
                                 <Button variant="outline" mr={3} onClick={onClose}>
                                     Cancel
-                            </Button>
+                  </Button>
                                 <Button type="submit" colorScheme="blue">Submit</Button>
                             </DrawerFooter>
-                        </form>
-                    </DrawerContent>
-                </DrawerOverlay>
+                        </DrawerContent>
+                    </DrawerOverlay>
+                </form>
             </Drawer>
         </>
     )

@@ -17,6 +17,7 @@ import NoticeBoard from "./pages/notice";
 import NoticeView from "./pages/noticeFullView"
 import Committee from "./pages/committee";
 import Event from "./pages/event";
+import EventDetails from "../src/components/event/eventDetails"
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/notice/fullview" component={NoticeView}/>
         <Route exact path="/noticeboard" component={NoticeBoard}/>
         <Route exact path ="/event" component={Event}/>
+        <Route exact path ="/eventdetails" component={EventDetails}/>
 
         {/* <Route exact path="/administrator" component={Administrator} /> */}
         <Route path="/admin" component={Admin} />
