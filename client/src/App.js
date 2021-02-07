@@ -11,12 +11,12 @@ import Blog from "./pages/blog";
 import Landing from "./pages/landing";
 import Profile from "./pages/profile";
 import SignIn from "./pages/signIn";
-// import Administrator from "./pages/administrator";
 import Gallary  from "./pages/gallary";
 import Admin from "./pages/admin";
 import NoticeBoard from "./pages/notice";
 import NoticeView from "./pages/noticeFullView"
 import Committee from "./pages/committee";
+import Event from "./pages/event";
 
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
         <Route exact path="/gallary" component={Gallary}/>
         <Route exact path="/notice/fullview" component={NoticeView}/>
         <Route exact path="/noticeboard" component={NoticeBoard}/>
+        <Route exact path ="/event" component={Event}/>
 
         {/* <Route exact path="/administrator" component={Administrator} /> */}
         <Route path="/admin" component={Admin} />

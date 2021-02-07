@@ -3,7 +3,7 @@ import React from "react";
 
 const Layout = (props) => {
   return (
-    <Box bg="gray.50" h="100%">
+    <Box bg="gray.50" h="100%" minH="75vh">
       {props.children}
     </Box>
   );
