@@ -36,14 +36,14 @@ const events = [
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem!",
         image: "https://picsum.photos/800",
       },
-      {
-        id: 5,
-        title: "The Third event",
-        event_date: "14 December, 2020",
-        description:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem!",
-        image: "https://picsum.photos/900",
-      },
+    //   {
+    //     id: 5,
+    //     title: "The Third event",
+    //     event_date: "14 December, 2020",
+    //     description:
+    //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem!",
+    //     image: "https://picsum.photos/900",
+    //   },
   ];
 
 const Event = () => {
