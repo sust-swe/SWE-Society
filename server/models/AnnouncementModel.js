@@ -13,6 +13,9 @@ const Announcement =  sequelize.define('announcement', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+    attachment:{
+        type: DataTypes.TEXT
+    },
     deadline: {
         type: DataTypes.DATE,
         allowNull: false

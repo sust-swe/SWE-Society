@@ -54,7 +54,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/workexp', workExperienceRoutes);
 app.use('/api/achievements', achievementRoutes);
 app.use('/api/gallary', gallaryRoutes);
-app.use('/api/committee/announcement', AnnouncementRoutes);
+app.use('/api/announcement', AnnouncementRoutes);
 app.use('/api/committee', committeeRoutes);
 app.get('/api/', (req, res) => {
   res.send('Hello');
