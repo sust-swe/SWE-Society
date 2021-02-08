@@ -1,7 +1,12 @@
+import { Flex } from "@chakra-ui/react";
 import SingleFrame from "../components/gallary/singleFrame";
-const Gallary = () =>{
-    return(
-        <SingleFrame></SingleFrame>
+import Layout from "../components/generic/layout";
+
+const Gallary = () => {
+    return (
+        <Flex minH="75vh" justifyContent="center" align="center" flexWrap="wrap" >
+            <SingleFrame />
+        </Flex>
     )
 }
 

@@ -28,7 +28,7 @@ const NoticeFullView = (notice) => {
         setRequestState("loading");
 
         axios
-            .patch("/api/committee/announcement/" + editedNotice.id, editedNotice)
+            .patch("/api/announcement/" + editedNotice.id, editedNotice)
             .then((res) => {
                 setRequestState("success");
                 onClose();
@@ -84,7 +84,7 @@ const NoticeFullView = (notice) => {
                                  type="text"
                                  value={editedNotice.title}
                                  ref={initialRef}
-                                 onchange ={(e) =>
+                                 onChange ={(e) =>
                                         setEditedNotice({
                                           ...editedNotice,
                                           title: e.target.value,
@@ -96,9 +96,9 @@ const NoticeFullView = (notice) => {
                                 <FormLabel>Body</FormLabel>
                                 <Textarea
                                 value={editedNotice.content}
-                                 onChange={(body) => setEditedNotice({
+                                 onChange={(e) => setEditedNotice({
                                     ...editedNotice,
-                                    content: body
+                                    content: e.target.value
                                 })} />
 
                             </FormControl>
