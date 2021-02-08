@@ -1,7 +1,6 @@
-import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, FormLabel, IconButton, Input, InputGroup, InputLeftAddon, InputRightAddon, Select, Stack, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, IconButton,  Stack,  useDisclosure, useToast } from "@chakra-ui/react"
 import React from "react";
-import DatePicker from "react-datepicker";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
@@ -27,9 +26,9 @@ const AdminDrawer = (event) => {
 
     return (
         <>
-            <IconButton onClick={ onOpen} color="black" icon={<HamburgerIcon />}></IconButton>
+            <HamburgerIcon  w={8} h={8} onClick={onOpen}/>
             <Drawer
-                size="sm"
+                size="xs"
                 isOpen={isOpen}
                 placement="left"
                 initialFocusRef={firstField}
@@ -40,12 +39,12 @@ const AdminDrawer = (event) => {
                         <DrawerCloseButton />
                         <DrawerHeader borderBottomWidth="1px">
                             Admin
-              </DrawerHeader>
+                    </DrawerHeader>
 
                         <DrawerBody>
                             <Stack spacing="24px">
                                 <Box>
-                                    <EventAddDrawer></EventAddDrawer>
+                                    <EventAddDrawer/>
                                 </Box>
                             </Stack>
                         </DrawerBody>

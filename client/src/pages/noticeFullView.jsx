@@ -1,27 +1,41 @@
 import React from 'react';
 import { EditIcon } from "@chakra-ui/icons";
 import { Box, Button, Center, Flex, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Text, Textarea, toast, useDisclosure, useToast } from "@chakra-ui/react"
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from 'axios';
 import { AuthContext } from '../contexts/authContext';
 
 const NoticeFullView = (notice) => {
     let location = useLocation();
     const { unauthorizedHandler } = useContext(AuthContext);
-    const [editedNotice, setEditedNotice] = useState({
-        title: location.notice.title,
-        content: location.notice.content,
-        createdAt: new Date(location.notice.createdAt),
-        deadline: new Date(location.notice.deadline),
-        id: location.notice.id
-    });
+    const [editedNotice, setEditedNotice] = useState({});
     const [requestState, setRequestState] = useState("none");
     const toast = useToast();
     const history = useHistory();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const initialRef = React.useRef();
+
+    const [loadPromise, setLoadPromise] = useState(false);
+    const key = useParams().id
+
+    useEffect(() => {
+        const loadFirst = async () => {
+            axios
+                .get(`/api/announcement/${key}`)
+                .then((res) => {
+                    setEditedNotice(res.data);
+                    setLoadPromise(true);
+                }).catch((err) => {
+                    console.log('fuck too')
+                    console.log(err);
+                })
+        }
+        loadFirst();
+    }, [key, loadPromise]);
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -56,14 +70,14 @@ const NoticeFullView = (notice) => {
                     <IconButton onClick={onOpen} onClose={onClose} icon={<EditIcon />}>Edit</IconButton>
                 </Flex>
                 <Text fontSize="2xl" fontWeight="bold" textColor="black" >{editedNotice.title}</Text>
-                <Text fontSize="xl" fontWeight="bold" textColor="black" >Date : {new Date(location.notice.createdAt).getUTCDate()}/
-                {new Date(location.notice.createdAt).getUTCMonth() + 1}/
-                {new Date(location.notice.createdAt).getUTCFullYear()} -  {new Date(location.notice.deadline).getUTCDate()}/
-                {new Date(location.notice.deadline).getMonth() + 1}/
-                {new Date(location.notice.deadline).getUTCFullYear()}
+                <Text fontSize="xl" fontWeight="bold" textColor="black" >Date : {new Date(editedNotice.createdAt).getUTCDate()}/
+                {new Date(editedNotice.createdAt).getUTCMonth() + 1}/
+                {new Date(editedNotice.createdAt).getUTCFullYear()} -  {new Date(editedNotice.deadline).getUTCDate()}/
+                {new Date(editedNotice.deadline).getMonth() + 1}/
+                {new Date(editedNotice.deadline).getUTCFullYear()}
                 </Text>
                 <Text marginTop="5" fontSize="lg" textColor="black" >
-                    {location.notice.content}
+                    {editedNotice.content}
                 </Text>
                 <Button marginTop="3" bg="blue.500">View Attachment</Button>
 
@@ -109,8 +123,8 @@ const NoticeFullView = (notice) => {
                                     as={DatePicker}
                                     isClearable
                                     placeholder="Deadline"
-                                    minDate={location.notice.createdAt}
-                                    selected={editedNotice.deadline}
+                                    minDate={new Date(editedNotice.createdAt)}
+                                    selected={new Date(editedNotice.deadline)}
                                     onChange={(date) => setEditedNotice({
                                         ...editedNotice,
                                         deadline: date
