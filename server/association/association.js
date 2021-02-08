@@ -7,6 +7,7 @@ const Committee = require('../models/CommitteeModel');
 const Role = require('../models/RoleModel');
 const Event = require('../models/EventModel');
 const Announcement = require('../models/AnnouncementModel');
+const Notice = require('../models/NoticeModel');
 const Achievement = require('../models/AchievementModel');
 const Credential = require('../models/CredentialModel');
 const Education = require('../models/EducationModel');

@@ -266,7 +266,7 @@
         {
             "title": "How to code c++",
             "content" : "Try hard and practice more",
-            "image" : "cfdcfgh.jpg"
+            "image" : "['cfdcfgh.jpg','abc.jpg']"
         }
         ```
         
@@ -276,7 +276,7 @@
         {
             "title": "How to code Java",
             "content" : "Try hard and practice more",
-            "image" : "cfdcfgh.jpg"
+            "image" : "['cfdcfgh.jpg','abc.jpg']"
         }
         ```
 
@@ -329,7 +329,7 @@
 ## Notice related
 
 ### 
-- With User Authorization
+- Without User Authorization
 
    * Show All Notices : `GET /api/notice/`
         
@@ -358,7 +358,7 @@
 ## Announcement related
 
 ### 
-- With User Authorization
+- Without User Authorization
 
    * Show All Announcement : `GET /api/announcement/`
         
