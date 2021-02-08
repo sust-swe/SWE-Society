@@ -13,14 +13,15 @@ exports.createNotice = catchAsync(async (req, res, next) => {
 exports.updateNotice = catchAsync(async (req, res, next) => {
     req.body.hidden = undefined;
     const notice = await Notice.update(req.body, { returning: true, where: { id: req.params.id } });
+    console.log(notice[1][0]);
     if (notice[0] == 0)
         return next(new AppError(`Not found`, 404));
-    res.status(200).json(notice);
+    res.status(200).json(notice[1][0]);
 });
 
 exports.deleteNotice = catchAsync(async (req, res, next) => {
     const notice = await Notice.update({ hidden: "true" }, { returning: true, where: { id: req.params.id } });
-    if (notice)
+    if (notice[0] == 0)
         return next(new AppError(`Not found`, 404));
     res.status(200).json({ message: "Successfully deleted" });
 });
