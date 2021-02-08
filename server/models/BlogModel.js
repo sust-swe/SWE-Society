@@ -12,7 +12,7 @@ const Blog = sequelize.define('blog', {
         allowNull: false
     },
     image: {
-        type: DataTypes.STRING
+        type: DataTypes.ARRAY(DataTypes.STRING)
     },
     isApproved: {
         type: DataTypes.BOOLEAN,

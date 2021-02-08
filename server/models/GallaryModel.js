@@ -1,9 +1,9 @@
 const sequelize = require('../db');
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 
 
-const Gallary =  sequelize.define('gallary', {
+const Gallary = sequelize.define('gallary', {
 
     image: {
         type: DataTypes.STRING,
@@ -12,8 +12,12 @@ const Gallary =  sequelize.define('gallary', {
     caption: {
         type: DataTypes.TEXT,
         allowNull: false
+    },
+    hidden: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
-  
+
 });
 
 module.exports = Gallary;
