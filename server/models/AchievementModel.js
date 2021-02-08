@@ -1,9 +1,9 @@
 const sequelize = require('../db');
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 
 
-const Achievement =  sequelize.define('achievement', {
+const Achievement = sequelize.define('achievement', {
 
     team_name: {
         type: DataTypes.STRING,
@@ -21,7 +21,7 @@ const Achievement =  sequelize.define('achievement', {
         allowNull: false
     },
     image: {
-        type: DataTypes.STRING
+        type: DataTypes.ARRAY(DataTypes.STRING)
     },
     team_member: {
         type: DataTypes.ARRAY(DataTypes.BIGINT),
@@ -29,8 +29,12 @@ const Achievement =  sequelize.define('achievement', {
     },
     description: {
         type: DataTypes.STRING
+    },
+    hidden: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
-  
+
 });
 
 module.exports = Achievement;
