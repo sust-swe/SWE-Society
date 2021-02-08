@@ -14,7 +14,7 @@ const Event =  sequelize.define('event', {
         allowNull: false
     },
     image: {
-        type: DataTypes.STRING
+        type: DataTypes.ARRAY(DataTypes.STRING)
     },
     description: {
         type: DataTypes.STRING
