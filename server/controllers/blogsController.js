@@ -71,11 +71,12 @@ exports.updateBlog = catchAsync(async (req, res, next) => {
 
 exports.approveBlog = catchAsync(async (req, res, next) => {
 
-  const blog = await Blog.findOne({ where: { id: req.params.id, isApproved: "false" } });
+  let blog = await Blog.findOne({ where: { id: req.params.id, isApproved: "false" } });
+  console.log("hi");
   if (blog == null)
     return next(new AppError(`Blog Does Not found`, 404));
 
-  blog = await Blog.update({ isApproved: true }, { returning: true, where: { id: req.params.id } });
+  blog = await Blog.update({ isApproved: "true" }, { returning: true, where: { id: req.params.id } });
 
   res.status(200).json({
     message: "Successfully approved",
