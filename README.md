@@ -257,9 +257,26 @@
 ### 
 - With User Authorization
 
-   * Post A Blog (Form Request) : `POST /api/blogs/`
+   * Post A Blog : `POST /api/blogs/`
+
+        ```json
+        Request Body
+        {
+            "title": "How to code c++",
+            "content" : "Try hard and practice more",
+            "image" : "cfdcfgh.jpg"
+        }
+        ```
         
-   * Update An Existing Blog : `PATCH /api/blogs/`
+   * Update An Existing Blog : `PATCH /api/blogs/:blog_id`
+        ```json
+        Request Body
+        {
+            "title": "How to code Java",
+            "content" : "Try hard and practice more",
+            "image" : "cfdcfgh.jpg"
+        }
+        ```
 
    * Show All (Approved) Blogs : `GET /api/blogs/true`
        
@@ -275,7 +292,7 @@
         
    * Delete (Hide) Any Blog : `Delete /api/blogs/:id`
 
-   * Show Not Approved Blogs : `GET /api/blogs/false`
+   * Show All Not Approved Blogs : `GET /api/blogs/false`
 
 ## Comment related
 
@@ -287,7 +304,6 @@
         Request Body
         {
             "content": "WOW",
-            "reg_no": "2017831023",
             "blog_id": "4"
         }
         ```
