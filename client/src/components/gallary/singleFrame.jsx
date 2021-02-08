@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Img, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
+import { Box, Img, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 
 const SingleFrame = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()

@@ -6,22 +6,27 @@ const AppError = require('../utils/appError');
 const Comment = require('../models/CommentModel');
 
 
-exports.getAllBlogs = catchAsync(async (req, res, next) => {
-
+exports.getAllNotApprovedBlogs = catchAsync(async (req, res, next) => {
   let result;
+  if (req.user.role != 'admin' && req.user.role != 'superadmin')
+    return next(new AppError(`Not allowed to perform this action`, 403));
 
-  if (req.body.isApproved) {
-    result = await Blog.findAll({ where: { isApproved: req.body.isApproved }, include: [Comment] });
-  } else {
-    result = await Blog.findAll({ include: [Comment] })
-  }
+  result = await Blog.findAll({ where: { isApproved: "false", hidden: "false" }, include: [Comment] });
+  res.send(result);
+});
+
+exports.getAllApprovedBlogs = catchAsync(async (req, res, next) => {
+  let result;
+  result = await Blog.findAll({ where: { isApproved: "true", hidden: "false" }, include: [Comment] });
   res.send(result);
 });
 
 
 exports.postBlog = catchAsync(async (req, res, next) => {
 
-  req.body.reg_no = req.user.reg_no
+  req.body.reg_no = req.user.reg_no;
+  req.body.isApproved = undefined;
+  req.body.hidden = undefined;
   const blog = await Blog.create(req.body)
   res.status(200).json(blog);
 });
@@ -29,7 +34,7 @@ exports.postBlog = catchAsync(async (req, res, next) => {
 
 exports.getOneBlog = catchAsync(async (req, res, next) => {
 
-  const blog = await Blog.findOne({ where: { id: req.params.id } });
+  const blog = await Blog.findOne({ where: { id: req.params.id, hidden: "false", isApproved: "true" } });
 
   if (blog == null)
     return next(new AppError(`Blog Does Not found`, 404));
@@ -40,7 +45,7 @@ exports.getOneBlog = catchAsync(async (req, res, next) => {
 
 exports.getSpecificUsersBlogs = catchAsync(async (req, res, next) => {
 
-  const blogs = await Blog.findAll({ where: { reg_no: req.params.reg_no } });
+  const blogs = await Blog.findAll({ where: { reg_no: req.params.reg_no, hidden: "false", isApproved: "true" } });
 
   if (blogs == null)
     return next(new AppError(`Blog Does Not found`, 404));
@@ -51,13 +56,14 @@ exports.getSpecificUsersBlogs = catchAsync(async (req, res, next) => {
 
 exports.updateBlog = catchAsync(async (req, res, next) => {
 
-  const blog = await Blog.findOne({ where: { id: req.params.id } });
+  const blog = await Blog.findOne({ where: { id: req.params.id, hidden: "false", isApproved: "true" } });
   if (blog == null)
     return next(new AppError(`Blog Does Not found`, 404));
 
   if (req.user.reg_no != blog.reg_no)
     return next(new AppError(`Not allowed to perform this action`, 403));
-
+  req.body.isApproved = undefined;
+  req.body.hidden = undefined;
   blog = await Blog.update(req.body, { returning: true, where: { id: req.params.id } });
 
   res.status(200).json({ message: "Successfully updated", blog });
@@ -65,11 +71,12 @@ exports.updateBlog = catchAsync(async (req, res, next) => {
 
 exports.approveBlog = catchAsync(async (req, res, next) => {
 
-  const blog = await Blog.findOne({ where: { id: req.params.id } });
+  let blog = await Blog.findOne({ where: { id: req.params.id, isApproved: "false" } });
+  console.log("hi");
   if (blog == null)
     return next(new AppError(`Blog Does Not found`, 404));
 
-  blog = await Blog.update({ isApproved: true }, { returning: true, where: { id: req.params.id } });
+  blog = await Blog.update({ isApproved: "true" }, { returning: true, where: { id: req.params.id } });
 
   res.status(200).json({
     message: "Successfully approved",
@@ -86,8 +93,11 @@ exports.deleteBlog = catchAsync(async (req, res, next) => {
 
   if (req.user.reg_no != blog.reg_no && req.user.role != 'admin' && req.user.role != 'superadmin')
     return next(new AppError(`Not allowed to perform this action`, 403));
+  if (req.user.reg_no == blog.reg_no)
+    await Blog.destroy({ where: { id: req.params.id } });
+  else
+    await Blog.update({ hidden: true }, { returning: true, where: { id: req.params.id } });
 
-  await Blog.destroy({ where: { id: req.params.id } });
 
   res.status(200).json({
     status: 'success',

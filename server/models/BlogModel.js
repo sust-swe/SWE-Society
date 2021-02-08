@@ -1,7 +1,7 @@
 const sequelize = require('../db');
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
-const Blog =  sequelize.define('blog', {
+const Blog = sequelize.define('blog', {
 
     title: {
         type: DataTypes.STRING,
@@ -17,9 +17,13 @@ const Blog =  sequelize.define('blog', {
     isApproved: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    hidden: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 
-  });
+});
 
 
-  module.exports = Blog;
+module.exports = Blog;

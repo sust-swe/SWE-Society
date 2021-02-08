@@ -28,12 +28,10 @@ function App() {
         <Route exact path="/" component={Landing} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/gallary" component={Gallary}/>
-        <Route exact path="/notice/fullview" component={NoticeView}/>
+        <Route exact path="/notice/:id" component={NoticeView}/>
         <Route exact path="/noticeboard" component={NoticeBoard}/>
+        <Route exact path ="/event/:id" component={EventDetails}/>
         <Route exact path ="/event" component={Event}/>
-        <Route exact path ="/eventdetails" component={EventDetails}/>
-
-        {/* <Route exact path="/administrator" component={Administrator} /> */}
         <Route path="/admin" component={Admin} />
         <ProtectedRoute path="/admin" restrictedTo={["admin", "superadmin"]} component={Admin} />
         <ProtectedRoute exact path="/profile" component={Profile} />

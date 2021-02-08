@@ -251,9 +251,82 @@
 
     * Show A Specific Committee With All Of Its Members  : `GET /api/committee/:committee_order`
     
-    
-    
-    
+       ```
+## Blog related
+
+### 
+- With User Authorization
+
+   * Post A Blog : `POST /api/blogs/`
+
+        ```json
+        Request Body
+        {
+            "title": "How to code c++",
+            "content" : "Try hard and practice more",
+            "image" : "cfdcfgh.jpg"
+        }
+        ```
+        
+   * Update An Existing Blog : `PATCH /api/blogs/:blog_id`
+        ```json
+        Request Body
+        {
+            "title": "How to code Java",
+            "content" : "Try hard and practice more",
+            "image" : "cfdcfgh.jpg"
+        }
+        ```
+
+   * Show All (Approved) Blogs : `GET /api/blogs/true`
+       
+   * Show A Single Blog : `GET /api/blogs/:id`
+
+   * Show Specific Users Blog : `GET /api/blogs/:reg_no`
+
+   * Delete Own Blog : `Delete /api/blogs/:id`
+
+- With Admin / Superadmin Authorization
+
+   * Approve A Blog : `PATCH /api/blogs/approve/:id`
+        
+   * Delete (Hide) Any Blog : `Delete /api/blogs/:id`
+
+   * Show All Not Approved Blogs : `GET /api/blogs/false`
+
+## Comment related
+
+### 
+- With User Authorization
+
+   * Post A Comment : `POST /api/comments/`
+        ```json
+        Request Body
+        {
+            "content": "WOW",
+            "blog_id": "4"
+        }
+        ```
+        
+   * Update An Existing Comment : `PATCH /api/comments/comment:id`
+        ```json
+        Request Body
+        {
+            "content": "WOW"
+        }
+        ```
+
+   * Show All Comments Of A Blogs : `GET /api/comments/:blog_id`
+
+   * Delete Own Comment : `Delete /api/comments/:comment_id`
+
+- With Admin / Superadmin Authorization
+        
+   * Delete (Hide) Any Comment : `Delete /api/comments/:comment_id`
+
+   
+
+
    
 ### ER Diagram
 
