@@ -4,6 +4,7 @@ const formidabel = require("formidable");
 
 exports.UpdateImage = catchAsync(async(req, res, next) => {
     let formData = {};
+    let images = [];
     const prefixPath = "/../public/media/";
     let filePath = "public/media/";
     new formidabel.IncomingForm()
@@ -11,7 +12,9 @@ exports.UpdateImage = catchAsync(async(req, res, next) => {
       .on("fileBegin", (image, file) => {
         const randPath = file.path.split("_")[1] + "." + file.type.split("/")[1];
         file.path = __dirname + prefixPath + randPath;
-        filePath += randPath;
+        filePath += randPath +" ";
+        images.push(filePath);
+        filePath = "public/media/";
       })
       .on("file", (name, file) => {
         formData[name] = filePath;
@@ -21,6 +24,6 @@ exports.UpdateImage = catchAsync(async(req, res, next) => {
         formData[fieldName] = fieldValue;
       })
       .once('end', () => {
-        res.status(200).json({imageUrl: filePath});
+        res.status(200).json({image: images});
       });
 })
