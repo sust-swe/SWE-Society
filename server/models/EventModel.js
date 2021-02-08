@@ -1,9 +1,9 @@
 const sequelize = require('../db');
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 
 
-const Event =  sequelize.define('event', {
+const Event = sequelize.define('event', {
 
     title: {
         type: DataTypes.STRING,
@@ -27,19 +27,8 @@ const Event =  sequelize.define('event', {
     cta_link: {
         type: DataTypes.STRING
     }
-  
+
 });
 
 module.exports = Event;
 
-
-// CREATE TABLE events(
-// 	event_id serial primary key,
-// 	title VARCHAR(100) NOT NULL,
-// 	event_date Date NOT NULL,
-// 	image_url text ,
-// 	description VARCHAR(200),
-// 	prority INT NOT NULL,
-// 	cta_link text,
-// 	committee_order INT NOT NULL REFERENCES committees (committee_order)
-// );
