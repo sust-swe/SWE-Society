@@ -1,5 +1,5 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, FormLabel, Image, Input, InputGroup, InputLeftAddon, InputRightAddon, Select, Stack, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
+import { Box, Button, Center, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormLabel, Image, Input, Stack, Text, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
 import React from "react";
 import DatePicker from "react-datepicker";
 import { useContext, useState, useEffect } from "react";
@@ -23,7 +23,7 @@ const EventAddDrawer = (event) => {
 
     useEffect(() => {
 
-    },[editedEvent])
+    }, [editedEvent])
 
     const [requestState, setRequestState] = useState("none");
     const toast = useToast();
@@ -56,9 +56,14 @@ const EventAddDrawer = (event) => {
 
     return (
         <>
-            <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpen}>
-                Event
-          </Button>
+            <Flex bg="gray" align="center" cursor="pointer" _hover={{ shadow: "dark-lg" }} onClick={onOpen} >
+                <Box marginLeft="5" size="lg">
+                    <AddIcon w={6} h={6}/>
+                </Box>
+                <Center marginLeft="5">
+                    <Text fontSize="3xl" fontWeight="bold">Event</Text>
+                </Center>
+            </Flex>
             <Drawer
                 size="md"
                 isOpen={isOpen}
@@ -76,17 +81,25 @@ const EventAddDrawer = (event) => {
 
                             <DrawerBody>
                                 <Stack spacing="24px">
-                                    <Box>
-                                        <Input type="file"
-                                        onChange={(e) => setEditedEvent({
-                                            ...editedEvent,
-                                            image: URL.createObjectURL(e.target.files[0]),
-                                        })}
-                                         />
+                                    <Box marginTop="5">
+                                        <Button color="blue.400" >Add Images</Button>
                                     </Box>
 
                                     <Box>
                                         <Image src={editedEvent.image} />
+                                    </Box>
+
+                                    <Box>
+                                        <FormLabel htmlFor="username">Location</FormLabel>
+                                        <Input
+                                            id="location"
+                                            placeholder="Location"
+                                            value={editedEvent.location}
+                                            onChange={(e) => setEditedEvent({
+                                                ...editedEvent,
+                                                location: e.target.value
+                                            })}
+                                        />
                                     </Box>
 
                                     <Box>
@@ -97,23 +110,12 @@ const EventAddDrawer = (event) => {
                                             placeholder="Please enter event title"
                                             value={editedEvent.title}
                                             onChange={(e) => setEditedEvent({
-                                               ...editedEvent,
-                                               title: e.target.value
-                                           })}
+                                                ...editedEvent,
+                                                title: e.target.value
+                                            })}
                                         />
                                     </Box>
 
-                                    <Box>
-                                        <FormLabel htmlFor="desc">Description</FormLabel>
-                                        <Textarea
-                                         id="desc"
-                                         value={editedEvent.description}
-                                         onChange={(e) => setEditedEvent({
-                                            ...editedEvent,
-                                            description: e.target.value
-                                        })} 
-                                          />
-                                    </Box>
 
                                     <Box>
                                         <FormLabel>Deadline</FormLabel>
@@ -127,6 +129,18 @@ const EventAddDrawer = (event) => {
                                                 event_date: date
                                             })
                                             }
+                                        />
+                                    </Box>
+
+                                    <Box>
+                                        <FormLabel htmlFor="desc">Description</FormLabel>
+                                        <Textarea
+                                            id="desc"
+                                            value={editedEvent.description}
+                                            onChange={(e) => setEditedEvent({
+                                                ...editedEvent,
+                                                description: e.target.value
+                                            })}
                                         />
                                     </Box>
 
