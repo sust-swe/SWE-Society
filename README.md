@@ -92,7 +92,8 @@
             "joining_date": "2017-12-30",
             "leaving_date": "2019-12-30",
             "description":"Sust is very popular",
-            "subject" : "English"
+            "subject" : "English",
+            "location" : "Dhaka, Bangladesh"
         }
         ```
     * Delete An Educational Info : `DELETE /api/education/:id`
@@ -107,7 +108,8 @@
             "joining_date": "2017-12-30",
             "leaving_date": "2019-12-30",
             "description":"Sust is the best",
-            "subject" : "EEE"
+            "subject" : "EEE",
+            "location" : "Dhaka, Bangladesh"
         }
         ```
     * Get Educational Details of A Specific User : `GET /api/education/:reg_no/`
@@ -116,13 +118,13 @@
 
          ```json
         Request Body
-       {
-        "company": "DZIT",
-        "position": "Software Engineer",
-        "joining_date": "2021-01-08",
-        "leaving_date": "2022-01-08",
-        "description": "DZIT is very reknown It farm in Bangladesh",
-        "location" : "Dhaka, Bangladesh"
+        {
+            "company": "DZIT",
+            "position": "Software Engineer",
+            "joining_date": "2021-01-08",
+            "leaving_date": "2022-01-08",
+            "description": "DZIT is very reknown It farm in Bangladesh",
+            "location" : "Dhaka, Bangladesh"
         }
         ```
     * Delete A Work Experience : `DELETE /api/workexp/:id`
@@ -323,6 +325,63 @@
 - With Admin / Superadmin Authorization
         
    * Delete (Hide) Any Comment : `Delete /api/comments/:comment_id`
+
+## Notice related
+
+### 
+- With User Authorization
+
+   * Show All Notices : `GET /api/notice/`
+        
+- With Admin / Superadmin Authorization
+    
+   * Post A Notice : `POST /api/notice/`
+        ```json
+        Request Body
+        {
+            "title": "society fee",
+            "description" : "NULL is allowed",
+            "attachment" : ["abc.pdf","xyz.pdf"]
+        }
+        ```
+   * Update Any Notice : `PATCH /api/notice/:notice_id`
+        ```json
+        Request Body
+        {
+            "title": "tour fee",
+            "description" : "NULL is allowed",
+            "attachment" : ["axc.pdf","x2z.pdf"]
+        }
+        ```
+   * Delete (Hide) Any Notice : `DELETE /api/notice/:notice_id`
+
+## Announcement related
+
+### 
+- With User Authorization
+
+   * Show All Announcement : `GET /api/announcement/`
+        
+- With Admin / Superadmin Authorization
+    
+   * Post An Announcement : `POST /api/announcement/`
+        ```json
+        Request Body
+        {
+            "title": "society fee",
+            "deadline" : "2021-02-08T16:45:43.016Z"
+        }
+        ```
+   * Update Any Announcement : `PATCH /api/announcement/:announcement_id`
+        ```json
+        Request Body
+        {
+            "title": "tour fee",
+            "deadline" : "2021-02-08T16:45:43.016Z"
+        }
+        ```
+   * Delete (Hide) Any Announcement : `DELETE /api/announcement/:announcement_id`
+
 
    
 
