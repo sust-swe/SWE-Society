@@ -258,53 +258,59 @@
 - With User Authorization
 
    * Post A Blog (Form Request) : `POST /api/blogs/`
-        | Key |Value |
-        | --- | --- |
-        | title | How To Code |
-        | content | Practice more and more and think precisely |
-        | user_id | 2017831005 |
-        | image | c++.jpg |
+        
+   * Update An Existing Blog : `PATCH /api/blogs/`
 
-    * Update An Existing Blog : `PATCH /api/blogs/`
+   * Show All (Approved) Blogs : `GET /api/blogs/true`
+       
+   * Show A Single Blog : `GET /api/blogs/:id`
+
+   * Show Specific Users Blog : `GET /api/blogs/:reg_no`
+
+   * Delete Own Blog : `Delete /api/blogs/:id`
+
+- With Admin / Superadmin Authorization
+
+   * Approve A Blog : `PATCH /api/blogs/approve/:id`
+        
+   * Delete (Hide) Any Blog : `Delete /api/blogs/:id`
+
+   * Show Not Approved Blogs : `GET /api/blogs/false`
+
+## Comment related
+
+### 
+- With User Authorization
+
+   * Post A Comment : `POST /api/comments/`
         ```json
         Request Body
         {
-            "session" : [[2017],[2018]],
-            "start_date" : "2021-01-08",
-            "end_date" : "2021-02-08"
+            "content": "WOW",
+            "reg_no": "2017831023",
+            "blog_id": "4"
+        }
+        ```
+        
+   * Update An Existing Comment : `PATCH /api/comments/comment:id`
+        ```json
+        Request Body
+        {
+            "content": "WOW"
         }
         ```
 
-    * Add Members To The Current Committee : `POST /api/committee/role`
-        ```json
-        Request Body
-        [
-            {
-                "designation":"president",
-                "reg_no": "2017831034"
-            },
-            {
-                "designation":"vice president",
-                "reg_no": "2017831036"
-            }
-        ]
-        ```
-    * Update Role Of Members Of The Current Committee : `PATCH /api/committee/role`
-        ```json
-        Request Body
-        [
-            {
-                "designation":"muchi",
-                "reg_no": "2017831034"
-            },
-            {
-                "designation":"darowan",
-                "reg_no": "2017831036"
-            }
-        ]
-        ```
-    
-    
+   * Show All Comments Of A Blogs : `GET /api/comments/:blog_id`
+
+   * Delete Own Comment : `Delete /api/comments/:comment_id`
+
+- With Admin / Superadmin Authorization
+        
+   * Delete (Hide) Any Comment : `Delete /api/comments/:comment_id`
+
+   
+
+
    
 ### ER Diagram
 
