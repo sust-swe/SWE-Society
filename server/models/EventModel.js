@@ -17,11 +17,12 @@ const Event =  sequelize.define('event', {
         type: DataTypes.ARRAY(DataTypes.STRING)
     },
     description: {
-        type: DataTypes.STRING
+        type: DataTypes.TEXT
     },
     priority: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 5,
     },
     cta_link: {
         type: DataTypes.STRING

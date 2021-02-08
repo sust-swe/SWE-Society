@@ -1,5 +1,4 @@
 const catchAsync = require('./../utils/catchAsync');
-const client = require('../db');
 const Announcement = require('../models/AnnouncementModel');
 const AppError = require('../utils/appError');
 
