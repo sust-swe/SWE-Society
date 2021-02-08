@@ -251,7 +251,58 @@
 
     * Show A Specific Committee With All Of Its Members  : `GET /api/committee/:committee_order`
     
-    
+       ```
+## Blog related
+
+### 
+- With User Authorization
+
+   * Post A Blog (Form Request) : `POST /api/blogs/`
+        | Key |Value |
+        | --- | --- |
+        | title | How To Code |
+        | content | Practice more and more and think precisely |
+        | user_id | 2017831005 |
+        | image | c++.jpg |
+
+    * Update An Existing Blog : `PATCH /api/blogs/`
+        ```json
+        Request Body
+        {
+            "session" : [[2017],[2018]],
+            "start_date" : "2021-01-08",
+            "end_date" : "2021-02-08"
+        }
+        ```
+
+    * Add Members To The Current Committee : `POST /api/committee/role`
+        ```json
+        Request Body
+        [
+            {
+                "designation":"president",
+                "reg_no": "2017831034"
+            },
+            {
+                "designation":"vice president",
+                "reg_no": "2017831036"
+            }
+        ]
+        ```
+    * Update Role Of Members Of The Current Committee : `PATCH /api/committee/role`
+        ```json
+        Request Body
+        [
+            {
+                "designation":"muchi",
+                "reg_no": "2017831034"
+            },
+            {
+                "designation":"darowan",
+                "reg_no": "2017831036"
+            }
+        ]
+        ```
     
     
    

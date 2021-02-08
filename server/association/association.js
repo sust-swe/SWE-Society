@@ -37,6 +37,3 @@ Committee.hasMany(Role, { foreignKey: { name: 'committee_order', allowNull: fals
 Role.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } })
 Role.belongsTo(Committee, { foreignKey: { name: 'committee_order', allowNull: false } })
 
-
-
-
