@@ -3,25 +3,25 @@ const { DataTypes } = require('sequelize');
 
 
 
-const Announcement = sequelize.define('announcement', {
+const Notice = sequelize.define('notice', {
 
     title: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false
     },
-    deadline: {
-        type: DataTypes.DATE,
-        allowNull: false
+    description: {
+        type: DataTypes.TEXT
+    },
+    attachment: {
+        type: DataTypes.ARRAY(DataTypes.STRING)
     },
     hidden: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     }
-
-
 });
 
-module.exports = Announcement;
+module.exports = Notice;
 
 
 
