@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
 import EventAddDrawer from "../event/eventAddDrawer"
+import NoticeAddDrawer from "../notice/noticeAddDrawer";
 
 const AdminDrawer = (event) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -45,6 +46,9 @@ const AdminDrawer = (event) => {
                             <Stack spacing="24px">
                                 <Box>
                                     <EventAddDrawer/>
+                                </Box>
+                                <Box>
+                                    <NoticeAddDrawer/>
                                 </Box>
                             </Stack>
                         </DrawerBody>

@@ -27,4 +27,12 @@ exports.deleteAnnouncement = catchAsync(async (req, res, next) => {
 exports.getAllAnnouncements = catchAsync(async (req, res, next) => {
     const announcements = await Announcement.findAll({ where: { hidden: "false" } });
     res.status(200).json(announcements);
+});
+
+exports.getAnnouncement = catchAsync(async(req, res, next) => {
+    const announcement = await Announcement.findOne({where:{id: req.params.id}});
+
+    if(announcement == null)
+        return next(new AppError(`Not found`, 404));
+        res.status(200).json(announcement);
 })
