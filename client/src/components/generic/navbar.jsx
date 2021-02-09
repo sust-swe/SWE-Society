@@ -1,5 +1,4 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Heading, IconButton, Link } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Link } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
@@ -35,9 +34,11 @@ const MyNavbar = (props) => {
       {...props}
     >
       <Flex align="center" mr={5}>
-        <MenuItems>
-          <AdminDrawer />
-        </MenuItems>
+        {["admin", "superadmin"].includes(user?.credential?.role) && (
+          <MenuItems>
+            <AdminDrawer />
+          </MenuItems>
+        )}
 
         <Heading as="h1" size="lg" letterSpacing={"-.1rem"}>
           SWE Society
@@ -70,14 +71,13 @@ const MyNavbar = (props) => {
             <MenuItems to="/committee">Committee</MenuItems>
             {(user.credential.role === "admin" ||
               user.credential.role === "superadmin") && (
-                <MenuItems to="/admin">Admin</MenuItems>
-              )}
+              <MenuItems to="/admin">Admin</MenuItems>
+            )}
           </>
         )}
         <MenuItems to="/gallary">Gallary</MenuItems>
         <MenuItems to="/noticeboard">Notice</MenuItems>
         <MenuItems to="/event">Event</MenuItems>
-
       </Box>
 
       <Box

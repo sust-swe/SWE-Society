@@ -1,27 +1,16 @@
-import { Container } from "@chakra-ui/react";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import PostThumb from "../components/blog/postThumb";
+import AddPostPopover from "../components/blog/addPostPopover";
+import AllPosts from "../components/blog/allPosts";
 import Layout from "../components/generic/layout";
+import { BlogProvider } from "../contexts/blogContext";
 
 const Blog = ({ userId }) => {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    axios.get("/api/blogs/true").then((res) => {
-      console.log(res.data);
-      setPosts(res.data);
-    });
-  }, []);
-
   return (
-    <Layout>
-      <Container p={3} maxW="4xl" centerContent minH="70vh">
-        {posts.map((post) => (
-          <PostThumb {...post} key={post.title} />
-        ))}
-      </Container>
-    </Layout>
+    <BlogProvider>
+      <Layout>
+        <AllPosts />
+        <AddPostPopover />
+      </Layout>
+    </BlogProvider>
   );
 };
 
