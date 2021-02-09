@@ -10,9 +10,14 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import CommentBox from "./commentBox";
+import CommentsView from "./commentsView";
 
 const SinglePostModal = ({ post, onClose, onOpen, isOpen }) => {
+  const [comments, setComments] = useState(post.comments);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="3xl">
       <ModalOverlay />
@@ -34,13 +39,18 @@ const SinglePostModal = ({ post, onClose, onOpen, isOpen }) => {
             {new Date(post.createdAt).toDateString()}
           </Text>
           <Text color="gray.700">{post.content}</Text>
+          {post.comments.length > 0 && <CommentsView comments={comments} />}
+          <CommentBox
+            postId={post.id}
+            comments={comments}
+            setComments={setComments}
+          />
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
+          <Button colorScheme="green" mr={3} onClick={onClose}>
             Close
           </Button>
-          <Button variant="ghost">Secondary Action</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
