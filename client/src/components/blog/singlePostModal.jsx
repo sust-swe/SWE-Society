@@ -10,6 +10,7 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const SinglePostModal = ({ post, onClose, onOpen, isOpen }) => {
   return (
@@ -18,7 +19,7 @@ const SinglePostModal = ({ post, onClose, onOpen, isOpen }) => {
       <ModalContent>
         {post.image && (
           <Image
-            src={post.image}
+            src={post.image[0]}
             width="100%"
             height="400px"
             objectFit="cover"
@@ -29,7 +30,8 @@ const SinglePostModal = ({ post, onClose, onOpen, isOpen }) => {
         <ModalCloseButton />
         <ModalBody>
           <Text fontSize="sm" opacity="0.6" mb={2}>
-            {post.author} | {post.date}
+            <Link to={"/user/" + post.reg_no}>{post.reg_no}</Link> |{" "}
+            {new Date(post.createdAt).toDateString()}
           </Text>
           <Text color="gray.700">{post.content}</Text>
         </ModalBody>
