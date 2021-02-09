@@ -19,6 +19,10 @@ const Event = sequelize.define('event', {
     description: {
         type: DataTypes.TEXT
     },
+    location: {
+        type: DataTypes.STRING(50),
+        allowNull: false
+    },
     hidden: {
         type: DataTypes.BOOLEAN,
         defaultValue: false

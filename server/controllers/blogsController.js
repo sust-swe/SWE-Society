@@ -56,7 +56,7 @@ exports.getSpecificUsersBlogs = catchAsync(async (req, res, next) => {
 
 exports.updateBlog = catchAsync(async (req, res, next) => {
 
-  const blog = await Blog.findOne({ where: { id: req.params.id, hidden: "false", isApproved: "true" } });
+  let blog = await Blog.findOne({ where: { id: req.params.id, hidden: "false", isApproved: "true" } });
   if (blog == null)
     return next(new AppError(`Blog Does Not found`, 404));
 
