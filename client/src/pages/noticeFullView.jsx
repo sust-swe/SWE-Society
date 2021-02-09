@@ -1,14 +1,13 @@
 import React from 'react';
 import { EditIcon } from "@chakra-ui/icons";
-import { Box, Button, Center, Flex, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Text, Textarea, toast, useDisclosure, useToast } from "@chakra-ui/react"
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import DatePicker from "react-datepicker";
+import { Box, Button, Center, Flex, FormControl, FormLabel, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Text, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
+import { useHistory, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import axios from 'axios';
 import { AuthContext } from '../contexts/authContext';
 
-const NoticeFullView = (notice) => {
-    let location = useLocation();
+
+const NoticeFullView = () => {
     const { unauthorizedHandler } = useContext(AuthContext);
     const [editedNotice, setEditedNotice] = useState({});
     const [requestState, setRequestState] = useState("none");
@@ -23,12 +22,11 @@ const NoticeFullView = (notice) => {
     useEffect(() => {
         const loadFirst = async () => {
             axios
-                .get(`/api/announcement/${key}`)
+                .get(`/api/notice/${key}`)
                 .then((res) => {
                     setEditedNotice(res.data);
                     setLoadPromise(true);
                 }).catch((err) => {
-                    console.log('fuck too')
                     console.log(err);
                 })
         }
@@ -42,7 +40,7 @@ const NoticeFullView = (notice) => {
         setRequestState("loading");
 
         axios
-            .patch("/api/announcement/" + editedNotice.id, editedNotice)
+            .patch("/api/notice/" + editedNotice.id, editedNotice)
             .then((res) => {
                 setRequestState("success");
                 onClose();
@@ -72,12 +70,10 @@ const NoticeFullView = (notice) => {
                 <Text fontSize="2xl" fontWeight="bold" textColor="black" >{editedNotice.title}</Text>
                 <Text fontSize="xl" fontWeight="bold" textColor="black" >Date : {new Date(editedNotice.createdAt).getUTCDate()}/
                 {new Date(editedNotice.createdAt).getUTCMonth() + 1}/
-                {new Date(editedNotice.createdAt).getUTCFullYear()} -  {new Date(editedNotice.deadline).getUTCDate()}/
-                {new Date(editedNotice.deadline).getMonth() + 1}/
-                {new Date(editedNotice.deadline).getUTCFullYear()}
+                {new Date(editedNotice.createdAt).getUTCFullYear()}
                 </Text>
                 <Text marginTop="5" fontSize="lg" textColor="black" >
-                    {editedNotice.content}
+                    {editedNotice.description}
                 </Text>
                 <Button marginTop="3" bg="blue.500">View Attachment</Button>
 
@@ -109,28 +105,12 @@ const NoticeFullView = (notice) => {
                             <FormControl mt={4}>
                                 <FormLabel>Body</FormLabel>
                                 <Textarea
-                                value={editedNotice.content}
+                                value={editedNotice.description}
                                  onChange={(e) => setEditedNotice({
                                     ...editedNotice,
-                                    content: e.target.value
+                                    description: e.target.value
                                 })} />
 
-                            </FormControl>
-
-                            <FormControl mt={4}>
-                                <FormLabel>Deadline</FormLabel>
-                                <Input
-                                    as={DatePicker}
-                                    isClearable
-                                    placeholder="Deadline"
-                                    minDate={new Date(editedNotice.createdAt)}
-                                    selected={new Date(editedNotice.deadline)}
-                                    onChange={(date) => setEditedNotice({
-                                        ...editedNotice,
-                                        deadline: date
-                                    })
-                                    }
-                                />
                             </FormControl>
                         </ModalBody>
 

@@ -13,6 +13,10 @@ const Event = sequelize.define('event', {
         type: DataTypes.DATE,
         allowNull: false
     },
+    location: {
+    	type: DataTypes.STRING,
+    	allowNull: false
+    },
     image: {
         type: DataTypes.ARRAY(DataTypes.STRING)
     },

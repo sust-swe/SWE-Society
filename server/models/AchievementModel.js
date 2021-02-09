@@ -38,15 +38,3 @@ const Achievement = sequelize.define('achievement', {
 });
 
 module.exports = Achievement;
-
-// CREATE TABLE achievements(
-// 	achievement_id serial PRIMARY KEY,
-// 	team_name VARCHAR(50) NOT NULL,
-// 	title VARCHAR(100),
-// 	position VARCHAR(50) NOT NULL,
-// 	date date NOT NULL,
-// 	image_url text,
-// 	team_members INT [] NOT NULL,
-// 	description VARCHAR(200),
-// 	user_id INT REFERENCES member (reg_no)
-// );

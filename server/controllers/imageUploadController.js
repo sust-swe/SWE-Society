@@ -12,9 +12,7 @@ exports.UpdateImage = catchAsync(async(req, res, next) => {
       .on("fileBegin", (image, file) => {
         const randPath = file.path.split("_")[1] + "." + file.type.split("/")[1];
         file.path = __dirname + prefixPath + randPath;
-        filePath += randPath +" ";
-        images.push(filePath);
-        filePath = "public/media/";
+        images.push(randPath);
       })
       .on("file", (name, file) => {
         formData[name] = filePath;
