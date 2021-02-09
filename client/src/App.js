@@ -18,6 +18,7 @@ import NoticeView from "./pages/noticeFullView"
 import Committee from "./pages/committee";
 import Event from "./pages/event";
 import EventDetails from "../src/components/event/eventDetails"
+import MyBlog from "./pages/myBlog";
 
 
 function App() {
@@ -38,7 +39,7 @@ function App() {
         <ProtectedRoute exact path="/user/:id" component={Profile}/>
         <ProtectedRoute exact path="/committee" component={Committee}/>
 
-        <ProtectedRoute exact path="/blog" component={Blog}/>
+        <ProtectedRoute exact path="/blog" component={MyBlog}/>
         <Route path="*" component={NotFound} />
       </Switch>
 
