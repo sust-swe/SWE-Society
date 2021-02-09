@@ -13,6 +13,7 @@ const EventCard = (event) => {
       m={3}
       cursor="pointer"
       width="sm"
+      minH="xl"
       _hover={{ boxShadow: "dark-lg" }}
     >
       <Image src={event.image[0]} width="sm"></Image>

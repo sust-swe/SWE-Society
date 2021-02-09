@@ -48,6 +48,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Testing a route
+app.use(express.static(__dirname + '/public/media/'));
 app.use('/api/imageupload', imageUploadRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/comments', commentsRoutes);

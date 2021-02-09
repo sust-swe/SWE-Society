@@ -1,5 +1,5 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Button, Center, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormLabel, Input, Stack, Text, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
+import { Box, Button, Center, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormLabel, Image, Input, Stack, Text, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
 import React from "react";
 import DatePicker from "react-datepicker";
 import { useContext, useState, useEffect } from "react";
@@ -7,23 +7,21 @@ import { AuthContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-
-const EventAddDrawer = () => {
+const NoticeAddDrawer = (notice) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const firstField = React.useRef()
 
     const { unauthorizedHandler } = useContext(AuthContext);
-    const [editedEvent, setEditedEvent] = useState({
+    const [editedNotice, setEditedNotice] = useState({
         title: "",
         description: "",
-        event_date: new Date(),
-        image: [],
+        attachment: [],
 
     });
 
     useEffect(() => {
 
-    }, [editedEvent])
+    }, [editedNotice])
 
     const [requestState, setRequestState] = useState("none");
     const toast = useToast();
@@ -31,11 +29,10 @@ const EventAddDrawer = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(editedEvent);
         setRequestState("loading");
 
         axios
-            .post("/api/event/", editedEvent)
+            .post("/api/notice/", editedNotice)
             .then((res) => {
                 setRequestState("success");
                 onClose();
@@ -58,10 +55,10 @@ const EventAddDrawer = () => {
         <>
             <Flex bg="gray" align="center" cursor="pointer" _hover={{ shadow: "dark-lg" }} onClick={onOpen} >
                 <Box marginLeft="5" size="lg">
-                    <AddIcon w={6} h={6} />
+                    <AddIcon w={6} h={6}/>
                 </Box>
                 <Center marginLeft="5">
-                    <Text fontSize="3xl" fontWeight="bold">Event</Text>
+                    <Text fontSize="3xl" fontWeight="bold">Notice</Text>
                 </Center>
             </Flex>
             <Drawer
@@ -76,26 +73,13 @@ const EventAddDrawer = () => {
                         <DrawerContent>
                             <DrawerCloseButton />
                             <DrawerHeader borderBottomWidth="1px">
-                                Create a new event
+                                Create a new notice
                             </DrawerHeader>
 
                             <DrawerBody>
                                 <Stack spacing="24px">
                                     <Box marginTop="5">
-                                        <Button color="blue.400" >Add Images</Button>
-                                    </Box>
-
-                                    <Box>
-                                        <FormLabel htmlFor="username">Location</FormLabel>
-                                        <Input
-                                            id="location"
-                                            placeholder="Location"
-                                            value={editedEvent.location}
-                                            onChange={(e) => setEditedEvent({
-                                                ...editedEvent,
-                                                location: e.target.value
-                                            })}
-                                        />
+                                        <Button color="blue.400" >Attachment</Button>
                                     </Box>
 
                                     <Box>
@@ -104,27 +88,11 @@ const EventAddDrawer = () => {
                                             ref={firstField}
                                             id="title"
                                             placeholder="Please enter event title"
-                                            value={editedEvent.title}
-                                            onChange={(e) => setEditedEvent({
-                                                ...editedEvent,
+                                            value={editedNotice.title}
+                                            onChange={(e) => setEditedNotice({
+                                                ...editedNotice,
                                                 title: e.target.value
                                             })}
-                                        />
-                                    </Box>
-
-
-                                    <Box>
-                                        <FormLabel>Event Date</FormLabel>
-                                        <Input
-                                            as={DatePicker}
-                                            isClearable
-                                            placeholder="Event date"
-                                            selected={editedEvent.event_date}
-                                            onChange={(date) => setEditedEvent({
-                                                ...editedEvent,
-                                                event_date: date
-                                            })
-                                            }
                                         />
                                     </Box>
 
@@ -132,9 +100,9 @@ const EventAddDrawer = () => {
                                         <FormLabel htmlFor="desc">Description</FormLabel>
                                         <Textarea
                                             id="desc"
-                                            value={editedEvent.description}
-                                            onChange={(e) => setEditedEvent({
-                                                ...editedEvent,
+                                            value={editedNotice.description}
+                                            onChange={(e) => setEditedNotice({
+                                                ...editedNotice,
                                                 description: e.target.value
                                             })}
                                         />
@@ -157,4 +125,4 @@ const EventAddDrawer = () => {
     )
 }
 
-export default EventAddDrawer;
+export default NoticeAddDrawer;
