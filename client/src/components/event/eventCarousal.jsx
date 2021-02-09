@@ -1,8 +1,9 @@
+
 import { Carousel } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
 
 const EventCarousal = (props) => {
-console.log(props.items);
+
   return (
     <Carousel>
       {props.items.map((item) => (

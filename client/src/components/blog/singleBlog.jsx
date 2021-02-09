@@ -4,8 +4,12 @@ import Layout from "../generic/layout";
 import ShowComment from "./showComment";
 import WriteComment from "./writeComment";
 import MultipleGridImages from 'react-multiple-image-grid'
+import { useContext, useState, useEffect } from "react";
+import EventCarousal from "../event/eventCarousal";
 
 const SingleBlog = (blog) => {
+
+
     return (
         <Box padding="5" mt="2" width="3xl" bg="whitesmoke">
             <Flex align="center" direction="row" >
@@ -23,12 +27,17 @@ const SingleBlog = (blog) => {
                 <Text>{blog.content}</Text>
             </Box>
             <Box  >
-                <Image cursor="pointer" src={blog.image[0]} />
+                
+            {blog.image.map((img) => (
+                    <Image mt={2} cursor="pointer" src={img} />
+                ))}
+
+                
                 {/* <MultipleGridImages images={blog.image} /> */}
             </Box>
             <Divider mt={2} mb={2} orientation="horizontal" />
 
-            <WriteComment/>
+            <WriteComment {...blog} />
 
             <Divider mt={1} mb={1} orientation="horizontal" />
 
