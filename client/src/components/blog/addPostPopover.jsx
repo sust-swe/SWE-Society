@@ -38,30 +38,39 @@ const AddPostPopover = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    axios
-      .post("/api/blogs/", { title, content, image })
-      .then((res) => {
-        onClose();
-        setLoading(false);
-        toast({
-          title: "Posted",
-          description: "Waiting for approval",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
+    if (title && content) {
+      setLoading(true);
+      axios
+        .post("/api/blogs/", { title, content, image })
+        .then((res) => {
+          onClose();
+          setLoading(false);
+          toast({
+            title: "Posted",
+            description: "Waiting for approval",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        })
+        .catch((err) => {
+          unauthorizedHandler(err);
+          onClose();
+          toast({
+            title: "Something went wrong",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
         });
-      })
-      .catch((err) => {
-        unauthorizedHandler(err);
-        onClose();
-        toast({
-          title: "Something went wrong",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
+    } else {
+      toast({
+        title: "Please fill up Title and Content",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
       });
+    }
   };
 
   const handleFileInput = (e) => {
