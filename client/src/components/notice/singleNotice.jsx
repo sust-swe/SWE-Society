@@ -1,4 +1,4 @@
-import { Box, Center, Flex, IconButton, Text, useToast } from "@chakra-ui/react";
+import { Box, Center, Flex, IconButton, Spacer, Text, useToast } from "@chakra-ui/react";
 import { Link, useHistory } from 'react-router-dom';
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useContext, useState } from "react";
@@ -15,7 +15,7 @@ const SingleNotice = (notice) => {
     setDeleteRequestState("loading");
     window.confirm("Are you sure?")
       ? axios
-        .delete("/api/announcement/" + notice.id)
+        .delete("/api/notice/" + notice.id)
         .then((res) => {
           setDeleteRequestState("success");
           history.go(0);
@@ -34,7 +34,7 @@ const SingleNotice = (notice) => {
   };
 
   return (
-    <Box margin="2" width="4xl" display="flex" shadow>
+    <Box margin="2" display="flex" shadow>
       <Flex spacing={0}>
         <Box borderColor="black">
           <Center minW="20" border="1px" borderColor="black" bg="white">{new Date(notice.createdAt).getUTCDate()} </Center>
@@ -48,7 +48,9 @@ const SingleNotice = (notice) => {
           </Link>
         </Center>
 
-        <IconButton onClick={deleteNotice} icon={<DeleteIcon/>} />
+        <Flex marginLeft="10">
+          <IconButton onClick={deleteNotice} icon={<DeleteIcon color="red"/>} />
+        </Flex>
 
       </Flex>
     </Box>

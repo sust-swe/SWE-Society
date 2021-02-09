@@ -12,7 +12,6 @@ import {
   DrawerOverlay,
   Flex,
   FormLabel,
-  Image,
   Input,
   Stack,
   Text,
@@ -28,13 +27,8 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ImageUploader from "../generic/imageUploader";
 
-const EventAddDrawer = (event) => {
+const EventAddDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    isOpen: isUploaderOpen,
-    onOpen: onUploaderOpen,
-    onClose: onUploaderClose,
-  } = useDisclosure();
   const firstField = React.useRef();
 
   const { unauthorizedHandler } = useContext(AuthContext);
@@ -42,13 +36,8 @@ const EventAddDrawer = (event) => {
     title: "",
     description: "",
     event_date: new Date(),
-    leaving_date: null,
-    image: "",
+    image: [],
   });
-
-  const setImage = (url) => {
-    setEditedEvent({ ...editedEvent, image: [url] });
-  };
 
   useEffect(() => {}, [editedEvent]);
 
@@ -117,19 +106,7 @@ const EventAddDrawer = (event) => {
               <DrawerBody>
                 <Stack spacing="24px">
                   <Box marginTop="5">
-                    <ImageUploader
-                      isOpen={isUploaderOpen}
-                      onClose={onUploaderClose}
-                      setImage={setImage}
-                    >
-                      <Button color="blue.400" onClick={onUploaderOpen}>
-                        Add Images
-                      </Button>
-                    </ImageUploader>
-                  </Box>
-
-                  <Box>
-                    <Image src={editedEvent.image} />
+                    <Button color="blue.400">Add Images</Button>
                   </Box>
 
                   <Box>
@@ -164,7 +141,7 @@ const EventAddDrawer = (event) => {
                   </Box>
 
                   <Box>
-                    <FormLabel>Deadline</FormLabel>
+                    <FormLabel>Event Date</FormLabel>
                     <Input
                       as={DatePicker}
                       isClearable

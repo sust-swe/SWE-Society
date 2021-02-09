@@ -5,20 +5,15 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
 import EventAddDrawer from "../event/eventAddDrawer"
+import NoticeAddDrawer from "../notice/noticeAddDrawer";
+import GallaryAddDrawer from "../gallary/gallarayAddDrawer";
+
 
 const AdminDrawer = (event) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const firstField = React.useRef()
 
     const { unauthorizedHandler } = useContext(AuthContext);
-    const [editedEvent, setEditedEvent] = useState({
-        title: "",
-        description: "",
-        event_date: new Date(),
-        leaving_date: null,
-        image: "",
-
-    });
 
     const [requestState, setRequestState] = useState("none");
     const toast = useToast();
@@ -45,6 +40,12 @@ const AdminDrawer = (event) => {
                             <Stack spacing="24px">
                                 <Box>
                                     <EventAddDrawer/>
+                                </Box>
+                                <Box>
+                                    <NoticeAddDrawer/>
+                                </Box>
+                                <Box>
+                                    <GallaryAddDrawer/>
                                 </Box>
                             </Stack>
                         </DrawerBody>

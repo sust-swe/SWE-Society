@@ -11,7 +11,7 @@ const Notice = () => {
     const [notices, setNotices] = useState([]);
 
     useEffect(() => {
-        axios.get("/api/announcement").then((res) => {
+        axios.get("/api/notice").then((res) => {
             console.log(res);
             setNotices(res.data);
         }).catch(err => {

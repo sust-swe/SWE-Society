@@ -13,16 +13,19 @@ const Event = sequelize.define('event', {
         type: DataTypes.DATE,
         allowNull: false
     },
+    location: {
+    	type: DataTypes.STRING,
+    	allowNull: false
+    },
     image: {
         type: DataTypes.ARRAY(DataTypes.STRING)
     },
     description: {
         type: DataTypes.TEXT
     },
-    priority: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 5,
+    hidden: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     },
     cta_link: {
         type: DataTypes.STRING
