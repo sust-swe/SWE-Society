@@ -6,6 +6,7 @@ import { AuthContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
 import EventAddDrawer from "../event/eventAddDrawer"
 import NoticeAddDrawer from "../notice/noticeAddDrawer";
+import GallaryAddDrawer from "../gallary/gallarayAddDrawer";
 
 
 const AdminDrawer = (event) => {
@@ -42,6 +43,9 @@ const AdminDrawer = (event) => {
                                 </Box>
                                 <Box>
                                     <NoticeAddDrawer/>
+                                </Box>
+                                <Box>
+                                    <GallaryAddDrawer/>
                                 </Box>
                             </Stack>
                         </DrawerBody>
