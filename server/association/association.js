@@ -27,9 +27,10 @@ Credential.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } })
 
 Blog.hasMany(Comment, { foreignKey: { name: "blog_id", allowNull: false } });
 Comment.belongsTo(Blog, { foreignKey: { name: "blog_id", allowNull: false } });
+Comment.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } });
 
 User.hasMany(Role, { foreignKey: { name: "reg_no", allowNull: false } });
-User.hasMany(Achievement, { foreignKey: { name: "reg_no", allowNull: false } });
+//User.hasMany(Achievement, { foreignKey: { name: "reg_no", allowNull: false } });
 
 User.hasMany(WorkExperience, { foreignKey: { name: "reg_no", allowNull: false } });
 WorkExperience.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } });

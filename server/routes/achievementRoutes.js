@@ -5,10 +5,9 @@ const achievementController = require('../controllers/achievementController');
 const authController = require('../controllers/authController');
 
 
-router.post('/',authController.protect, achievementController.addAchievement);
-router.delete('/:id',authController.protect, achievementController.deleteAchievement);
-router.get('/user/:reg_no', achievementController.getSpecificUserAchievements);
-router.get('/:id', achievementController.getSingleAchievement);
-router.get('/', achievementController.getAllAchievement);
+router.post('/', authController.protect, achievementController.addAchievement);
+router.delete('/:id', authController.protect, achievementController.deleteAchievement);
+router.get('/', achievementController.getAllAchievements);
+router.patch('/:id', authController.protect, achievementController.updateAchievement)
 
 module.exports = router;

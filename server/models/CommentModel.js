@@ -7,7 +7,10 @@ const Comment = sequelize.define('comment', {
 
     content: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     hidden: {
         type: DataTypes.BOOLEAN,
