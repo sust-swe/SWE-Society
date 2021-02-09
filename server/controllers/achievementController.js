@@ -16,11 +16,10 @@ exports.addAchievement = catchAsync(async (req, res, next) => {
 });
 
 exports.updateAchievement = catchAsync(async (req, res, next) => {
-    let achievement = await Achievement.findOne({ where: { id: req.params.id, hidden: "false" } });
-    if (achievement == null)
-        return next(new AppError(`Achievement Does Not found`, 404));
     req.body.hidden = undefined;
-    achievement = await Achievement.update(req.body, { returning: true, where: { id: req.params.id } });
+    const achievement = await Achievement.update(req.body, { returning: true, where: { id: req.params.id, hidden: "false" } });
+    if (achievement[0] == 0)
+        return next(new AppError(`Not found`, 404));
     res.status(200).json(achievement[1][0]);
 });
 

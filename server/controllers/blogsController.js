@@ -36,20 +36,6 @@ exports.getAllApprovedBlogs = catchAsync(async (req, res, next) => {
   res.send(result);
 });
 
-// exports.getAllCommentsOfABlog = catchAsync(async (req, res, next) => {
-//   let result;
-//   result = await Comment.findAll({
-//     where: { hidden: "false" }, include: [
-//       {
-//         model: User,
-//         attributes: ['name', 'image']
-//       }
-//     ]
-//   });
-//   res.send(result);
-// });
-
-
 exports.postBlog = catchAsync(async (req, res, next) => {
 
   req.body.reg_no = req.user.reg_no;

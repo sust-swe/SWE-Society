@@ -417,6 +417,42 @@
         ```
    * Delete (Hide) Any Achievement : `DELETE /api/achievements/:achievement_id`
 
+## Event related
+
+### 
+- Without User Authorization
+
+   * Show All Events : `GET /api/event/`
+   * Show Specific Event : `GET /api/event/:event_id`
+        
+- With Admin / Superadmin Authorization
+    
+   * Post A Event : `POST /api/event/`
+        ```json
+        Request Body
+        {
+            "title" : "Badminton Tournament",
+            "location": "IICT,SUST",
+            "event_date": "2017-12-30T00:00:00.000Z",
+            "image": ["aa.jpg","bb.jpg"],
+            "description":"it was...",
+            "cta_link" : "fb link or something, null is allowed"
+        }
+        ```
+   * Update Any Event : `PATCH /api/event/:event_id`
+        ```json
+        Request Body
+        {
+            "title" : "Chess Tournament",
+            "location": "IICT,SUST",
+            "event_date": "2017-12-30T00:00:00.000Z",
+            "image": ["aa.jpg","bb.jpg"],
+            "description":"it was...",
+            "cta_link" : "fb link or something, null is allowed"
+        }
+        ```
+   * Delete (Hide) Any Event : `DELETE /api/event/:event_id`
+
    
 
 
