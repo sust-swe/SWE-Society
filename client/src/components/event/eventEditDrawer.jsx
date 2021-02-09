@@ -1,5 +1,5 @@
-import { AddIcon } from "@chakra-ui/icons";
-import { Box, Button, Center, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormLabel, Input, Stack, Text, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
+import { AddIcon, EditIcon } from "@chakra-ui/icons";
+import { Box, Button, Center, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Flex, FormLabel, IconButton, Input, Stack, Text, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
 import React from "react";
 import DatePicker from "react-datepicker";
 import { useContext, useState, useEffect } from "react";
@@ -8,34 +8,22 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 
-const EventAddDrawer = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const firstField = React.useRef()
+const EventEditDrawer = (editedEvent) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const firstField = React.useRef();
 
     const { unauthorizedHandler } = useContext(AuthContext);
-    const [editedEvent, setEditedEvent] = useState({
-        title: "",
-        description: "",
-        event_date: new Date(),
-        image: [],
-
-    });
-
-    useEffect(() => {
-
-    }, [editedEvent])
-
+    const [setEditedEvent] = useState({});
     const [requestState, setRequestState] = useState("none");
     const toast = useToast();
     const history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(editedEvent);
         setRequestState("loading");
 
         axios
-            .post("/api/event/", editedEvent)
+            .patch(`/api/event/${editedEvent.id}`, editedEvent)
             .then((res) => {
                 setRequestState("success");
                 onClose();
@@ -56,13 +44,8 @@ const EventAddDrawer = () => {
 
     return (
         <>
-            <Flex bg="gray" align="center" cursor="pointer" _hover={{ shadow: "dark-lg" }} onClick={onOpen} >
-                <Box marginLeft="5" size="lg">
-                    <AddIcon w={6} h={6} />
-                </Box>
-                <Center marginLeft="5">
-                    <Text fontSize="3xl" fontWeight="bold">Event</Text>
-                </Center>
+            <Flex cursor="pointer" onClick={onOpen} >
+                <IconButton icon={<EditIcon w={10} h={10} />} />
             </Flex>
             <Drawer
                 size="md"
@@ -76,15 +59,11 @@ const EventAddDrawer = () => {
                         <DrawerContent>
                             <DrawerCloseButton />
                             <DrawerHeader borderBottomWidth="1px">
-                                Create a new event
+                                Edit event
                             </DrawerHeader>
 
                             <DrawerBody>
                                 <Stack spacing="24px">
-                                    <Box marginTop="5">
-                                        <Button color="blue.400" >Add Images</Button>
-                                    </Box>
-
                                     <Box>
                                         <FormLabel htmlFor="username">Location</FormLabel>
                                         <Input
@@ -119,7 +98,7 @@ const EventAddDrawer = () => {
                                             as={DatePicker}
                                             isClearable
                                             placeholder="Event date"
-                                            selected={editedEvent.event_date}
+                                            selected={new Date(editedEvent.event_date)}
                                             onChange={(date) => setEditedEvent({
                                                 ...editedEvent,
                                                 event_date: date
@@ -146,7 +125,7 @@ const EventAddDrawer = () => {
                             <DrawerFooter borderTopWidth="1px">
                                 <Button variant="outline" mr={3} onClick={onClose}>
                                     Cancel
-                  </Button>
+                                </Button>
                                 <Button type="submit" colorScheme="blue">Submit</Button>
                             </DrawerFooter>
                         </DrawerContent>
@@ -157,4 +136,4 @@ const EventAddDrawer = () => {
     )
 }
 
-export default EventAddDrawer;
+export default EventEditDrawer;
