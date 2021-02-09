@@ -3,6 +3,7 @@ import {
   Center,
   Flex,
   Image,
+  Spacer,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -35,16 +36,17 @@ const PostThumb = (post) => {
               {post.title}
             </Text>
             <Text fontSize="sm" opacity="0.6" mb={2}>
-              {post.author} | {post.date}
+              {post.reg_no} | {new Date(post.createdAt).toDateString()}
             </Text>
             <Text color="gray.500" isTruncated noOfLines={3}>
               {post.content}
             </Text>
           </Box>
         </Center>
+        <Spacer />
         {post.image && (
           <Image
-            src={post.image}
+            src={post.image[0]}
             height={["250px", "250px", "100%", "100%"]}
             width={["100%", "100%", "250px", "250px"]}
             objectFit="cover"
