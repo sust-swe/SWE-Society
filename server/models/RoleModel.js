@@ -1,14 +1,17 @@
 const sequelize = require('../db');
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 
 
-const Role =  sequelize.define('role', {
-    designation:{
+const Role = sequelize.define('role', {
+    designation: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
-    reg_no:{
+    reg_no: {
         type: DataTypes.BIGINT,
         allowNull: false,
         primaryKey: true
@@ -18,6 +21,6 @@ const Role =  sequelize.define('role', {
         allowNull: false,
         primaryKey: true
     }
-  });
+});
 
-  module.exports = Role;
+module.exports = Role;

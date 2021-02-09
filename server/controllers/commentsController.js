@@ -2,6 +2,7 @@ const catchAsync = require('./../utils/catchAsync');
 const Comment = require('../models/CommentModel');
 const Blog = require('../models/BlogModel');
 const AppError = require('../utils/appError');
+const User = require('../models/UserModel');
 
 exports.postComment = catchAsync(async (req, res, next) => {
     req.body.reg_no = req.user.reg_no;
@@ -44,7 +45,15 @@ exports.deleteComment = catchAsync(async (req, res, next) => {
 });
 
 exports.getCommentsOfBlog = catchAsync(async (req, res, next) => {
-    const comments = await Comment.findAll({ where: { blog_id: req.params.blog_id, hidden: "false" }, include: [{ model: Blog }] });
+    console.log("HI");
+    const comments = await Comment.findAll({
+        where: { blog_id: req.params.blog_id, hidden: "false" }, include: [
+            {
+                model: User,
+                attributes: ['name', 'image']
+            }
+        ]
+    });
 
     res.status(200).json({
         status: 'success',

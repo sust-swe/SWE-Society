@@ -7,25 +7,30 @@ const Event = sequelize.define('event', {
 
     title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     event_date: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     location: {
-    	type: DataTypes.STRING,
-    	allowNull: false
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     image: {
         type: DataTypes.ARRAY(DataTypes.STRING)
     },
     description: {
         type: DataTypes.TEXT
-    },
-    location: {
-        type: DataTypes.STRING(50),
-        allowNull: false
     },
     hidden: {
         type: DataTypes.BOOLEAN,

@@ -7,25 +7,34 @@ const Achievement = sequelize.define('achievement', {
 
     team_name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     title: {
-        type: DataTypes.STRING(100)
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     position: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     date: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     image: {
         type: DataTypes.ARRAY(DataTypes.STRING)
-    },
-    team_member: {
-        type: DataTypes.ARRAY(DataTypes.BIGINT),
-        allowNull: false
     },
     description: {
         type: DataTypes.STRING

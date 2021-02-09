@@ -382,6 +382,40 @@
         ```
    * Delete (Hide) Any Announcement : `DELETE /api/announcement/:announcement_id`
 
+## Achievement related
+
+### 
+- Without User Authorization
+
+   * Show All Achievements : `GET /api/achievements/`
+        
+- With Admin / Superadmin Authorization
+    
+   * Post An Achievement : `POST /api/achievements/`
+        ```json
+        Request Body
+        {
+            "team_name" : "XYZ",
+            "title" : "DIU HACKATHON",
+            "position":"runner-up",
+            "date":"2017-12-30T00:00:00.000Z",
+            "image":["aa.jpg","bb.jpg"],
+            "description":"it was..."
+        }
+        ```
+   * Update Any Achievement : `PATCH /api/achievements/:achievements_id`
+        ```json
+        Request Body
+        {
+            "team_name" : "XYZ",
+            "title" : "DIU HACKATHON",
+            "position":"runner-up",
+            "date":"2017-12-30T00:00:00.000Z",
+            "image":["aa.jpg","bb.jpg"],
+            "description":"it was..."
+        }
+        ```
+   * Delete (Hide) Any Achievement : `DELETE /api/achievements/:achievement_id`
 
    
 
