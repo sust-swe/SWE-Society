@@ -318,7 +318,7 @@
         }
         ```
 
-   * Show All Comments Of A Blogs : `GET /api/comments/:blog_id`
+   * Show All Comments Of A Blog : `GET /api/comments/:blog_id`
 
    * Delete Own Comment : `Delete /api/comments/:comment_id`
 
@@ -453,6 +453,33 @@
         ```
    * Delete (Hide) Any Event : `DELETE /api/event/:event_id`
 
+## Gallary related
+
+### 
+- Without User Authorization
+
+   * Show All Contents : `GET /api/gallary/`
+   * Show Specific Content : `GET /api/gallary/:content_id`
+        
+- With Admin / Superadmin Authorization
+    
+   * Post A Content : `POST /api/gallary/`
+        ```json
+        Request Body
+        {
+            "caption" : "Bijoy Dibosh",
+            "image" : "abc.jpg"
+        }
+        ```
+   * Update Any Content : `PATCH /api/gallary/:content_id`
+        ```json
+        Request Body
+        {
+            "caption" : "Bijoy Dibosh NA",
+            "image" : "abc.jpg"
+        }
+        ```
+   * Delete (Hide) Any Content : `DELETE /api/gallary/:content_id`
    
 
 
