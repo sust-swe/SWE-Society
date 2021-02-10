@@ -239,13 +239,8 @@
             }
         ]
         ```
-    * Remove A Member From The Current Committee : `DELETE /api/committee/role/`
-        ```json
-        Request Body
-        {
-            "reg_no": "2017831036"
-        }
-        ```
+    * Remove A Member From The Current Committee : `DELETE /api/committee/role/:reg_no`
+
 - With User Authorization
 
     * Show All Committees : `GET /api/committee/`
@@ -481,6 +476,35 @@
         ```
    * Delete (Hide) Any Content : `DELETE /api/gallary/:content_id`
    
+
+## Batch related
+
+### 
+- Without User Authorization
+
+   * Show All Batches: `GET /api/batch/`
+   * Show Specific Batch With Students : `GET /api/batch/:batch_year`
+        
+- With Admin / Superadmin Authorization
+    
+   * Create A Batch : `POST /api/batch/`
+        ```json
+        Request Body
+        {
+            "name":"Uththan",
+            "batch":"2017",
+            "image" : "abc.jpg"
+        }
+        ```
+   * Update Any Batch : `PATCH /api/batch/:batch_year`
+        ```json
+        Request Body
+        {
+            "name":"Uththan",
+            "image" : "xyz.jpg"
+        }
+        ```
+   * Delete (Hide) Any Batch : `DELETE /api/batch/:batch_year`
 
 
    

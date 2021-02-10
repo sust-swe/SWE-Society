@@ -1,7 +1,6 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import AddPostPopover from "../components/blog/addPostPopover";
 import AllPosts from "../components/blog/allPosts";
 import Layout from "../components/generic/layout";
 import { BlogProvider } from "../contexts/blogContext";

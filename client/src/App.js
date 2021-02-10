@@ -22,6 +22,11 @@ import AddPost from "./pages/addPost";
 import CreateCommittee from "./pages/createCommittee";
 import UpdateCommittee from "./pages/updateCommittee";
 import MyBlog from "./pages/myBlog";
+import ChangeEmail from "./pages/changeEmail";
+import ResetPassword from "./pages/resetPassword";
+import Batch from "./pages/batch";
+import SingleBatch from "./pages/singleBatch";
+import Announcements from "./pages/announcements";
 
 
 function App() {
@@ -42,8 +47,13 @@ function App() {
         <ProtectedRoute exact path="/committee" component={Committee}/>
         <ProtectedRoute exact path="/committee/create"  restrictedTo={["admin", "superadmin"]} component={CreateCommittee}/>
         <ProtectedRoute exact path="/committee/update"  restrictedTo={["admin", "superadmin"]} component={UpdateCommittee}/>
+        <ProtectedRoute exact path="/batch" component={Batch}/>
+        <ProtectedRoute exact path="/batch/:batch" component={SingleBatch}/>
         <ProtectedRoute exact path="/addpost" component={AddPost}/>
         <ProtectedRoute exact path="/blog" component={MyBlog}/>
+        <ProtectedRoute exact path="/changeemail" component={ChangeEmail}/>
+        <ProtectedRoute exact path="/announcements"  restrictedTo={["admin", "superadmin"]} component={Announcements}/>
+        <Route exact path="/resetpassword/:token" component={ResetPassword}/>
         <Route path="*" component={NotFound} />
       </Switch>
 
