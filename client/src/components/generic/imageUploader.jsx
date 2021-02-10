@@ -63,7 +63,7 @@ const ImageUploader = (props) => {
           <ModalBody>
             {url && <Image src={url} />}
             <Box {...getRootProps()}>
-              <input {...getInputProps()} accept=".jpg,.png" />
+              <input {...getInputProps()} accept=".jpg,.png,.jpeg" />
               {fileStatus !== "selected" ? (
                 <>
                   {isDragActive ? (

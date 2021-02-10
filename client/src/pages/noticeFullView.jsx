@@ -17,6 +17,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
+  Spinner,
   Text,
   Textarea,
   useDisclosure,
@@ -26,6 +27,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../contexts/authContext";
+import Layout from "../components/generic/layout";
 import { Link } from "react-router-dom";
 
 const NoticeFullView = () => {
@@ -36,6 +38,12 @@ const NoticeFullView = () => {
     attachment: [],
   });
   const [requestState, setRequestState] = useState("none");
+
+
+const NoticeFullView = () => {
+  const { unauthorizedHandler } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+
   const toast = useToast();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,12 +53,13 @@ const NoticeFullView = () => {
   const key = useParams().id;
 
   useEffect(() => {
+    setLoading(true);
     const loadFirst = async () => {
       axios
         .get(`/api/notice/${key}`)
         .then((res) => {
           setEditedNotice(res.data);
-          console.log(res.data);
+          setLoading(false);
           setLoadPromise(true);
         })
         .catch((err) => {});
@@ -65,12 +74,10 @@ const NoticeFullView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setRequestState("loading");
 
     axios
       .patch("/api/notice/" + editedNotice.id, editedNotice)
       .then((res) => {
-        setRequestState("success");
         onClose();
         history.go(0);
       })
@@ -83,93 +90,93 @@ const NoticeFullView = () => {
           duration: 3000,
           isClosable: true,
         });
-        setRequestState("error");
       });
   };
 
   return (
-    <Center bg="grey" minH="75vh">
-      <Box bg="white" w="50%" p={4} marginTop="5" marginBottom="5">
-        <Flex>
-          <Text fontSize="3xl" fontWeight="bold" textColor="red">
-            Notice Board
-          </Text>
-          <Spacer />
-          <IconButton onClick={onOpen} onClose={onClose} icon={<EditIcon />}>
-            Edit
-          </IconButton>
-        </Flex>
-        <Text fontSize="2xl" fontWeight="bold" textColor="black">
-          {editedNotice.title}
-        </Text>
-        <Text fontSize="xl" fontWeight="bold" textColor="black">
-          Date : {new Date(editedNotice.createdAt).getUTCDate()}/
-          {new Date(editedNotice.createdAt).getUTCMonth() + 1}/
-          {new Date(editedNotice.createdAt).getUTCFullYear()}
-        </Text>
-        <Text marginTop="5" fontSize="lg" textColor="black">
-          {editedNotice.description}
-        </Text>
-        {editedNotice.attachment.length > 0 ? (
-          <Button onClick={viewAttachment} marginTop="3" bg="blue.500">
-            View Attachment
-            <Link
-              to={`192.168.31.68:8000/${editedNotice.attachment[0]}`}
-              target="_blank"
-            ></Link>
-          </Button>
+
+    <Layout>
+      <Center minH="75vh">
+        {loading ? (
+          <Spinner />
         ) : (
-          <></>
+          <Box bg="white" w="50%" shadow="xl" borderRadius="md" p={5}>
+            <Flex>
+              <Text fontSize="2xl" fontWeight="bold" textColor="black">
+                {editedNotice.title}
+              </Text>
+              <Spacer />
+              <IconButton
+                onClick={onOpen}
+                onClose={onClose}
+                icon={<EditIcon />}
+              >
+                Edit
+              </IconButton>
+            </Flex>
+            <Text fontSize="xl" fontWeight="bold" textColor="black">
+              Date : {new Date(editedNotice.createdAt).getUTCDate()}/
+              {new Date(editedNotice.createdAt).getUTCMonth() + 1}/
+              {new Date(editedNotice.createdAt).getUTCFullYear()}
+            </Text>
+            <Text marginTop="5" fontSize="lg" textColor="black">
+              {editedNotice.description}
+            </Text>
+
+            <Modal
+              initialFocusRef={initialRef}
+              isOpen={isOpen}
+              onClose={onClose}
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Create your account</ModalHeader>
+                <ModalCloseButton />
+                <form onSubmit={handleSubmit}>
+                  <ModalBody pb={6}>
+                    <FormControl>
+                      <FormLabel>Title</FormLabel>
+                      <Input
+                        type="text"
+                        value={editedNotice.title}
+                        ref={initialRef}
+                        onChange={(e) =>
+                          setEditedNotice({
+                            ...editedNotice,
+                            title: e.target.value,
+                          })
+                        }
+                        placeholder="First name"
+                      />
+                    </FormControl>
+
+                    <FormControl mt={4}>
+                      <FormLabel>Body</FormLabel>
+                      <Textarea
+                        value={editedNotice.description}
+                        onChange={(e) =>
+                          setEditedNotice({
+                            ...editedNotice,
+                            description: e.target.value,
+                          })
+                        }
+                      />
+                    </FormControl>
+                  </ModalBody>
+
+                  <ModalFooter>
+                    <Button type="submit" colorScheme="blue" mr={3}>
+                      Save
+                    </Button>
+                    <Button onClick={onClose}>Cancel</Button>
+                  </ModalFooter>
+                </form>
+              </ModalContent>
+            </Modal>
+          </Box>
         )}
-
-        <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Create your account</ModalHeader>
-            <ModalCloseButton />
-            <form onSubmit={handleSubmit}>
-              <ModalBody pb={6}>
-                <FormControl>
-                  <FormLabel>Title</FormLabel>
-                  <Input
-                    type="text"
-                    value={editedNotice.title}
-                    ref={initialRef}
-                    onChange={(e) =>
-                      setEditedNotice({
-                        ...editedNotice,
-                        title: e.target.value,
-                      })
-                    }
-                    placeholder="First name"
-                  />
-                </FormControl>
-
-                <FormControl mt={4}>
-                  <FormLabel>Body</FormLabel>
-                  <Textarea
-                    value={editedNotice.description}
-                    onChange={(e) =>
-                      setEditedNotice({
-                        ...editedNotice,
-                        description: e.target.value,
-                      })
-                    }
-                  />
-                </FormControl>
-              </ModalBody>
-
-              <ModalFooter>
-                <Button type="submit" colorScheme="blue" mr={3}>
-                  Save
-                </Button>
-                <Button onClick={onClose}>Cancel</Button>
-              </ModalFooter>
-            </form>
-          </ModalContent>
-        </Modal>
-      </Box>
-    </Center>
+      </Center>
+    </Layout>
   );
 };
 

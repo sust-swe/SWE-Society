@@ -65,7 +65,7 @@ const ProfileBasics = ({ user }) => {
         <VisuallyHidden>
           <input
             type="file"
-            accept=".jpg,.png"
+            accept=".jpg,.png,.jpeg"
             ref={imageRef}
             onChange={handleFileInput}
           />
