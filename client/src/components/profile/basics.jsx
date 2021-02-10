@@ -1,6 +1,7 @@
 import {
   Badge,
   Box,
+  Button,
   Center,
   Heading,
   Icon,
@@ -15,6 +16,8 @@ import { GoLocation } from "react-icons/go";
 import { IoMailOutline } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import BasicEditModal from "./basicEditModal";
+import UpdateEmail from "./updateEmail";
+import UpdatePassword from "./updatePassword";
 
 const ProfileBasics = ({ user }) => {
   const edit = useLocation().pathname.startsWith("/profile");
@@ -94,6 +97,10 @@ const ProfileBasics = ({ user }) => {
               </Link>
             )}
           </Text>
+        </Center>
+        <Center>
+          <UpdatePassword />
+          <UpdateEmail />
         </Center>
       </Box>
     </Box>
