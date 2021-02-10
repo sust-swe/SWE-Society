@@ -11,8 +11,10 @@ const Notice = require('../models/NoticeModel');
 const Achievement = require('../models/AchievementModel');
 const Credential = require('../models/CredentialModel');
 const Education = require('../models/EducationModel');
+const Batch = require('../models/BatchModel');
 
-// User Relations
+
+Batch.hasMany(User, { foreignKey: { name: 'batch', allowNull: false } })
 User.hasMany(Blog, { foreignKey: { name: 'reg_no', allowNull: false } })
 Blog.belongsTo(User, { foreignKey: { name: 'reg_no', allowNull: false } })
 

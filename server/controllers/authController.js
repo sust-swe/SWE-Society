@@ -3,6 +3,7 @@ const AppError = require('./../utils/appError');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const Credential = require('../models/CredentialModel');
+const User = require('../models/UserModel')
 
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -21,7 +22,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   const user = await Credential.findOne({
     where: {
       reg_no: currentUser.reg_no
-    }
+    }, include: [{
+      model: User,
+      attributes: ['name']
+    }]
   })
   if (user == null)
     return next(new AppError('The user belonging to this token does no longer exist.', 401));
@@ -32,7 +36,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   //console.log(changedTimestamp, decoded.iat);
   req.user = {
     reg_no: user.reg_no,
-    role: user.role
+    role: user.role,
+    name: user.user.name
   };
   next();
 });

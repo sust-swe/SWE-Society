@@ -1,9 +1,11 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import AddSingleMember from "./addSingleMember";
 import CreateAdmin from "./createAdmin";
 
 const DashboardButtons = () => {
+  const history = useHistory();
+
   return (
     <Flex flexWrap="wrap">
       <CreateAdmin />
@@ -40,8 +42,11 @@ const DashboardButtons = () => {
         flexGrow="1"
         m={3}
         p={3}
+        as={Link}
+        to="/announcements"
+        cursor="pointer"
       >
-        <Text fontSize="xl">Committee</Text>
+        <Text fontSize="xl">Announcements</Text>
       </Center>
     </Flex>
   );

@@ -45,7 +45,7 @@ const SkillsEditModal = ({ isFloating }) => {
       })
       .then((res) => {
         setRequestState("success");
-        login(...user, ...res.data.user);
+        login({ ...user, ...res.data.user });
         onClose();
         history.go(0);
       })
@@ -105,7 +105,12 @@ const SkillsEditModal = ({ isFloating }) => {
               <Button colorScheme="red" mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button type="submit" colorScheme="green" bg="green.500">
+              <Button
+                disabled={requestState === "loading"}
+                type="submit"
+                colorScheme="green"
+                bg="green.500"
+              >
                 {requestState === "loading" && <Spinner mr={1} />}Submit
               </Button>
             </ModalFooter>

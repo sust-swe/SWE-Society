@@ -162,10 +162,3 @@ exports.removeAdmin = catchAsync(async (req, res, next) => {
 });
 
 
-
-
-
-// ,
-//     include: [{
-//       model: Credential,
-//     }],
