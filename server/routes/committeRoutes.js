@@ -10,7 +10,7 @@ const announcementController = require('../controllers/announcementController');
 // router.delete('/announcement/:id', authController.protect, authController.restrictTo('admin', 'superadmin'), announcementController.deleteAnnouncement);
 // router.get('/announcement/:committee_order', authController.protect, announcementController.getAllAnnouncements);
 router.post('/role', committeeController.addMemberToCommittee);
-router.delete('/role', committeeController.removeMember);
+router.delete('/role/:reg_no', committeeController.removeMember);
 router.patch('/role', committeeController.updateRole);
 router.post('/', committeeController.createCommittee);
 router.get('/current', committeeController.getExecutiveMembersOfCurrentCommittee);

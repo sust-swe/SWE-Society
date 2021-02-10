@@ -30,7 +30,8 @@ const User = sequelize.define('user', {
         type: DataTypes.TEXT
     },
     image: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        defaultValue: "user.png"
     },
     fb_link: {
         type: DataTypes.STRING,

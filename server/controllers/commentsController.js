@@ -50,7 +50,7 @@ exports.getCommentsOfBlog = catchAsync(async (req, res, next) => {
         where: { blog_id: req.params.blog_id, hidden: "false" }, include: [
             {
                 model: User,
-                attributes: ['name', 'image']
+                attributes: ['name', 'image', 'reg_no']
             }
         ]
     });
