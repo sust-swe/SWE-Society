@@ -92,7 +92,7 @@ const UpdatePassword = () => {
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Confirm New Password</FormLabel>
+                <FormLabel>New Password</FormLabel>
                 <Input
                   placeholder="New Password"
                   type="password"

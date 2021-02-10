@@ -39,7 +39,7 @@ const ChangeEmail = () => {
       })
       .catch((err) => {
         toast({
-          title: err.response.data.message,
+          title: err?.response?.data?.message,
           status: "error",
           duration: 3000,
           isClosable: true,
