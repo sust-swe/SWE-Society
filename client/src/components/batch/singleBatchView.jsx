@@ -6,17 +6,19 @@ import {
   Heading,
   Image,
   Spinner,
+  Stack,
 } from "@chakra-ui/react";
 import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../contexts/authContext";
 import { BatchContext } from "../../contexts/batchContext";
+import EditBatchModal from "./editBatchModal";
 
 const SingleBatchView = ({ batch }) => {
   const { selectedBatch, batchLoading, getSelectedBatch } = useContext(
     BatchContext
   );
-  const { user } = useContext(AuthContext);
+  const { user: loggedUser } = useContext(AuthContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -62,13 +64,26 @@ const SingleBatchView = ({ batch }) => {
       ) : (
         <>
           <Box textAlign="center">
-            <Heading size="lg" m={2}>
-              {selectedBatch.name}
-            </Heading>
-            <Badge mb={2}>
-              Session {selectedBatch.batch} -{" "}
-              {parseInt(selectedBatch.batch) + 1}
-            </Badge>
+            {selectedBatch.image && (
+              <Image
+                m="auto"
+                w="100px"
+                h="100px"
+                src={"/" + selectedBatch.image}
+                mb={4}
+              />
+            )}
+            <Heading size="lg">{selectedBatch.name}</Heading>
+            <Flex justifyContent="center">
+              <Badge m={1}>
+                Session {selectedBatch.batch} -{" "}
+                {parseInt(selectedBatch.batch) + 1}
+              </Badge>
+
+              {["admin", "superadmin"].includes(loggedUser.credential.role) && (
+                <EditBatchModal batch={selectedBatch} />
+              )}
+            </Flex>
           </Box>
           <Flex flexWrap="wrap" justifyContent="center">
             {selectedBatch.users
