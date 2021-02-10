@@ -3,12 +3,10 @@ import { Avatar, Box, Divider, Flex, IconButton, Image, Spacer, Text, Textarea }
 import Layout from "../generic/layout";
 import ShowComment from "./showComment";
 import WriteComment from "./writeComment";
-import MultipleGridImages from 'react-multiple-image-grid'
 import { useContext, useState, useEffect } from "react";
 import EventCarousal from "../event/eventCarousal";
 
 const SingleBlog = (blog) => {
-
 
     return (
         <Box padding="5" mt="2" width="3xl" bg="whitesmoke">
@@ -28,12 +26,11 @@ const SingleBlog = (blog) => {
             </Box>
             <Box  >
                 
-            {blog.image.map((img) => (
+            {/* {blog.image.map((img) => (
                     <Image mt={2} cursor="pointer" src={img} />
-                ))}
+                ))} */}
 
-                
-                {/* <MultipleGridImages images={blog.image} /> */}
+            <Image mt={2} cursor="pointer" src={blog.image[0]} />
             </Box>
             <Divider mt={2} mb={2} orientation="horizontal" />
 
