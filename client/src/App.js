@@ -22,6 +22,7 @@ import AddPost from "./pages/addPost";
 import CreateCommittee from "./pages/createCommittee";
 import UpdateCommittee from "./pages/updateCommittee";
 import MyBlog from "./pages/myBlog";
+import ChangeEmail from "./pages/changeEmail";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
         <ProtectedRoute exact path="/committee/update"  restrictedTo={["admin", "superadmin"]} component={UpdateCommittee}/>
         <ProtectedRoute exact path="/addpost" component={AddPost}/>
         <ProtectedRoute exact path="/blog" component={MyBlog}/>
+        <ProtectedRoute exact path="/changeemail" component={ChangeEmail}/>
         <Route path="*" component={NotFound} />
       </Switch>
 
