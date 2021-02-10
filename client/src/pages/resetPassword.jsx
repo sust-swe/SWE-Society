@@ -26,9 +26,9 @@ const ResetPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
 
     if (newPassword === confirmPassword) {
+      setLoading(true);
       axios
         .patch("/api/user/password/reset/" + token, {
           password: newPassword,
