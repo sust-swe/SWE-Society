@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Center,
   Spinner,
@@ -39,6 +40,9 @@ const CommitteeList = (props) => {
       >
         <Td>
           Session {committee.session[0].value} - {committee.session[1].value}
+          <Badge size="xl" colorScheme="green" ml={2}>
+            {committee.committee_order}
+          </Badge>
         </Td>
       </Tr>
     );
@@ -67,7 +71,11 @@ const CommitteeList = (props) => {
               </Th>
             </Tr>
           </Thead>
-          <Tbody>{committeeList.map(singleItem)}</Tbody>
+          <Tbody>
+            {committeeList
+              .sort((a, b) => b.committee_order - a.committee_order)
+              .map(singleItem)}
+          </Tbody>
         </Table>
       )}
     </Box>

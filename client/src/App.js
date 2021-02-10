@@ -40,10 +40,9 @@ function App() {
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/user/:id" component={Profile}/>
         <ProtectedRoute exact path="/committee" component={Committee}/>
-        <ProtectedRoute exact path="/committee/create" component={CreateCommittee}/>
-        <ProtectedRoute exact path="/committee/update" component={UpdateCommittee}/>
+        <ProtectedRoute exact path="/committee/create"  restrictedTo={["admin", "superadmin"]} component={CreateCommittee}/>
+        <ProtectedRoute exact path="/committee/update"  restrictedTo={["admin", "superadmin"]} component={UpdateCommittee}/>
         <ProtectedRoute exact path="/addpost" component={AddPost}/>
-
         <ProtectedRoute exact path="/blog" component={MyBlog}/>
         <Route path="*" component={NotFound} />
       </Switch>
