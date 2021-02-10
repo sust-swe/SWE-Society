@@ -36,11 +36,6 @@ const UpdatePassword = () => {
           newpassword: newPassword,
         })
         .then((res) => {
-          setLoading(false);
-          setOldPassword("");
-          setNewPassword("");
-          setConfirmPassword("");
-          onClose();
           toast({
             title: "Password Updated!",
             status: "success",
@@ -49,17 +44,19 @@ const UpdatePassword = () => {
           });
         })
         .catch((err) => {
-          setLoading(false);
-          setOldPassword("");
-          setNewPassword("");
-          setConfirmPassword("");
-          onClose();
           toast({
             title: "Wrong Password!",
             status: "error",
             duration: 3000,
             isClosable: true,
           });
+        })
+        .finally(() => {
+          setLoading(false);
+          setOldPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+          onClose();
         });
     } else {
       toast({

@@ -16,6 +16,7 @@ import { GoLocation } from "react-icons/go";
 import { IoMailOutline } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import BasicEditModal from "./basicEditModal";
+import UpdateEmail from "./updateEmail";
 import UpdatePassword from "./updatePassword";
 
 const ProfileBasics = ({ user }) => {
@@ -99,9 +100,7 @@ const ProfileBasics = ({ user }) => {
         </Center>
         <Center>
           <UpdatePassword />
-          <Button size="sm" m={1}>
-            Change Email
-          </Button>
+          <UpdateEmail />
         </Center>
       </Box>
     </Box>
