@@ -15,7 +15,6 @@ import {
   IconButton,
   Image,
   Input,
-
   Menu,
   MenuButton,
   MenuItem,
@@ -45,7 +44,7 @@ import { AuthContext } from "../../contexts/authContext";
 import axios from "axios";
 import { HtmlEditor, MenuBar } from "@aeaton/react-prosemirror";
 import { options, menu } from "@aeaton/react-prosemirror-config-default";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SingleBlog = (blog) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -136,7 +135,9 @@ const SingleBlog = (blog) => {
       <Flex align="center" direction="row">
         <Avatar margin={1} src={blog.user.image} />
 
-        <Link fontWeight="bold" to={`user/${blog.reg_no}`} fontSize="xl">{blog.user.name}</Link>
+        <Link fontWeight="bold" to={`user/${blog.reg_no}`} fontSize="xl">
+          {blog.user.name}
+        </Link>
         <Spacer />
 
         {(blog.reg_no === user.reg_no ||

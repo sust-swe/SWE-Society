@@ -26,10 +26,15 @@ import { useHistory, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../contexts/authContext";
+import { Link } from "react-router-dom";
 
 const NoticeFullView = () => {
   const { unauthorizedHandler } = useContext(AuthContext);
-  const [editedNotice, setEditedNotice] = useState({});
+  const [editedNotice, setEditedNotice] = useState({
+    title: "",
+    description: "",
+    attachment: [],
+  });
   const [requestState, setRequestState] = useState("none");
   const toast = useToast();
   const history = useHistory();
@@ -45,12 +50,18 @@ const NoticeFullView = () => {
         .get(`/api/notice/${key}`)
         .then((res) => {
           setEditedNotice(res.data);
+          console.log(res.data);
           setLoadPromise(true);
         })
         .catch((err) => {});
     };
     loadFirst();
   }, [key, loadPromise]);
+
+  const viewAttachment = () => {
+    // axios.get(`192.168.31.68:8000/${editedNotice.attachment[0]}`);
+    history.push(`192.168.31.68:8000/${editedNotice.attachment[0]}`);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,9 +110,17 @@ const NoticeFullView = () => {
         <Text marginTop="5" fontSize="lg" textColor="black">
           {editedNotice.description}
         </Text>
-        <Button marginTop="3" bg="blue.500">
-          View Attachment
-        </Button>
+        {editedNotice.attachment.length > 0 ? (
+          <Button onClick={viewAttachment} marginTop="3" bg="blue.500">
+            View Attachment
+            <Link
+              to={`192.168.31.68:8000/${editedNotice.attachment[0]}`}
+              target="_blank"
+            ></Link>
+          </Button>
+        ) : (
+          <></>
+        )}
 
         <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
