@@ -69,7 +69,7 @@ const ResetPassword = () => {
     <Layout>
       <Center minH="75vh">
         <Box p={5} textAlign="center" bg="white" borderRadius="md" shadow="xl">
-          <Heading size="md">Change Email</Heading>
+          <Heading size="md">Reset Password</Heading>
           <form onSubmit={handleSubmit}>
             <FormControl mt={4}>
               <FormLabel>New Password</FormLabel>
@@ -93,7 +93,7 @@ const ResetPassword = () => {
             </FormControl>
 
             <Button disabled={loading} type="submit" colorScheme="green" mt={4}>
-              {loading && <Spinner mr={3} />}Set Password
+              {loading && <Spinner mr={3} />}Reset Password
             </Button>
           </form>
         </Box>
