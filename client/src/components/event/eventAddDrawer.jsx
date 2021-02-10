@@ -47,7 +47,6 @@ const EventAddDrawer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(editedEvent);
     setRequestState("loading");
 
     axios

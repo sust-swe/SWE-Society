@@ -13,10 +13,11 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import { HtmlEditor, MenuBar } from "@aeaton/react-prosemirror";
 import { options, menu } from "@aeaton/react-prosemirror-config-default";
+import { useHistory } from "react-router-dom";
 
 const AddPostForm = (props) => {
   const [title, setTitle] = useState("");
@@ -27,6 +28,7 @@ const AddPostForm = (props) => {
   const toast = useToast();
   const { unauthorizedHandler } = useContext(AuthContext);
   const imageInputRef = useRef(null);
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,6 +45,7 @@ const AddPostForm = (props) => {
             duration: 3000,
             isClosable: true,
           });
+          history.push("/blog");
         })
         .catch((err) => {
           unauthorizedHandler(err);
@@ -86,10 +89,6 @@ const AddPostForm = (props) => {
         });
       });
   };
-
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
 
   return (
     <Box p={10} bg="white">
@@ -141,6 +140,7 @@ const AddPostForm = (props) => {
                     onClick={() =>
                       setImage(image.filter((cur) => cur !== file))
                     }
+                    id={file}
                     h="auto"
                     m={1}
                     src={file}

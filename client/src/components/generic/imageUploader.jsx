@@ -29,7 +29,7 @@ const ImageUploader = (props) => {
     const type = file.type.split("/")[0];
     if (type === "image") {
       const url = URL.createObjectURL(file);
-      setFile(file);
+      setFile(files);
       setUrl(url);
       setFileStatus("selected");
     } else {
@@ -45,8 +45,8 @@ const ImageUploader = (props) => {
 
   const handleSubmit = () => {
     const bodyFormData = new FormData();
-    bodyFormData.append("images", file);
-    axios.post("/api/imageUpload", bodyFormData).then((res) => {
+    bodyFormData.append("image", file);
+    axios.post("/api/imageupload", bodyFormData).then((res) => {
       setImage(res.data.image[0]);
       onClose();
     });
