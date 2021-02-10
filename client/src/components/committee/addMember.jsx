@@ -19,7 +19,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 const AddMember = ({ committee, setCommittee }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -53,6 +53,11 @@ const AddMember = ({ committee, setCommittee }) => {
           isClosable: true,
         });
         onClose();
+      })
+      .finally(() => {
+        setLoading(false);
+        setDesignation("");
+        setReg_no("");
       });
   };
 
@@ -82,7 +87,7 @@ const AddMember = ({ committee, setCommittee }) => {
                 <FormLabel>Designation</FormLabel>
                 <Input
                   type="text"
-                  onChange={(e) => setDesignation(e.target.value)}
+                  onChange={(e) => setDesignation(e.target.value.toUpperCase())}
                   value={designation}
                 />
                 <FormHelperText>
@@ -94,7 +99,7 @@ const AddMember = ({ committee, setCommittee }) => {
                 <FormLabel>Registration No</FormLabel>
                 <Input
                   type="text"
-                  onChange={(e) => setReg_no(e.target.value)}
+                  onChange={(e) => setReg_no(e.target.value.toUpperCase())}
                   value={reg_no}
                 />
               </FormControl>

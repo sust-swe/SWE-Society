@@ -6,11 +6,14 @@ import {
   Table,
   Tbody,
   Td,
+  Tfoot,
   Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
 import { useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../contexts/authContext";
 import { CommitteeContext } from "../../contexts/committeeContext";
 
 const CommitteeList = (props) => {
@@ -21,9 +24,13 @@ const CommitteeList = (props) => {
     getSelectedCommittee,
     selectedCommittee,
   } = useContext(CommitteeContext);
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
     getCommitteeList();
   }, []);
+
+  const history = useHistory();
 
   const singleItem = (committee) => {
     return (
@@ -76,6 +83,24 @@ const CommitteeList = (props) => {
               .sort((a, b) => b.committee_order - a.committee_order)
               .map(singleItem)}
           </Tbody>
+          {["admin", "superadmin"].includes(user.credential.role) && (
+            <Tfoot>
+              <Tr
+                onClick={() => history.push("/committee/create")}
+                _hover={{ bg: "gray.100" }}
+                cursor="pointer"
+              >
+                <Th textAlign="center">Add New Committee</Th>
+              </Tr>
+              <Tr
+                onClick={() => history.push("/committee/update")}
+                _hover={{ bg: "gray.100" }}
+                cursor="pointer"
+              >
+                <Th textAlign="center">Update Current Committee</Th>
+              </Tr>
+            </Tfoot>
+          )}
         </Table>
       )}
     </Box>

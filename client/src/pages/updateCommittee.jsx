@@ -72,7 +72,7 @@ const UpdateCommittee = () => {
       key={reg_no}
       opacity={deleted ? 0.5 : 1}
     >
-      <Td textAlign="center">{designation}</Td>
+      <Td textAlign="center">{designation.toUpperCase()}</Td>
       <Td textAlign="center">{reg_no}</Td>
       <Td textAlign="center">{name}</Td>
     </Tr>
