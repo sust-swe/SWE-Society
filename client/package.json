@@ -24,7 +24,7 @@
     "react-datepicker": "^3.4.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.3.0",
-    "react-icons": "^4.1.0",
+    "react-icons": "^4.2.0",
     "react-images-upload": "^1.2.8",
     "react-pro-sidebar": "^0.5.0",
     "react-router-dom": "^5.2.0",
@@ -58,5 +58,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.31.159:8000"
+  "proxy": "http://192.168.31.68:8000"
 }
