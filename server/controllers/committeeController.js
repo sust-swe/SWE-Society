@@ -22,7 +22,7 @@ exports.getExecutiveMembersOfACommittee = catchAsync(async (req, res, next) => {
         include: [
             {
                 model: User,
-                attributes: ['name']
+                attributes: ['name', 'image']
             },
             Committee
         ]
