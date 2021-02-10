@@ -13,7 +13,7 @@ const Landing = () => {
           },
           {
             title: "Hello World 2",
-            src: "bf290297ad1b28c26ea44d48b1d44db0.png",
+            src: "bd2e9131b5256c98cf2f6584faaea745.png",
             desc: "This is hello world 2",
           },
           {

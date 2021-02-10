@@ -12,12 +12,9 @@ const Event = () => {
     axios
       .get("/api/event")
       .then((res) => {
-        console.log(res);
         setEvents(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
   return (
     <Layout>

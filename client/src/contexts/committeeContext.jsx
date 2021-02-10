@@ -31,7 +31,6 @@ const CommitteeProvider = (props) => {
       .then((res) => {
         setSelectedCommittee(res.data);
         setCommitteeLoading(false);
-        console.log(res.data);
       })
       .catch((err) => unauthorizedHandler(err));
   };

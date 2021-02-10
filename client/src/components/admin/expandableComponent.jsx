@@ -7,7 +7,6 @@ const ExpandableComponent = ({ data, onDelete }) => {
   const [deleteStatus, setDeleteStatus] = useState("none");
   const [makeAdminStatus, setMakeAdminStatus] = useState("none");
   const { unauthorizedHandler } = useContext(AuthContext);
-  console.log(data);
 
   const handleDelete = () => {
     if (window.confirm(`Are you sure to delete ${data.name}?`)) {

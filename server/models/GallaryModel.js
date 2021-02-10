@@ -7,11 +7,14 @@ const Gallary = sequelize.define('gallary', {
 
     image: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     caption: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
     },
     hidden: {
         type: DataTypes.BOOLEAN,

@@ -318,7 +318,7 @@
         }
         ```
 
-   * Show All Comments Of A Blogs : `GET /api/comments/:blog_id`
+   * Show All Comments Of A Blog : `GET /api/comments/:blog_id`
 
    * Delete Own Comment : `Delete /api/comments/:comment_id`
 
@@ -382,7 +382,104 @@
         ```
    * Delete (Hide) Any Announcement : `DELETE /api/announcement/:announcement_id`
 
+## Achievement related
 
+### 
+- Without User Authorization
+
+   * Show All Achievements : `GET /api/achievements/`
+        
+- With Admin / Superadmin Authorization
+    
+   * Post An Achievement : `POST /api/achievements/`
+        ```json
+        Request Body
+        {
+            "team_name" : "XYZ",
+            "title" : "DIU HACKATHON",
+            "position":"runner-up",
+            "date":"2017-12-30T00:00:00.000Z",
+            "image":["aa.jpg","bb.jpg"],
+            "description":"it was..."
+        }
+        ```
+   * Update Any Achievement : `PATCH /api/achievements/:achievements_id`
+        ```json
+        Request Body
+        {
+            "team_name" : "XYZ",
+            "title" : "DIU HACKATHON",
+            "position":"runner-up",
+            "date":"2017-12-30T00:00:00.000Z",
+            "image":["aa.jpg","bb.jpg"],
+            "description":"it was..."
+        }
+        ```
+   * Delete (Hide) Any Achievement : `DELETE /api/achievements/:achievement_id`
+
+## Event related
+
+### 
+- Without User Authorization
+
+   * Show All Events : `GET /api/event/`
+   * Show Specific Event : `GET /api/event/:event_id`
+        
+- With Admin / Superadmin Authorization
+    
+   * Post A Event : `POST /api/event/`
+        ```json
+        Request Body
+        {
+            "title" : "Badminton Tournament",
+            "location": "IICT,SUST",
+            "event_date": "2017-12-30T00:00:00.000Z",
+            "image": ["aa.jpg","bb.jpg"],
+            "description":"it was...",
+            "cta_link" : "fb link or something, null is allowed"
+        }
+        ```
+   * Update Any Event : `PATCH /api/event/:event_id`
+        ```json
+        Request Body
+        {
+            "title" : "Chess Tournament",
+            "location": "IICT,SUST",
+            "event_date": "2017-12-30T00:00:00.000Z",
+            "image": ["aa.jpg","bb.jpg"],
+            "description":"it was...",
+            "cta_link" : "fb link or something, null is allowed"
+        }
+        ```
+   * Delete (Hide) Any Event : `DELETE /api/event/:event_id`
+
+## Gallary related
+
+### 
+- Without User Authorization
+
+   * Show All Contents : `GET /api/gallary/`
+   * Show Specific Content : `GET /api/gallary/:content_id`
+        
+- With Admin / Superadmin Authorization
+    
+   * Post A Content : `POST /api/gallary/`
+        ```json
+        Request Body
+        {
+            "caption" : "Bijoy Dibosh",
+            "image" : "abc.jpg"
+        }
+        ```
+   * Update Any Content : `PATCH /api/gallary/:content_id`
+        ```json
+        Request Body
+        {
+            "caption" : "Bijoy Dibosh NA",
+            "image" : "abc.jpg"
+        }
+        ```
+   * Delete (Hide) Any Content : `DELETE /api/gallary/:content_id`
    
 
 

@@ -7,7 +7,10 @@ const Notice = sequelize.define('notice', {
 
     title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     description: {
         type: DataTypes.TEXT

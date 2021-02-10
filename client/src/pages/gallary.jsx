@@ -5,25 +5,24 @@ import { useState, useEffect } from "react";
 // import Layout from "../components/generic/layout";
 
 const Gallary = () => {
+  const [contents, setContents] = useState([]);
 
-    const [contents, setContents] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/api/gallary")
+      .then((res) => {
+        setContents(res.data);
+      })
+      .catch((err) => {});
+  }, []);
 
-    useEffect(() => {
-        axios.get("/api/gallary").then((res) => {
-            console.log(res);
-            setContents(res.data);
-        }).catch(err => {
-            console.log(err);
-        })
-    }, [])
-
-    return (
-        <Flex minH="75vh" justifyContent="center" align="center" flexWrap="wrap" >
-            {contents.map((content) => (
-                <SingleFrame {...content} key={content.id} />
-            ))}
-        </Flex>
-    )
-}
+  return (
+    <Flex minH="75vh" justifyContent="center" align="center" flexWrap="wrap">
+      {contents.map((content) => (
+        <SingleFrame {...content} key={content.id} />
+      ))}
+    </Flex>
+  );
+};
 
 export default Gallary;

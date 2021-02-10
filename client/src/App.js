@@ -18,6 +18,9 @@ import NoticeView from "./pages/noticeFullView"
 import Committee from "./pages/committee";
 import Event from "./pages/event";
 import EventDetails from "../src/components/event/eventDetails"
+import AddPost from "./pages/addPost";
+import CreateCommittee from "./pages/createCommittee";
+import UpdateCommittee from "./pages/updateCommittee";
 import MyBlog from "./pages/myBlog";
 
 
@@ -33,12 +36,13 @@ function App() {
         <Route exact path="/noticeboard" component={NoticeBoard}/>
         <Route exact path ="/event/:id" component={EventDetails}/>
         <Route exact path ="/event" component={Event}/>
-        <Route path="/admin" component={Admin} />
         <ProtectedRoute path="/admin" restrictedTo={["admin", "superadmin"]} component={Admin} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/user/:id" component={Profile}/>
         <ProtectedRoute exact path="/committee" component={Committee}/>
-
+        <ProtectedRoute exact path="/committee/create"  restrictedTo={["admin", "superadmin"]} component={CreateCommittee}/>
+        <ProtectedRoute exact path="/committee/update"  restrictedTo={["admin", "superadmin"]} component={UpdateCommittee}/>
+        <ProtectedRoute exact path="/addpost" component={AddPost}/>
         <ProtectedRoute exact path="/blog" component={MyBlog}/>
         <Route path="*" component={NotFound} />
       </Switch>
