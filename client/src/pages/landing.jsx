@@ -8,17 +8,17 @@ const Landing = () => {
         items={[
           {
             title: "Hello World",
-            src: "99aa6375d112e84bd2d3d78c47c26bf4.jpeg",
+            src: "975c737e3d0dcbfbb3bb4691043ae8d3.jpeg",
             desc: "This is hello world",
           },
           {
             title: "Hello World 2",
-            src: "https://picsum.photos/1200/600",
+            src: "bf290297ad1b28c26ea44d48b1d44db0.png",
             desc: "This is hello world 2",
           },
           {
             title: "Hello World 3",
-            src: "https://picsum.photos/1200/600",
+            src: "6a95af9e7585b0db14f537c339fe7e5d.jpeg",
             desc: "This is hello world 3",
           },
         ]}
