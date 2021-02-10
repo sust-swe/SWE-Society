@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aeaton/react-prosemirror": "^0.22.1",
+    "@aeaton/react-prosemirror-config-default": "^0.12.0",
     "@chakra-ui/icons": "^1.0.3",
     "@chakra-ui/react": "^1.1.4",
+    "@ckeditor/ckeditor5-build-classic": "^25.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.1",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
     "@testing-library/jest-dom": "^5.11.8",
@@ -54,5 +58,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.31.68:8000"
+  "proxy": "http://192.168.31.159:8000"
 }

@@ -1,3 +1,4 @@
+import { Flex } from "@chakra-ui/react";
 import CommitteeList from "../components/committee/committeeList";
 import CommitteeView from "../components/committee/committeeView";
 import Layout from "../components/generic/layout";
@@ -7,8 +8,10 @@ const Committee = (props) => {
   return (
     <CommitteeProvider>
       <Layout>
-        <CommitteeList />
-        <CommitteeView />
+        <Flex direction={["column-reverse", "column-reverse", "row", "row"]}>
+          <CommitteeList />
+          <CommitteeView />
+        </Flex>
       </Layout>
     </CommitteeProvider>
   );

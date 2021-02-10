@@ -7,11 +7,18 @@ const Committee = connection.define('committee', {
         primaryKey: true
     },
     session: {
-        type: DataTypes.RANGE(DataTypes.INTEGER)
+        type: DataTypes.RANGE(DataTypes.INTEGER),
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     start_date: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     end_date: {
         type: DataTypes.DATE

@@ -26,7 +26,6 @@ const Profile = ({ userId }) => {
       .get("/api/user/" + id)
       .then((res) => {
         setUser(res.data.user);
-        console.log(res.data.user);
         setRequestState("loaded");
       })
       .catch((err) => {

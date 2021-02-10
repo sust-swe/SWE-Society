@@ -5,11 +5,17 @@ const Blog = sequelize.define('blog', {
 
     title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     content: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     image: {
         type: DataTypes.ARRAY(DataTypes.STRING)

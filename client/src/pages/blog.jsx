@@ -1,45 +1,31 @@
-import { Container } from "@chakra-ui/react";
-import PostThumb from "../components/blog/postThumb";
+import { AddIcon } from "@chakra-ui/icons";
+import { IconButton } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import AddPostPopover from "../components/blog/addPostPopover";
+import AllPosts from "../components/blog/allPosts";
 import Layout from "../components/generic/layout";
-
-const posts = [
-  {
-    title: "The first blog post",
-    author: "KhanShaheb",
-    date: "12 December, 2020",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem! Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem!",
-    image: "https://picsum.photos/1000",
-  },
-  {
-    title: "The second post without image",
-    author: "Shakirul Hasan",
-    date: "13 December, 2020",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem!",
-  },
-  {
-    title: "The Third blog post",
-    author: "Shakirul Hasan Khan",
-    date: "14 December, 2020",
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero soluta tempore voluptatem ducimus sit mollitia, repellendus, eaque est ut tenetur iste eum dolores odio dolorem blanditiis exercitationem vitae at autem!",
-    image: "https://picsum.photos/900",
-  },
-];
+import { BlogProvider } from "../contexts/blogContext";
 
 const Blog = ({ userId }) => {
-
-
-
   return (
-    <Layout>
-      <Container p={3} maxW="4xl" centerContent minH="70vh">
-        {posts.map((post) => (
-          <PostThumb {...post} key={post.title} />
-        ))}
-      </Container>
-    </Layout>
+    <BlogProvider>
+      <Layout>
+        <AllPosts />
+        <Link to="/addpost">
+          <IconButton
+            colorScheme="green"
+            position="sticky"
+            bottom="15px"
+            left="100%"
+            mb={3}
+            mr={3}
+            fontSize="25px"
+            isRound
+            icon={<AddIcon />}
+          />
+        </Link>
+      </Layout>
+    </BlogProvider>
   );
 };
 

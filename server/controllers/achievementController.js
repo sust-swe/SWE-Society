@@ -4,37 +4,29 @@ const Achievement = require('../models/AchievementModel');
 const AppError = require('../utils/appError');
 
 
-exports.getAllAchievement = catchAsync(async(req, res, next) => {
-    const achievements = await Achievement.findAll();
-
-    if(achievements == null)
-        return next(new AppError(`Does not found`, 404));
-   res.status(200).json(achievements);
+exports.getAllAchievements = catchAsync(async (req, res, next) => {
+    const achievements = await Achievement.findAll({ where: { hidden: "false" } });
+    res.status(200).json(achievements);
 });
 
-exports.getSingleAchievement = catchAsync(async(req, res, next) => {
-    const achievement = await Achievement.findOne({where:{id: req.params.id}})
-    if(achievement == null)
-        return next(new AppError(`Does not found`, 404));
-   res.status(200).json(achievement);
-});
-
-exports.getSpecificUserAchievements = catchAsync(async(req, res, next) => {
-    const achievements = await Achievement.findAll({where: {reg_no: req.params.reg_no}});
-    if(achievements == null)
-        return next(new AppError(`Does not found`, 404));
-    res.status(200).json(achievements)
-})
-
-exports.addAchievement = catchAsync(async(req, res , next) => {
-    req.body.reg_no = req.user.reg_no;
+exports.addAchievement = catchAsync(async (req, res, next) => {
+    req.body.hidden = undefined;
     const achievement = await Achievement.create(req.body);
     res.status(200).json(achievement);
 });
 
-exports.deleteAchievement = catchAsync(async(req, res, next) => {
-    const achievement = await Achievement.destroy({where:{id: req.params.id, reg_no: req.user.reg_no}})
-    if(achievement == 0)
+exports.updateAchievement = catchAsync(async (req, res, next) => {
+    req.body.hidden = undefined;
+    const achievement = await Achievement.update(req.body, { returning: true, where: { id: req.params.id, hidden: "false" } });
+    if (achievement[0] == 0)
+        return next(new AppError(`Not found`, 404));
+    res.status(200).json(achievement[1][0]);
+});
+
+
+exports.deleteAchievement = catchAsync(async (req, res, next) => {
+    const achievement = await Achievement.update({ hidden: "true" }, { returning: true, where: { id: req.params.id } })
+    if (achievement[0] == 0)
         return next(new AppError(`Does not found`, 404));
-    res.status(200).json({message:"Successfully deleted", achievement});
+    res.status(200).json({ message: "Successfully deleted" });
 });
