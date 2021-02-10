@@ -21,6 +21,7 @@ import EventDetails from "../src/components/event/eventDetails"
 import AddPost from "./pages/addPost";
 import CreateCommittee from "./pages/createCommittee";
 import UpdateCommittee from "./pages/updateCommittee";
+import MyBlog from "./pages/myBlog";
 
 
 function App() {
@@ -43,7 +44,7 @@ function App() {
         <ProtectedRoute exact path="/committee/update" component={UpdateCommittee}/>
         <ProtectedRoute exact path="/addpost" component={AddPost}/>
 
-        <ProtectedRoute exact path="/blog" component={Blog}/>
+        <ProtectedRoute exact path="/blog" component={MyBlog}/>
         <Route path="*" component={NotFound} />
       </Switch>
 

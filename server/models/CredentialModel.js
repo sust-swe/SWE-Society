@@ -5,16 +5,27 @@ const Credential = sequelize.define('credential', {
 
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
 
     role: {
         type: DataTypes.STRING,
-        defaultValue: "user"
+        defaultValue: "user",
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     status: {
         type: DataTypes.STRING,
-        defaultValue: "student"
+        defaultValue: "student",
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     email: {
         type: DataTypes.STRING,
@@ -22,6 +33,7 @@ const Credential = sequelize.define('credential', {
         unique: true,
         validate: {
             isEmail: true,
+            notEmpty: true
         }
     }
 });

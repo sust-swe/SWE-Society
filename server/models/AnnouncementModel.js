@@ -7,11 +7,17 @@ const Announcement = sequelize.define('announcement', {
 
     title: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     deadline: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     hidden: {
         type: DataTypes.BOOLEAN,

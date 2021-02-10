@@ -4,6 +4,7 @@ const formidabel = require("formidable");
 const Blog = require('../models/BlogModel');
 const AppError = require('../utils/appError');
 const Comment = require('../models/CommentModel');
+const User = require('../models/UserModel');
 
 
 exports.getAllNotApprovedBlogs = catchAsync(async (req, res, next) => {
@@ -11,16 +12,29 @@ exports.getAllNotApprovedBlogs = catchAsync(async (req, res, next) => {
   if (req.user.role != 'admin' && req.user.role != 'superadmin')
     return next(new AppError(`Not allowed to perform this action`, 403));
 
-  result = await Blog.findAll({ where: { isApproved: "false", hidden: "false" }, include: [Comment] });
+  result = await Blog.findAll({
+    where: { isApproved: "false", hidden: "false" }, include: [
+      {
+        model: User,
+        attributes: ['name', 'image']
+      }
+    ]
+  });
   res.send(result);
 });
 
 exports.getAllApprovedBlogs = catchAsync(async (req, res, next) => {
   let result;
-  result = await Blog.findAll({ where: { isApproved: "true", hidden: "false" }, include: [Comment] });
+  result = await Blog.findAll({
+    where: { isApproved: "true", hidden: "false" }, include: [
+      {
+        model: User,
+        attributes: ['name', 'image']
+      }
+    ]
+  });
   res.send(result);
 });
-
 
 exports.postBlog = catchAsync(async (req, res, next) => {
 
@@ -56,7 +70,7 @@ exports.getSpecificUsersBlogs = catchAsync(async (req, res, next) => {
 
 exports.updateBlog = catchAsync(async (req, res, next) => {
 
-  const blog = await Blog.findOne({ where: { id: req.params.id, hidden: "false", isApproved: "true" } });
+  let blog = await Blog.findOne({ where: { id: req.params.id, hidden: "false", isApproved: "true" } });
   if (blog == null)
     return next(new AppError(`Blog Does Not found`, 404));
 

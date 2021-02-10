@@ -5,7 +5,11 @@ const User = sequelize.define('user', {
 
     name: {
         type: DataTypes.STRING,
-        noUpdate: true
+        noUpdate: true,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     nick_name: {
         type: DataTypes.STRING,
@@ -27,7 +31,6 @@ const User = sequelize.define('user', {
     },
     image: {
         type: DataTypes.STRING
-
     },
     fb_link: {
         type: DataTypes.STRING,
