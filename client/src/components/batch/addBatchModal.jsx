@@ -129,7 +129,7 @@ const AddBatchModal = () => {
                 <VisuallyHidden>
                   <input
                     ref={imageInputRef}
-                    accept=".jpg,.png"
+                    accept=".jpg,.png,.jpeg"
                     type="file"
                     onChange={handleFileInput}
                   />

@@ -20,9 +20,7 @@ const Notice = () => {
     <Layout>
       <Box minH="75vh" p={3}>
         <Box align="center" justifyContent="center">
-          <Heading margin="3" color="red">
-            Notice Board
-          </Heading>
+          <Heading margin="3">Notice Board</Heading>
         </Box>
         <Center>
           <Box bg="white" p={2} borderRadius="md" shadow="xl">

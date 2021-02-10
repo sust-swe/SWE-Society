@@ -107,12 +107,12 @@ const EditBatchModal = ({ batch }) => {
                 <VisuallyHidden>
                   <input
                     ref={imageInputRef}
-                    accept=".jpg,.png"
+                    accept=".jpg,.png,.jpeg"
                     type="file"
                     onChange={handleFileInput}
                   />
                 </VisuallyHidden>
-                {image.length > 0 && (
+                {image?.length > 0 && (
                   <>
                     <Flex flexWrap="wrap">
                       <Image

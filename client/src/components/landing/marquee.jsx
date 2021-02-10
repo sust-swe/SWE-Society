@@ -21,6 +21,7 @@ const Marquee = () => {
           color: "white",
           lineHeight: "45px",
           fontSize: "18px",
+          marginBottom: "-10px",
         }}
       >
         •{"\xa0\xa0\xa0"}
