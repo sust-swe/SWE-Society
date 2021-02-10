@@ -38,9 +38,14 @@ const PostThumb = (post) => {
             <Text fontSize="sm" opacity="0.6" mb={2}>
               {post.reg_no} | {new Date(post.createdAt).toDateString()}
             </Text>
-            <Text color="gray.500" isTruncated noOfLines={3}>
-              {post.content}
-            </Text>
+            <Text
+              color="gray.500"
+              isTruncated
+              noOfLines={3}
+              dangerouslySetInnerHTML={{
+                __html: post.content.replaceAll("&lt;", "<"),
+              }}
+            />
           </Box>
         </Center>
         <Spacer />

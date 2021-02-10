@@ -15,7 +15,6 @@ const Students = () => {
       .get("/api/user")
       .then((res) => {
         setUsers(res.data.users);
-        console.log(res.data.users);
       })
       .catch((err) => unauthorizedHandler(err));
 

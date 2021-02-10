@@ -38,8 +38,13 @@ const SinglePostModal = ({ post, onClose, onOpen, isOpen }) => {
             <Link to={"/user/" + post.reg_no}>{post.reg_no}</Link> |{" "}
             {new Date(post.createdAt).toDateString()}
           </Text>
-          <Text color="gray.700">{post.content}</Text>
-          {post.comments.length > 0 && <CommentsView comments={comments} />}
+          <Text
+            color="gray.700"
+            dangerouslySetInnerHTML={{
+              __html: post.content.replaceAll("&lt;", "<"),
+            }}
+          />
+          {post.comments?.length > 0 && <CommentsView comments={comments} />}
           <CommentBox
             postId={post.id}
             comments={comments}
