@@ -77,11 +77,10 @@ const ProfileBasics = ({ user }) => {
         </Center>
       ) : (
         <Image
-          src={user.image ? user.image : "https://picsum.photos/500"}
+          src={user.image ? "/" + user.image : "https://picsum.photos/500"}
           alt="Profile Pic"
           w="100%"
           borderTopRadius="md"
-          bg="black"
           transition="ease 0.3s"
           cursor={edit ? "pointer" : "auto"}
           onClick={() => {
