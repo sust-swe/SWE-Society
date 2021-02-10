@@ -62,12 +62,14 @@ exports.addMemberToCommittee = catchAsync(async (req, res, next) => {
         element.committee_order = committee_order
     });
     const role = await Role.bulkCreate(req.body);
-    res.status(200).json(role);
+    req.params.committee_order = committee_order;
+    this.getExecutiveMembersOfACommittee(req, res, next);
+    // res.status(200).json(role);
 });
 
 exports.removeMember = catchAsync(async (req, res, next) => {
     const committee_order = await Committee.count();
-    const role = await Role.destroy({ where: { reg_no: req.body.reg_no, committee_order } });
+    const role = await Role.destroy({ where: { reg_no: req.params.reg_no, committee_order } });
     if (role == 0)
         return next(new AppError(`Not found`, 404));
     res.status(200).json({ message: 'Successfully deleted' });

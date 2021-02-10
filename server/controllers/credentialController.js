@@ -132,8 +132,8 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 exports.requestEmailChange = catchAsync(async (req, res, next) => {
     const jwtToken = jwtGenerator({ email: req.body.email }, process.env.jwtResetTokenExpire);
-    const message = `<div>Hey,Use this token and update your email within 5 minutes.If this is not related to you just Ignore</div>
-                    <p>${jwtToken}</p>`;
+    const message = `<div>Hey ${req.user.name}, Use this token and update your email within 5 minutes. If this is not related to you just Ignore</div>
+                    <p><h3>${jwtToken}</h3></p>`;
     sendEmail(req.body.email, 'Update Email', message);
     res.status(200).json({
         status: 'success',
