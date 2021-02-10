@@ -45,6 +45,7 @@ const BatchProvider = (props) => {
         batchList,
         listLoading,
         getBatchList,
+        setBatchList,
       }}
     >
       {props.children}

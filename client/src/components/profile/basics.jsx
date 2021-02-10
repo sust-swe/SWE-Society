@@ -157,10 +157,12 @@ const ProfileBasics = ({ user }) => {
             )}
           </Text>
         </Center>
-        <Center>
-          <UpdatePassword />
-          <UpdateEmail />
-        </Center>
+        {edit && (
+          <Center>
+            <UpdatePassword />
+            <UpdateEmail />
+          </Center>
+        )}
       </Box>
     </Box>
   );

@@ -26,6 +26,7 @@ import ChangeEmail from "./pages/changeEmail";
 import ResetPassword from "./pages/resetPassword";
 import Batch from "./pages/batch";
 import SingleBatch from "./pages/singleBatch";
+import Announcements from "./pages/announcements";
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
         <ProtectedRoute exact path="/addpost" component={AddPost}/>
         <ProtectedRoute exact path="/blog" component={MyBlog}/>
         <ProtectedRoute exact path="/changeemail" component={ChangeEmail}/>
+        <ProtectedRoute exact path="/announcements"  restrictedTo={["admin", "superadmin"]} component={Announcements}/>
         <Route exact path="/resetpassword/:token" component={ResetPassword}/>
         <Route path="*" component={NotFound} />
       </Switch>
