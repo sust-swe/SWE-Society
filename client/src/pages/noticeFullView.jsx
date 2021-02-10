@@ -28,22 +28,15 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../contexts/authContext";
 import Layout from "../components/generic/layout";
-import { Link } from "react-router-dom";
 
 const NoticeFullView = () => {
   const { unauthorizedHandler } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const [editedNotice, setEditedNotice] = useState({
     title: "",
     description: "",
     attachment: [],
   });
-  const [requestState, setRequestState] = useState("none");
-
-
-const NoticeFullView = () => {
-  const { unauthorizedHandler } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
-
   const toast = useToast();
   const history = useHistory();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -94,7 +87,6 @@ const NoticeFullView = () => {
   };
 
   return (
-
     <Layout>
       <Center minH="75vh">
         {loading ? (
