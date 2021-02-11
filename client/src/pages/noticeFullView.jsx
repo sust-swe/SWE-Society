@@ -30,7 +30,7 @@ import { AuthContext } from "../contexts/authContext";
 import Layout from "../components/generic/layout";
 
 const NoticeFullView = () => {
-  const { unauthorizedHandler } = useContext(AuthContext);
+  const { loggedIn, unauthorizedHandler, user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [editedNotice, setEditedNotice] = useState({
     title: "",
@@ -93,13 +93,16 @@ const NoticeFullView = () => {
                 {editedNotice.title}
               </Text>
               <Spacer />
-              <IconButton
-                onClick={onOpen}
-                onClose={onClose}
-                icon={<EditIcon />}
-              >
-                Edit
-              </IconButton>
+              {loggedIn &&
+                ["admin", "superadmin"].includes(user.credential.role) && (
+                  <IconButton
+                    onClick={onOpen}
+                    onClose={onClose}
+                    icon={<EditIcon />}
+                  >
+                    Edit
+                  </IconButton>
+                )}
             </Flex>
             <Text fontSize="xl" fontWeight="bold" textColor="black">
               Date : {new Date(editedNotice.createdAt).getUTCDate()}/

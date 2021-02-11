@@ -165,8 +165,6 @@ const SingleBlog = (blog) => {
       <Box padding={2}>
         <Text
           color="black"
-          isTruncated
-          noOfLines={3}
           dangerouslySetInnerHTML={{
             __html: blog.content.replaceAll("&lt;", "<"),
           }}
