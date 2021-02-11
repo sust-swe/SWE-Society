@@ -9,13 +9,13 @@ const announcementController = require('../controllers/announcementController');
 // router.patch('/announcement/:id', authController.protect, authController.restrictTo('admin', 'superadmin'), announcementController.updateAnnouncement);
 // router.delete('/announcement/:id', authController.protect, authController.restrictTo('admin', 'superadmin'), announcementController.deleteAnnouncement);
 // router.get('/announcement/:committee_order', authController.protect, announcementController.getAllAnnouncements);
-router.post('/role', committeeController.addMemberToCommittee);
-router.delete('/role/:reg_no', committeeController.removeMember);
-router.patch('/role', committeeController.updateRole);
-router.post('/', committeeController.createCommittee);
-router.get('/current', committeeController.getExecutiveMembersOfCurrentCommittee);
-router.get('/:committee_order', committeeController.getExecutiveMembersOfACommittee);
-router.get('/', committeeController.getCommittees);
-router.patch('/', committeeController.updateCommittee);
+router.post('/role', authController.protect, authController.restrictTo('admin', 'superadmin'), committeeController.addMemberToCommittee);
+router.delete('/role/:reg_no', authController.protect, authController.restrictTo('admin', 'superadmin'), committeeController.removeMember);
+router.patch('/role', authController.protect, authController.restrictTo('admin', 'superadmin'), committeeController.updateRole);
+router.post('/', authController.protect, authController.restrictTo('superadmin'), committeeController.createCommittee);
+router.get('/current', authController.protect, committeeController.getExecutiveMembersOfCurrentCommittee);
+router.get('/:committee_order', authController.protect, committeeController.getExecutiveMembersOfACommittee);
+router.get('/', authController.protect, committeeController.getCommittees);
+router.patch('/', authController.protect, authController.restrictTo('admin', 'superadmin'), committeeController.updateCommittee);
 
 module.exports = router
