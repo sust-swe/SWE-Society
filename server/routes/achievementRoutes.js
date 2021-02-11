@@ -5,9 +5,9 @@ const achievementController = require('../controllers/achievementController');
 const authController = require('../controllers/authController');
 
 
-router.post('/', authController.protect, achievementController.addAchievement);
-router.delete('/:id', authController.protect, achievementController.deleteAchievement);
+router.post('/', authController.protect, authController.restrictTo('admin', 'superadmin'), achievementController.addAchievement);
+router.delete('/:id', authController.protect, authController.restrictTo('admin', 'superadmin'), achievementController.deleteAchievement);
 router.get('/', achievementController.getAllAchievements);
-router.patch('/:id', authController.protect, achievementController.updateAchievement)
+router.patch('/:id', authController.protect, authController.restrictTo('admin', 'superadmin'), achievementController.updateAchievement)
 
 module.exports = router;

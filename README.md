@@ -288,6 +288,8 @@
        
    * Show A Single Blog : `GET /api/blogs/:id`
 
+   * Show A Single Not Approved Blog : `GET /api/blogs/false/:id`
+
    * Show Specific Users Blog : `GET /api/blogs/:reg_no`
 
    * Delete Own Blog : `Delete /api/blogs/:id`

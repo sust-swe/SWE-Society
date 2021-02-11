@@ -57,6 +57,24 @@ exports.getOneBlog = catchAsync(async (req, res, next) => {
 
 });
 
+exports.getOneNotApprovedBlog = catchAsync(async (req, res, next) => {
+
+  const blog = await Blog.findOne({
+    where: { id: req.params.id, hidden: "false", isApproved: "false" }, include: [
+      {
+        model: User,
+        attributes: ['name', 'image']
+      }
+    ]
+  });
+
+  if (blog == null)
+    return next(new AppError(`Blog Does Not found`, 404));
+
+  res.status(200).json(blog);
+
+});
+
 exports.getSpecificUsersBlogs = catchAsync(async (req, res, next) => {
 
   const blogs = await Blog.findAll({ where: { reg_no: req.params.reg_no, hidden: "false", isApproved: "true" } });

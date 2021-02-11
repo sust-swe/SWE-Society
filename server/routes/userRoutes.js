@@ -9,13 +9,13 @@ router.get('/me', authController.protect, userController.getSingleUser);
 router.post('/login', credentialController.login);
 router.post('/broadcast', authController.protect, userController.broadcastUser);
 router.get('/logout', authController.protect, credentialController.logout);
-router.post('/register', userController.registerUser);
-router.get('/:reg_no', userController.getSingleUser);
+router.post('/register', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.registerUser);
+router.get('/:reg_no', authController.protect, userController.getSingleUser);
 router.delete('/:reg_no', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.deleteUser)
 router.patch('/update', authController.protect, userController.updateUser);
 router.patch('/setstatus', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.setStatus);
-router.patch('/setadmin', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.setAdmin);
-router.patch('/removeadmin/:reg_no', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.removeAdmin);
+router.patch('/setadmin', authController.protect, authController.restrictTo('superadmin'), userController.setAdmin);
+router.patch('/removeadmin/:reg_no', authController.protect, authController.restrictTo('superadmin'), userController.removeAdmin);
 router.get('/', userController.getAllUser);
 router.post('/password/forgot', credentialController.forgotPassword);
 router.patch('/password/update', authController.protect, credentialController.updatePassword);
