@@ -106,7 +106,7 @@ const GallaryAddDrawer = () => {
           <AddIcon w={6} h={6} />
         </Box>
         <Center marginLeft="5">
-          <Text fontSize="3xl" fontWeight="bold">
+          <Text fontSize="2xl" fontWeight="bold">
             Gallary
           </Text>
         </Center>

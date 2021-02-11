@@ -140,7 +140,7 @@ const ProfileBasics = ({ user }) => {
         </Box>
 
         <Center>
-          <Text fontSize="3xl">
+          <Text fontSize="2xl">
             {user.fb_link && (
               <Link href={user.fb_link}>
                 <Icon as={FaFacebookSquare} m={1} color="blue.700" />

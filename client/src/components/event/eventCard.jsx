@@ -20,7 +20,6 @@ const EventCard = (event) => {
       _hover={{ boxShadow: "dark-lg" }}
     >
       <Image borderTopRadius="md" src={event.image[0]} width="sm" />
-      {/* <Image borderTopRadius="md" src="https://picsum.photos/1000" width="sm" /> */}
       <Box p={2}>
         <Text color="green.800" margin="2" fontSize="xl" fontWeight="bold">
           {event.title}

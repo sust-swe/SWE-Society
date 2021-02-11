@@ -27,7 +27,7 @@ const Footer = (props) => {
           <Spacer />
           <Box p={3} m={2} minW={200}>
             <Text fontSize="md">We are available on:</Text>
-            <HStack fontSize="3xl">
+            <HStack fontSize="2xl">
               <a
                 target="_blank"
                 rel="noreferrer"

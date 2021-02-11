@@ -127,7 +127,8 @@ const EventDetails = () => {
                 ["admin", "superadmin"].includes(user.credential.role) && (
                   <IconButton
                     onClick={onOpen}
-                    icon={<EditIcon w={10} h={10} />}
+                    fontSize="xl"
+                    icon={<EditIcon />}
                   />
                 )}
               {loggedIn &&
@@ -135,7 +136,8 @@ const EventDetails = () => {
                   <IconButton
                     marginLeft={5}
                     onClick={handleDelete}
-                    icon={<DeleteIcon color="red" w={10} h={10} />}
+                    fontSize="xl"
+                    icon={<DeleteIcon />}
                   />
                 )}
             </Flex>

@@ -1,15 +1,10 @@
 import { Center, Flex, Text } from "@chakra-ui/react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AddSingleMember from "./addSingleMember";
-import CreateAdmin from "./createAdmin";
 
 const DashboardButtons = () => {
-  const history = useHistory();
-
   return (
     <Flex flexWrap="wrap">
-      <CreateAdmin />
-
       <Center
         textAlign="center"
         minW="150px"
