@@ -9,7 +9,6 @@ const EventsView = () => {
 
   useEffect(() => {
     axios.get("/api/event/").then((res) => {
-      console.log(res.data);
       setEvents(res.data);
     });
   }, []);

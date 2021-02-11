@@ -3,6 +3,7 @@ import LandingCarousal from "../components/landing/carousal";
 import Layout from "../components/generic/layout";
 import Marquee from "../components/landing/marquee";
 import EventsView from "../components/landing/eventsView";
+import NoticeView from "../components/landing/noticeView";
 
 const Landing = () => {
   return (
@@ -28,6 +29,7 @@ const Landing = () => {
         ]}
       />
       <EventsView />
+      <NoticeView />
     </Layout>
   );
 };
