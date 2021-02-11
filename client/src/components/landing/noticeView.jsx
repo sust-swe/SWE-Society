@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -43,7 +35,7 @@ const NoticeView = () => {
   );
 
   return (
-    <Box mt={5} bg="teal" color="white" p={2} textAlign="center">
+    <Box mt={5} bg="teal.800" color="white" p={2} textAlign="center">
       <Heading
         borderBottom="5px solid"
         borderColor="white"
