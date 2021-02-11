@@ -11,6 +11,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   Spinner,
   Tfoot,
   Th,
@@ -24,6 +25,7 @@ import { useState } from "react";
 const AddMember = ({ committee, setCommittee }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [designation, setDesignation] = useState("");
+  const [designationSelect, setDesignationSelect] = useState("");
   const [reg_no, setReg_no] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +36,13 @@ const AddMember = ({ committee, setCommittee }) => {
     setLoading(true);
 
     axios
-      .post("/api/committee/role", [{ designation, reg_no }])
+      .post("/api/committee/role", [
+        {
+          designation:
+            designationSelect !== "other" ? designationSelect : designation,
+          reg_no,
+        },
+      ])
       .then((res) => {
         setCommittee(res.data);
         onClose();
@@ -85,14 +93,34 @@ const AddMember = ({ committee, setCommittee }) => {
             <ModalBody>
               <FormControl id="designation">
                 <FormLabel>Designation</FormLabel>
-                <Input
-                  type="text"
-                  onChange={(e) => setDesignation(e.target.value.toUpperCase())}
-                  value={designation}
-                />
-                <FormHelperText>
-                  Please check if there's any typing mistake
-                </FormHelperText>
+
+                <Select
+                  placeholder="Select option"
+                  onChange={(e) => setDesignationSelect(e.target.value)}
+                >
+                  <option value="president">President</option>
+                  <option value="vice president">Vice President</option>
+                  <option value="general secretary">General Secretary</option>
+                  <option value="assistant general secretary">
+                    Assistant General Secretary
+                  </option>
+                  <option value="other">Other</option>
+                </Select>
+
+                {designationSelect === "other" && (
+                  <>
+                    <Input
+                      type="text"
+                      mt={4}
+                      onChange={(e) => setDesignation(e.target.value)}
+                      placeholder="Please write the designation..."
+                      value={designation}
+                    />
+                    <FormHelperText>
+                      Please check if there's any typing mistake
+                    </FormHelperText>
+                  </>
+                )}
               </FormControl>
 
               <FormControl id="reg_no" mt={4}>

@@ -145,7 +145,7 @@ const SingleBlog = (blog) => {
           <Menu>
             <MenuButton as={Button} rightIcon={<TriangleDownIcon />} />
             <MenuList>
-              <MenuItem onClick={onOpen}>Edit</MenuItem>
+              {blog.reg_no === user.reg_no && <MenuItem onClick={onOpen}>Edit</MenuItem>}
               <MenuItem onClick={handleDelete}>Delete</MenuItem>
             </MenuList>
           </Menu>

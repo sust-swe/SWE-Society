@@ -1,10 +1,12 @@
 import {
+  Avatar,
   Box,
   Center,
   Spinner,
   Table,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
@@ -25,16 +27,21 @@ const CommitteeView = (props) => {
     getSelectedCommittee("current");
   }, []);
 
-  const singleItem = ({ designation, reg_no, user: { name } }) => (
+  const singleItem = ({ designation, reg_no, user: { name, image } }) => (
     <Tr
       _hover={{ bg: "gray.100" }}
       cursor="pointer"
       onClick={() => history.push(`/user/${reg_no}`)}
       key={reg_no}
     >
+      <Td>
+        <Avatar mx={4} w="40px" h="40px" src={image} />
+        <Text d="inline" lineHeight="40px">
+          {name}
+        </Text>
+      </Td>
       <Td textAlign="center">{designation}</Td>
       <Td textAlign="center">{reg_no}</Td>
-      <Td textAlign="center">{name}</Td>
     </Tr>
   );
 
@@ -49,9 +56,9 @@ const CommitteeView = (props) => {
           <Table variant="simple">
             <Thead>
               <Tr>
+                <Th textAlign="center">Name</Th>
                 <Th textAlign="center">Designation</Th>
                 <Th textAlign="center">Registration No</Th>
-                <Th textAlign="center">Name</Th>
               </Tr>
             </Thead>
             <Tbody>{selectedCommittee.map(singleItem)}</Tbody>

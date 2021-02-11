@@ -1,5 +1,8 @@
+// import src from "*.avif";
+import { Image } from "@chakra-ui/react";
+
 const NotFound = (props) => {
-    return <h1>404:NotFound</h1>
-}
+  return <Image src="/404.jpg" />;
+};
 
 export default NotFound;
