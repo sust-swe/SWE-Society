@@ -60,11 +60,6 @@ const NoticeFullView = () => {
     loadFirst();
   }, [key, loadPromise]);
 
-  const viewAttachment = () => {
-    // axios.get(`192.168.31.68:8000/${editedNotice.attachment[0]}`);
-    history.push(`192.168.31.68:8000/${editedNotice.attachment[0]}`);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
