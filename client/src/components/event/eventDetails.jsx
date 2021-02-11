@@ -46,7 +46,7 @@ const EventDetails = () => {
   const firstField = React.useRef();
   const toast = useToast();
   const history = useHistory();
-  const { unauthorizedHandler } = useContext(AuthContext);
+  const { loggedIn, unauthorizedHandler, user } = useContext(AuthContext);
   useEffect(() => {
     const loadFirst = async () => {
       axios
@@ -123,12 +123,21 @@ const EventDetails = () => {
         <Box maxH="75vh" overflowY="scroll" overflowX="hidden">
           <Flex direction="column" padding="10">
             <Flex>
-              <IconButton onClick={onOpen} icon={<EditIcon w={10} h={10} />} />
-              <IconButton
-                marginLeft={5}
-                onClick={handleDelete}
-                icon={<DeleteIcon color="red" w={10} h={10} />}
-              />
+              {loggedIn &&
+                ["admin", "superadmin"].includes(user.credential.role) && (
+                  <IconButton
+                    onClick={onOpen}
+                    icon={<EditIcon w={10} h={10} />}
+                  />
+                )}
+              {loggedIn &&
+                ["admin", "superadmin"].includes(user.credential.role) && (
+                  <IconButton
+                    marginLeft={5}
+                    onClick={handleDelete}
+                    icon={<DeleteIcon color="red" w={10} h={10} />}
+                  />
+                )}
             </Flex>
 
             <Text fontFamily="heading" pt={10} fontSize="4xl" fontWeight="bold">

@@ -13,7 +13,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/authContext";
 const SingleNotice = (notice) => {
-  const { unauthorizedHandler } = useContext(AuthContext);
+  const { loggedIn, unauthorizedHandler, user } = useContext(AuthContext);
   const months = [
     "Jan",
     "Feb",
@@ -74,14 +74,16 @@ const SingleNotice = (notice) => {
               </Text>
             </Link>
           </Center>
-
-          <IconButton
-            m={1}
-            mx={3}
-            onClick={deleteNotice}
-            icon={<DeleteIcon />}
-            _hover={{ color: "red.600" }}
-          />
+          {loggedIn &&
+            ["admin", "superadmin"].includes(user.credential.role) && (
+              <IconButton
+                m={1}
+                mx={3}
+                onClick={deleteNotice}
+                icon={<DeleteIcon />}
+                _hover={{ color: "red.600" }}
+              />
+            )}
         </Flex>
       </Flex>
     </Box>

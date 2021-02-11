@@ -74,30 +74,6 @@ const ViewBeforeApprove = () => {
     loadFirst();
   }, [id, loadPromise]);
 
-  //   const handleDelete = (e) => {
-  //     e.preventDefault();
-  //     setDeleteRequestState("loading");
-  //     window.confirm("Are you sure?")
-  //       ? axios
-  //           .delete(`/api/blogs/${blog.id}`)
-  //           .then((res) => {
-  //             setRequestState("success");
-  //             history.go(0);
-  //           })
-  //           .catch((err) => {
-  //             unauthorizedHandler(err);
-
-  //             toast({
-  //               title: "Something Went Wrong",
-  //               status: "error",
-  //               duration: 3000,
-  //               isClosable: true,
-  //             });
-  //             setDeleteRequestState("error");
-  //           })
-  //       : setDeleteRequestState("none");
-  //   };
-
   return (
     <Flex justifyContent="center">
       <Box
