@@ -1,15 +1,43 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const EventsView = () => {
   const [events, setEvents] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     axios.get("/api/event/").then((res) => {
       console.log(res.data);
+      setEvents(res.data);
     });
   }, []);
+
+  const singleEvent = (event) => (
+    <Box
+      onClick={() => history.push("/event/" + event.id)}
+      m={3}
+      cursor="pointer"
+      width="xs"
+      borderRadius="md"
+      shadow="xl"
+      bg="white"
+      transition="ease 0.3s"
+      _hover={{ boxShadow: "dark-lg" }}
+    >
+      <Image borderTopRadius="md" src={event.image[0]} width="sm" />
+      <Box p={2}>
+        <Text color="green.800" margin="2" fontSize="xl" fontWeight="bold">
+          {event.title}
+        </Text>
+        <Text padding={2}>Date: {event.event_date}</Text>
+        <Text padding={2} isTruncated>
+          {event.description}
+        </Text>
+      </Box>
+    </Box>
+  );
 
   return (
     <Box mt={5} p={2} textAlign="center">
@@ -23,10 +51,10 @@ const EventsView = () => {
       >
         Events
       </Heading>
-      {/* 
-      <Flex>
 
-      </Flex> */}
+      <Flex justifyContent="center" flexWrap="wrap">
+        {events.map(singleEvent)}
+      </Flex>
     </Box>
   );
 };
