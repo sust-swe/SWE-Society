@@ -6,35 +6,42 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const MyBlog = () => {
+  const [blogs, setBlogs] = useState([]);
+  const history = useHistory();
 
-    const [blogs, setBlogs] = useState([]);
-    const history = useHistory();
+  const addPost = () => {
+    history.push("/addpost");
+  };
 
-    const addPost = () =>{
-        history.push('/addpost');
-    }
+  useEffect(() => {
+    axios
+      .get("/api/blogs/true")
+      .then((res) => {
+        setBlogs(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  return (
+    <Layout>
+      <Flex align="center" direction="column" overflowY="scroll">
+        <Box padding="5" mt="2" width="3xl" bg="whitesmoke" onClick={addPost}>
+          <Textarea
+            borderRadius="2xl"
+            bg="lightgray"
+            placeholder="Create a blog"
+          />
+        </Box>
 
-    useEffect(() => {
-        axios.get("/api/blogs/true").then((res) => {
-            console.log(res.data);
-            setBlogs(res.data);
-        }).catch(err => {
-            console.log(err);
-        })
-    }, [])
-    return (
-        <Layout >
-            <Flex align="center" direction="column"  overflowY="scroll">
-                <Box padding="5" mt="2" width="3xl" bg="whitesmoke" onClick={addPost}>
-                    <Textarea borderRadius="2xl" bg="lightgray"  placeholder="Create a blog" />
-                </Box>
-                
-                {blogs.map((blog) => (
-                    <SingleBlog {...blog} key={blog.id} />
-                ))}
-            </Flex>
-        </Layout>
-    )
-}
+        {blogs
+          .sort((a, b) => b.id - a.id)
+          .map((blog) => (
+            <SingleBlog {...blog} key={blog.id} />
+          ))}
+      </Flex>
+    </Layout>
+  );
+};
 
 export default MyBlog;
