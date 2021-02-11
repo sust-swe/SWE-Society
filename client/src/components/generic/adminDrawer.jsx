@@ -1,6 +1,7 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Center,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -8,17 +9,25 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
   Stack,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
 import EventAddDrawer from "../event/eventAddDrawer";
 import NoticeAddDrawer from "../notice/noticeAddDrawer";
 import GallaryAddDrawer from "../gallary/gallarayAddDrawer";
+import { useHistory } from "react-router-dom";
 
 const AdminDrawer = (event) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
+  const history = useHistory();
+
+  const gotoApproveBlog = (e) => {
+    history.push("/approveblog");
+  };
 
   return (
     <>
@@ -45,6 +54,24 @@ const AdminDrawer = (event) => {
                 </Box>
                 <Box>
                   <GallaryAddDrawer />
+                </Box>
+                <Box>
+                  <Flex
+                    bg="gray"
+                    align="center"
+                    cursor="pointer"
+                    _hover={{ shadow: "dark-lg" }}
+                    onClick={gotoApproveBlog}
+                  >
+                    <Box marginLeft="5" size="lg">
+                      <AddIcon w={6} h={6} />
+                    </Box>
+                    <Center marginLeft="5">
+                      <Text fontSize="3xl" fontWeight="bold">
+                        Approve Blog
+                      </Text>
+                    </Center>
+                  </Flex>
                 </Box>
               </Stack>
             </DrawerBody>
