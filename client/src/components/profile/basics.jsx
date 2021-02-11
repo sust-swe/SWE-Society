@@ -27,7 +27,7 @@ import UpdatePassword from "./updatePassword";
 const ProfileBasics = ({ user }) => {
   const edit = useLocation().pathname.startsWith("/profile");
   const [fileLoading, setFileLoading] = useState(false);
-  const { unauthorizedHandler } = useContext(AuthContext);
+  const { user: oldUser, login, unauthorizedHandler } = useContext(AuthContext);
   const imageRef = useRef(null);
   const toast = useToast();
   const history = useHistory();
@@ -46,6 +46,7 @@ const ProfileBasics = ({ user }) => {
         return axios.patch("/api/user/update/", { image: imageUrl });
       })
       .then((res) => {
+        login({ ...oldUser, ...res.data.user });
         history.go(0);
       })
       .catch((err) => {
