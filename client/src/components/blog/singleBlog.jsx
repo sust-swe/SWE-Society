@@ -234,11 +234,10 @@ const SingleBlog = (blog) => {
         </ModalContent>
       </Modal>
 
-      {comments.length > 0 ? (
-        comments.map((comment) => <ShowComment {...comment} key={comment.id} />)
-      ) : (
-        <></>
-      )}
+      {comments.length > 0 &&
+        comments.map((comment) => (
+          <ShowComment {...comment} key={comment.id} />
+        ))}
     </Box>
   );
 };

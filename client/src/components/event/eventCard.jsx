@@ -26,7 +26,9 @@ const EventCard = (event) => {
           {event.title}
         </Text>
         <Text padding={2}>Date: {event.event_date}</Text>
-        <Text padding={2}>{event.description}</Text>
+        <Text padding={2} isTruncated noOfLines={3}>
+          {event.description}
+        </Text>
       </Box>
     </Box>
   );

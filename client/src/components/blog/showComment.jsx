@@ -28,7 +28,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { HtmlEditor, MenuBar } from "@aeaton/react-prosemirror";
 import { options, menu } from "@aeaton/react-prosemirror-config-default";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const BlogComment = (comment) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -94,7 +94,9 @@ const BlogComment = (comment) => {
         src={comment.user.image}
       />
       <Box borderRadius="xl" padding="2" bg="lightgray" mb={2} mt={1}>
-        <Link fontWeight="bold" to={`user/${comment.reg_no}`} fontWeight="bold">{comment.user.name}</Link>
+        <Link fontWeight="bold" to={`user/${comment.reg_no}`}>
+          {comment.user.name}
+        </Link>
         <Text
           dangerouslySetInnerHTML={{
             __html: comment.content.replaceAll("&lt;", "<"),
@@ -108,7 +110,9 @@ const BlogComment = (comment) => {
         <Menu>
           <MenuButton ml={3} as={Button} rightIcon={<ChevronDownIcon />} />
           <MenuList>
-            <MenuItem onClick={onOpen}>Edit</MenuItem>
+            {comment.user.reg_no === user.reg_no && (
+              <MenuItem onClick={onOpen}>Edit</MenuItem>
+            )}
             <MenuItem onClick={handleDelete}>Delete</MenuItem>
           </MenuList>
         </Menu>
