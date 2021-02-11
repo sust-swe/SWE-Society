@@ -1,7 +1,7 @@
-import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const EventsView = () => {
   const [events, setEvents] = useState([]);
@@ -53,8 +53,22 @@ const EventsView = () => {
       </Heading>
 
       <Flex justifyContent="center" flexWrap="wrap">
-        {events.map(singleEvent)}
+        {events
+          .sort((a, b) => b.id - a.id)
+          .slice(0, 3)
+          .map(singleEvent)}
       </Flex>
+
+      <Button
+        colorScheme="teal"
+        _hover={{ color: "white" }}
+        as={Link}
+        to="/event"
+        textAlign="right"
+        m={2}
+      >
+        View More
+      </Button>
     </Box>
   );
 };
