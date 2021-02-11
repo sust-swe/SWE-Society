@@ -176,6 +176,15 @@
             "role":"admin/superadmin"
         }
         ```
+    * Set An User Teacher / Alumni : `PATCH /api/user/setstatus/`
+
+        ```json
+        Request Body
+        {
+            "reg_no": "2017831003",
+            "status":"teacher/alumni"
+        }
+        ```
     * Remove An User From Admin / Superadmin : `PATCH /api/user/removeadmin/:reg_no/`
 
     * Broadcast Email To All Users : `POST /api/user/broadcast/`
