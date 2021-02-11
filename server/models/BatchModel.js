@@ -20,7 +20,8 @@ const Batch = sequelize.define('batch', {
         }
     },
     image: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        defaultValue: "batch.png"
     },
     hidden: {
         type: DataTypes.BOOLEAN,

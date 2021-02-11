@@ -13,6 +13,7 @@ router.post('/register', userController.registerUser);
 router.get('/:reg_no', userController.getSingleUser);
 router.delete('/:reg_no', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.deleteUser)
 router.patch('/update', authController.protect, userController.updateUser);
+router.patch('/setstatus', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.setStatus);
 router.patch('/setadmin', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.setAdmin);
 router.patch('/removeadmin/:reg_no', authController.protect, authController.restrictTo('superadmin', 'admin'), userController.removeAdmin);
 router.get('/', userController.getAllUser);
