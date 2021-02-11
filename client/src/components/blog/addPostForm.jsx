@@ -124,7 +124,7 @@ const AddPostForm = (props) => {
             <input
               ref={imageInputRef}
               multiple
-              accept=".jpg,.png"
+              accept=".jpg,.png,.jpeg"
               type="file"
               style={{ visibility: "hidden" }}
               height={0}

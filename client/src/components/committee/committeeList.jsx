@@ -46,7 +46,7 @@ const CommitteeList = (props) => {
         key={committee.committee_order}
       >
         <Td>
-          Session {committee.session[0].value} - {committee.session[1].value}
+          Session {committee.session[0]?.value} - {committee.session[1]?.value}
           <Badge size="xl" colorScheme="green" ml={2}>
             {committee.committee_order}
           </Badge>

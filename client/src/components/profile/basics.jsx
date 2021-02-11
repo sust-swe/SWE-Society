@@ -6,27 +6,89 @@ import {
   Icon,
   Image,
   Link,
+  Spinner,
   Stack,
   Text,
+  useToast,
+  VisuallyHidden,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useContext, useRef, useState } from "react";
 import { FaFacebookSquare, FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import { FiPhoneCall } from "react-icons/fi";
 import { GoLocation } from "react-icons/go";
 import { IoMailOutline } from "react-icons/io5";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import { AuthContext } from "../../contexts/authContext";
 import BasicEditModal from "./basicEditModal";
+import UpdateEmail from "./updateEmail";
+import UpdatePassword from "./updatePassword";
 
 const ProfileBasics = ({ user }) => {
   const edit = useLocation().pathname.startsWith("/profile");
+  const [fileLoading, setFileLoading] = useState(false);
+  const { unauthorizedHandler } = useContext(AuthContext);
+  const imageRef = useRef(null);
+  const toast = useToast();
+  const history = useHistory();
+
+  const handleFileInput = (e) => {
+    setFileLoading(true);
+    const file = e.target.files[0];
+    const formData = new FormData();
+
+    formData.append(file.name, file, file.name);
+
+    axios
+      .post("api/imageupload", formData)
+      .then((res) => {
+        const imageUrl = res.data.image[0];
+        return axios.patch("/api/user/update/", { image: imageUrl });
+      })
+      .then((res) => {
+        history.go(0);
+      })
+      .catch((err) => {
+        unauthorizedHandler(err);
+        toast({
+          title: "Something Went Wrong",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
+  };
 
   return (
     <Box w="100%" bg="white" borderRadius="md" boxShadow="xl">
-      <Image
-        src={user.image ? user.image : "https://picsum.photos/500"}
-        alt="Profile Pic"
-        w="100%"
-        borderTopRadius="md"
-      />
+      {edit && (
+        <VisuallyHidden>
+          <input
+            type="file"
+            accept=".jpg,.png,.jpeg"
+            ref={imageRef}
+            onChange={handleFileInput}
+          />
+        </VisuallyHidden>
+      )}
+      {fileLoading ? (
+        <Center minH="200px">
+          <Spinner />
+        </Center>
+      ) : (
+        <Image
+          src={user.image ? "/" + user.image : "https://picsum.photos/500"}
+          alt="Profile Pic"
+          w="100%"
+          borderTopRadius="md"
+          transition="ease 0.3s"
+          cursor={edit ? "pointer" : "auto"}
+          onClick={() => {
+            if (edit) imageRef.current.click();
+          }}
+          _hover={{ opacity: edit ? 0.7 : 1 }}
+        />
+      )}
       <Box p={3}>
         <Heading display="inline-block" size="md" color="green.800">
           {user.name} {user.nick_name && <>({user.nick_name})</>}
@@ -95,6 +157,12 @@ const ProfileBasics = ({ user }) => {
             )}
           </Text>
         </Center>
+        {edit && (
+          <Center>
+            <UpdatePassword />
+            <UpdateEmail />
+          </Center>
+        )}
       </Box>
     </Box>
   );

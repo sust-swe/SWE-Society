@@ -32,13 +32,11 @@ const GallaryAddDrawer = () => {
   const firstField = React.useRef();
 
   const { unauthorizedHandler } = useContext(AuthContext);
-  const [content, setContent] = useState({
-    caption: "At first you have to upload the image",
-    image: "",
-    file: "",
-  });
+  const [caption, setCaption] = useState("");
+  const [image, setImage] = useState("");
+  const [file, setFile] = useState("");
 
-  useEffect(() => {}, [content]);
+  useEffect(() => {}, [caption, image]);
 
   const [requestState, setRequestState] = useState("none");
   const toast = useToast();
@@ -49,7 +47,7 @@ const GallaryAddDrawer = () => {
     setRequestState("loading");
 
     axios
-      .post("/api/gallary/", content)
+      .post("/api/gallary", { caption, image })
       .then((res) => {
         setRequestState("success");
         onClose();
@@ -71,16 +69,17 @@ const GallaryAddDrawer = () => {
   const imageUpload = (e) => {
     e.preventDefault();
     setRequestState("loading");
-
+    const files = e.target.files;
     const formData = new FormData();
 
-    formData.append("myFile", content.file, content.file.name);
+    for (const file of files) formData.append(file.name, file, file.name);
 
     axios
       .post("api/imageupload", formData)
       .then((res) => {
         setRequestState("success");
-        setContent({ image: res.data.image[0] });
+        console.log(res.data.image);
+        setImage(res.data.image[0]);
       })
       .catch((err) => {
         unauthorizedHandler(err);
@@ -130,32 +129,19 @@ const GallaryAddDrawer = () => {
               <DrawerBody>
                 <Stack spacing="24px">
                   <Box marginTop="5">
-                    <Input
-                      type="file"
-                      onChange={(e) => {
-                        content.file = e.target.files[0];
-                      }}
-                    ></Input>
+                    <Input type="file" onChange={imageUpload}></Input>
                   </Box>
-                  <Button onClick={imageUpload} color="blue.500">
-                    Upload
-                  </Button>
 
                   <Box>
-                    <Image src={content.image} />
+                    <Image src={image} />
                   </Box>
 
                   <Box>
                     <FormLabel htmlFor="desc">Description</FormLabel>
                     <Textarea
                       id="desc"
-                      value={content.caption}
-                      onChange={(e) =>
-                        setContent({
-                          ...content,
-                          caption: e.target.value,
-                        })
-                      }
+                      value={caption}
+                      onChange={(e) => setCaption(e.target.value)}
                     />
                   </Box>
                 </Stack>

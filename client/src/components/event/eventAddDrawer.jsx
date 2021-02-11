@@ -12,16 +12,19 @@ import {
   DrawerOverlay,
   Flex,
   FormLabel,
+  Image,
   Input,
+  Spinner,
   Stack,
   Text,
   Textarea,
   useDisclosure,
   useToast,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 import React from "react";
 import DatePicker from "react-datepicker";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -32,25 +35,49 @@ const EventAddDrawer = () => {
   const firstField = React.useRef();
 
   const { unauthorizedHandler } = useContext(AuthContext);
-  const [editedEvent, setEditedEvent] = useState({
-    title: "",
-    description: "",
-    event_date: new Date(),
-    image: [],
-  });
-
-  useEffect(() => {}, [editedEvent]);
-
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [event_date, setEventDate] = useState(new Date());
+  const [location, setLocation] = useState("");
   const [requestState, setRequestState] = useState("none");
   const toast = useToast();
   const history = useHistory();
+  const [image, setImage] = useState([]);
+  const [fileLoading, setFileLoading] = useState(false);
+  const imageInputRef = useRef(null);
+
+  useEffect(() => {}, [title, description, event_date, image, location]);
+
+  const handleFileInput = (e) => {
+    setFileLoading(true);
+    const files = e.target.files;
+    const formData = new FormData();
+
+    for (const file of files) formData.append(file.name, file, file.name);
+
+    axios
+      .post("/api/imageupload", formData)
+      .then((res) => {
+        setImage([...image, ...res.data.image]);
+        setFileLoading(false);
+      })
+      .catch((err) => {
+        unauthorizedHandler(err);
+        toast({
+          title: "Something Went Wrong",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setRequestState("loading");
 
     axios
-      .post("/api/event/", editedEvent)
+      .post("/api/event", { title, description, event_date, image, location })
       .then((res) => {
         setRequestState("success");
         onClose();
@@ -104,8 +131,47 @@ const EventAddDrawer = () => {
 
               <DrawerBody>
                 <Stack spacing="24px">
-                  <Box marginTop="5">
-                    <Button color="blue.400">Add Images</Button>
+                  <Box mt={2}>
+                    <VisuallyHidden>
+                      <input
+                        ref={imageInputRef}
+                        multiple
+                        accept=".jpg,.png"
+                        type="file"
+                        style={{ visibility: "hidden" }}
+                        height={0}
+                        onChange={handleFileInput}
+                      />
+                    </VisuallyHidden>
+                    {image.length > 0 && (
+                      <>
+                        <Flex flexWrap="wrap">
+                          {image.map((file) => (
+                            <Image
+                              w="150px"
+                              onClick={() =>
+                                setImage(image.filter((cur) => cur !== file))
+                              }
+                              id={file}
+                              h="auto"
+                              m={1}
+                              src={file}
+                              cursor="pointer"
+                              border="1px solid #aaa"
+                            />
+                          ))}
+                        </Flex>
+                        <Text fontSize="sm">Click to delete any photo!</Text>
+                      </>
+                    )}
+                    <Button
+                      size="sm"
+                      colorScheme="green"
+                      onClick={() => imageInputRef.current.click()}
+                      disabled={fileLoading}
+                    >
+                      {fileLoading && <Spinner mr={3} />}Add Image
+                    </Button>
                   </Box>
 
                   <Box>
@@ -113,13 +179,8 @@ const EventAddDrawer = () => {
                     <Input
                       id="location"
                       placeholder="Location"
-                      value={editedEvent.location}
-                      onChange={(e) =>
-                        setEditedEvent({
-                          ...editedEvent,
-                          location: e.target.value,
-                        })
-                      }
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
                     />
                   </Box>
 
@@ -129,13 +190,8 @@ const EventAddDrawer = () => {
                       ref={firstField}
                       id="title"
                       placeholder="Please enter event title"
-                      value={editedEvent.title}
-                      onChange={(e) =>
-                        setEditedEvent({
-                          ...editedEvent,
-                          title: e.target.value,
-                        })
-                      }
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
                     />
                   </Box>
 
@@ -145,13 +201,8 @@ const EventAddDrawer = () => {
                       as={DatePicker}
                       isClearable
                       placeholder="Event date"
-                      selected={editedEvent.event_date}
-                      onChange={(date) =>
-                        setEditedEvent({
-                          ...editedEvent,
-                          event_date: date,
-                        })
-                      }
+                      selected={event_date}
+                      onChange={(date) => setEventDate(date)}
                     />
                   </Box>
 
@@ -159,13 +210,8 @@ const EventAddDrawer = () => {
                     <FormLabel htmlFor="desc">Description</FormLabel>
                     <Textarea
                       id="desc"
-                      value={editedEvent.description}
-                      onChange={(e) =>
-                        setEditedEvent({
-                          ...editedEvent,
-                          description: e.target.value,
-                        })
-                      }
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
                     />
                   </Box>
                 </Stack>

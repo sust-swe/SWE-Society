@@ -1,9 +1,7 @@
-
 import { Carousel } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
 
 const EventCarousal = (props) => {
-
   return (
     <Carousel>
       {props.items.map((item) => (
@@ -11,7 +9,7 @@ const EventCarousal = (props) => {
           <img
             className="d-block"
             style={{ width: "100%", height: "75vh", objectFit: "cover" }}
-            src={item}
+            src={`/${item}`}
             alt="First slide"
           />
           <Carousel.Caption>

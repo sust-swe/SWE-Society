@@ -12,18 +12,22 @@ const EventCard = (event) => {
       onClick={handleClick}
       m={3}
       cursor="pointer"
-      width="sm"
-      minH="xl"
+      width="xs"
+      borderRadius="md"
+      shadow="xl"
+      bg="white"
+      transition="ease 0.3s"
       _hover={{ boxShadow: "dark-lg" }}
     >
-      <Image src={event.image[0]} width="sm"></Image>
-      <Text margin="2" fontSize="xl" fontWeight="bold">
-        {event.title}
-      </Text>
-      <Text padding={2}>Date: {event.event_date}</Text>
-      <Text padding={2} isTruncated noOfLines={3}>
-        {event.description}
-      </Text>
+      {/* <Image borderTopRadius="md" src={event.image[0]} width="sm" /> */}
+      <Image borderTopRadius="md" src="https://picsum.photos/1000" width="sm" />
+      <Box p={2}>
+        <Text color="green.800" margin="2" fontSize="xl" fontWeight="bold">
+          {event.title}
+        </Text>
+        <Text padding={2}>Date: {event.event_date}</Text>
+        <Text padding={2}>{event.description}</Text>
+      </Box>
     </Box>
   );
 };

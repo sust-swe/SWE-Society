@@ -15,6 +15,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { Redirect, useHistory } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
+import ForgotPassword from "../components/signIn/forgotPassword";
 
 const SignIn = (props) => {
   const [show, setShow] = useState(false);
@@ -101,10 +102,7 @@ const SignIn = (props) => {
             <hr style={{ padding: "5px" }} />
 
             <Text fontSize="xs">
-              <Link color="teal.500" href="#" m={1}>
-                Forgot Password?
-              </Link>
-              <br />
+              <ForgotPassword />
               <Link color="teal.500" href="#" m={1}>
                 Don't have an account?
               </Link>
