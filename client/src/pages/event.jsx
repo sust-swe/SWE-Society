@@ -19,9 +19,11 @@ const Event = () => {
   return (
     <Layout>
       <Flex justifyContent="center" flexWrap="wrap">
-        {events.map((event) => (
-          <EventCard {...event} key={event.id} />
-        ))}
+        {events
+          .sort((a, b) => b.id - a.id)
+          .map((event) => (
+            <EventCard {...event} key={event.id} />
+          ))}
       </Flex>
     </Layout>
   );

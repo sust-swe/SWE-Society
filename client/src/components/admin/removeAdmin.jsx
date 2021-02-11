@@ -20,7 +20,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
 
-const CreateAdmin = () => {
+const RemoveAdmin = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [reg_no, setReg_no] = useState("");
   const [requestStatus, setRequestStatus] = useState("none");
@@ -30,15 +30,12 @@ const CreateAdmin = () => {
   const handleSubmit = () => {
     setRequestStatus("loading");
     axios
-      .patch("/api/user/setadmin/", {
-        reg_no,
-        role: "admin",
-      })
+      .patch("/api/user/removeadmin/" + reg_no)
       .then((res) => {
         setRequestStatus("none");
         onClose();
         toast({
-          title: "Admin Created",
+          title: "Admin Removed",
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -73,13 +70,13 @@ const CreateAdmin = () => {
         m={3}
         p={3}
       >
-        <Text fontSize="xl">Create Admin</Text>
+        <Text fontSize="xl">Remove Admin</Text>
       </Center>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create Admin</ModalHeader>
+          <ModalHeader>Remove Admin</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
@@ -93,7 +90,7 @@ const CreateAdmin = () => {
 
           <ModalFooter>
             <Button colorScheme="green" onClick={handleSubmit}>
-              {requestStatus === "loading" && <Spinner mr={1} />}Create Admin
+              {requestStatus === "loading" && <Spinner mr={1} />}Remove Admin
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -102,4 +99,4 @@ const CreateAdmin = () => {
   );
 };
 
-export default CreateAdmin;
+export default RemoveAdmin;

@@ -20,7 +20,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/authContext";
 
-const CreateAdmin = () => {
+const CreateAlumni = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [reg_no, setReg_no] = useState("");
   const [requestStatus, setRequestStatus] = useState("none");
@@ -29,16 +29,20 @@ const CreateAdmin = () => {
 
   const handleSubmit = () => {
     setRequestStatus("loading");
+    console.log({
+      reg_no,
+      status: "alumni",
+    });
     axios
-      .patch("/api/user/setadmin/", {
+      .patch("/api/user/setstatus/", {
         reg_no,
-        role: "admin",
+        status: "alumni",
       })
       .then((res) => {
         setRequestStatus("none");
         onClose();
         toast({
-          title: "Admin Created",
+          title: "Alumni Created",
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -73,13 +77,13 @@ const CreateAdmin = () => {
         m={3}
         p={3}
       >
-        <Text fontSize="xl">Create Admin</Text>
+        <Text fontSize="xl">Create Alumni</Text>
       </Center>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create Admin</ModalHeader>
+          <ModalHeader>Create Alumni</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl>
@@ -93,7 +97,7 @@ const CreateAdmin = () => {
 
           <ModalFooter>
             <Button colorScheme="green" onClick={handleSubmit}>
-              {requestStatus === "loading" && <Spinner mr={1} />}Create Admin
+              {requestStatus === "loading" && <Spinner mr={1} />}Create Alumni
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -102,4 +106,4 @@ const CreateAdmin = () => {
   );
 };
 
-export default CreateAdmin;
+export default CreateAlumni;

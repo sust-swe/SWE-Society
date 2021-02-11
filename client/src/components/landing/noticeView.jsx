@@ -1,21 +1,22 @@
-import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const EventsView = () => {
-  const [events, setEvents] = useState([]);
+const NoticeView = () => {
+  const [notice, setNotice] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
-    axios.get("/api/event/").then((res) => {
-      setEvents(res.data);
+    axios.get("/api/notice/").then((res) => {
+      console.log(res.data);
+      setNotice(res.data);
     });
   }, []);
 
-  const singleEvent = (event) => (
+  const singleEvent = (singleNotice) => (
     <Box
-      onClick={() => history.push("/event/" + event.id)}
+      onClick={() => history.push("/notice/" + singleNotice.id)}
       m={3}
       cursor="pointer"
       width="xs"
@@ -25,41 +26,36 @@ const EventsView = () => {
       transition="ease 0.3s"
       _hover={{ boxShadow: "dark-lg" }}
     >
-      <Image borderTopRadius="md" src={event.image[0]} width="sm" />
-      <Box p={2}>
-        <Text color="green.800" margin="2" fontSize="xl" fontWeight="bold">
-          {event.title}
+      <Center height="100%">
+        <Text color="black" margin="2" fontSize="lg">
+          {singleNotice.title}
         </Text>
-        <Text padding={2}>Date: {event.event_date}</Text>
-        <Text padding={2} isTruncated>
-          {event.description}
-        </Text>
-      </Box>
+      </Center>
     </Box>
   );
 
   return (
-    <Box mt={5} p={2} textAlign="center">
+    <Box mt={5} bg="teal.800" color="white" p={2} textAlign="center">
       <Heading
         borderBottom="5px solid"
-        borderColor="teal"
+        borderColor="white"
         display="inline-block"
         px={4}
         py={2}
         mb={4}
       >
-        Events
+        Notices
       </Heading>
 
       <Flex justifyContent="center" flexWrap="wrap">
-        {events
+        {notice
           .sort((a, b) => b.id - a.id)
           .slice(0, 3)
           .map(singleEvent)}
       </Flex>
 
       <Button
-        colorScheme="teal"
+        colorScheme="whiteAlpha"
         _hover={{ color: "white" }}
         as={Link}
         to="/event"
@@ -72,4 +68,4 @@ const EventsView = () => {
   );
 };
 
-export default EventsView;
+export default NoticeView;
