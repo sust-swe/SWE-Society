@@ -1,5 +1,5 @@
 import React from "react";
-import { EditIcon } from "@chakra-ui/icons";
+import { EditIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -9,6 +9,7 @@ import {
   FormLabel,
   IconButton,
   Input,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -44,6 +45,12 @@ const NoticeFullView = () => {
 
   const [loadPromise, setLoadPromise] = useState(false);
   const key = useParams().id;
+
+  const goExternal = (e) => {
+    window.location.replace(
+      `/192.168.31.68:8000/${editedNotice.attachment[0]}`
+    );
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -112,6 +119,18 @@ const NoticeFullView = () => {
             <Text marginTop="5" fontSize="lg" textColor="black">
               {editedNotice.description}
             </Text>
+
+            {editedNotice.attachment.length > 0 && (
+              <Flex
+                _hover={{ shadow: "dark-lg" }}
+                textAlign="center"
+                width="min"
+              >
+                <Button bg="Highlight" onClick={goExternal}>
+                  Attachment
+                </Button>
+              </Flex>
+            )}
 
             <Modal
               initialFocusRef={initialRef}
