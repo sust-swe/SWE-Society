@@ -521,4 +521,4 @@
    
 ### ER Diagram
 
-![ER Diagram for SWE Society Website](documents/others/images/erd.png)
+![ER Diagram for SWE Society Website](documents/others/images/erdpg.png)
