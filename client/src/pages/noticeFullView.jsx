@@ -1,5 +1,5 @@
 import React from "react";
-import { EditIcon, ExternalLinkIcon } from "@chakra-ui/icons";
+import { EditIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -9,7 +9,6 @@ import {
   FormLabel,
   IconButton,
   Input,
-  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
