@@ -1,4 +1,4 @@
-import { ChatIcon, TriangleDownIcon } from "@chakra-ui/icons";
+import { ChatIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -136,11 +136,14 @@ const SingleBlog = (blog) => {
           ["admin", "superadmin"].includes(user.credential.role)) && (
           <Menu>
             <MenuButton
-              as={Button}
+              as={IconButton}
+              isRound
               rightIcon={<AiOutlineEllipsis size={40} />}
             />
             <MenuList>
-              {blog.reg_no === user.reg_no && <MenuItem onClick={onOpen}>Edit</MenuItem>}
+              {blog.reg_no === user.reg_no && (
+                <MenuItem onClick={onOpen}>Edit</MenuItem>
+              )}
               <MenuItem onClick={handleDelete}>Delete</MenuItem>
             </MenuList>
           </Menu>
