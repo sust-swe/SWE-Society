@@ -1,13 +1,10 @@
 import Layout from "../components/generic/layout";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { AuthContext } from "../contexts/authContext";
 import ApproveBlogCard from "../components/blog/approveBlogCard";
 import { Flex } from "@chakra-ui/react";
 const ApproveBlog = () => {
   const [unApprovedBlogs, setunApprovedBlogs] = useState([]);
-  const { unauthorizedHandler } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios

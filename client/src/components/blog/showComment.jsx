@@ -5,6 +5,7 @@ import {
   Flex,
   FormControl,
   FormLabel,
+  IconButton,
   Menu,
   MenuButton,
   MenuItem,
@@ -21,14 +22,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { AuthContext } from "../../contexts/authContext";
-import { useContext, useState, useEffect } from "react";
-import { ChevronDownIcon, TriangleDownIcon } from "@chakra-ui/icons";
-import { BsThreeDots } from "react-icons/bs";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { HtmlEditor, MenuBar } from "@aeaton/react-prosemirror";
 import { options, menu } from "@aeaton/react-prosemirror-config-default";
 import { Link } from "react-router-dom";
+import { AiOutlineEllipsis } from "react-icons/ai";
 
 const BlogComment = (comment) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -108,7 +108,12 @@ const BlogComment = (comment) => {
       {(comment.user.reg_no === user.reg_no ||
         ["admin", "superadmin"].includes(user.credential.role)) && (
         <Menu>
-          <MenuButton ml={3} as={Button} rightIcon={<ChevronDownIcon />} />
+          <MenuButton
+            ml={3}
+            as={IconButton}
+            isRound="true"
+            rightIcon={<AiOutlineEllipsis size={30} />}
+          />
           <MenuList>
             {comment.user.reg_no === user.reg_no && (
               <MenuItem onClick={onOpen}>Edit</MenuItem>

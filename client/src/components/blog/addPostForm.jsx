@@ -91,7 +91,7 @@ const AddPostForm = (props) => {
   };
 
   return (
-    <Box p={10} bg="white">
+    <Box p={10} bg="white" width="2xl">
       <Heading textAlign="center" size="lg">
         Create a Post
       </Heading>

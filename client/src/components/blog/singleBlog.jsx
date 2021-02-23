@@ -1,9 +1,4 @@
-import {
-  ChatIcon,
-  ChevronDownIcon,
-  DeleteIcon,
-  TriangleDownIcon,
-} from "@chakra-ui/icons";
+import { ChatIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -13,7 +8,6 @@ import {
   FormControl,
   FormLabel,
   IconButton,
-  Image,
   Input,
   Menu,
   MenuButton,
@@ -26,17 +20,15 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Select,
   Spacer,
   Text,
-  Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import Layout from "../generic/layout";
+
 import ShowComment from "./showComment";
 import WriteComment from "./writeComment";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import BlogCarosuel from "./blogCarosuel";
 import React from "react";
 import { useHistory } from "react-router-dom";
@@ -45,16 +37,16 @@ import axios from "axios";
 import { HtmlEditor, MenuBar } from "@aeaton/react-prosemirror";
 import { options, menu } from "@aeaton/react-prosemirror-config-default";
 import { Link } from "react-router-dom";
+import { AiOutlineEllipsis } from "react-icons/ai";
 
 const SingleBlog = (blog) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef();
   const [editedBlog, setEditedBlog] = useState(blog);
   const [comments, setComments] = useState([]);
-  const [loadPromise, setLoadPromise] = useState(false);
   const [requestState, setRequestState] = useState("none");
   const [deleteRequestState, setDeleteRequestState] = useState("none");
-  const firstField = React.useRef();
+
   const toast = useToast();
   const history = useHistory();
   const { unauthorizedHandler, user } = useContext(AuthContext);
@@ -143,9 +135,15 @@ const SingleBlog = (blog) => {
         {(blog.reg_no === user.reg_no ||
           ["admin", "superadmin"].includes(user.credential.role)) && (
           <Menu>
-            <MenuButton as={Button} rightIcon={<TriangleDownIcon />} />
+            <MenuButton
+              as={IconButton}
+              isRound
+              rightIcon={<AiOutlineEllipsis size={40} />}
+            />
             <MenuList>
-              {blog.reg_no === user.reg_no && <MenuItem onClick={onOpen}>Edit</MenuItem>}
+              {blog.reg_no === user.reg_no && (
+                <MenuItem onClick={onOpen}>Edit</MenuItem>
+              )}
               <MenuItem onClick={handleDelete}>Delete</MenuItem>
             </MenuList>
           </Menu>
