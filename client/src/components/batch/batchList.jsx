@@ -37,6 +37,8 @@ const BatchList = (props) => {
     >
       <Image
         height="120px"
+        width="120px"
+        objectFit="cover"
         borderLeftRadius="md"
         src={batch.image ? "/" + batch.image : "https://picsum.photos/200"}
       />

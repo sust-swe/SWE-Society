@@ -141,6 +141,26 @@ exports.setAdmin = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.setStatus = catchAsync(async (req, res, next) => {
+  const { status, reg_no } = req.body;
+  let user = await User.findOne({
+    where: {
+      reg_no
+    }
+  });
+  if (user == null)
+    return next(new AppError(`User does not exist`, 404));
+  user = await Credential.update({ status },
+    {
+      where: { reg_no },
+      returning: true
+    });
+  res.status(200).json({
+    status: 'success',
+    message: `User has been made ${status}`
+  });
+});
+
 exports.removeAdmin = catchAsync(async (req, res, next) => {
   const reg_no = req.params.reg_no;
   let user = await User.findOne({

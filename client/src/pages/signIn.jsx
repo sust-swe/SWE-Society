@@ -59,46 +59,47 @@ const SignIn = (props) => {
             <Heading size="md" m={1}>
               Welcome Back
             </Heading>
-            <Input
-              placeholder="Email"
-              type="email"
-              m={1}
-              name="email"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoFocus
-            />
-            <InputGroup m={1}>
+            <form onSubmit={signIn}>
               <Input
-                type={show ? "text" : "password"}
-                placeholder="Password"
-                name="password"
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Email"
+                type="email"
+                m={1}
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
                 required
+                autoFocus
               />
-              <InputRightElement width="4.5rem">
-                <Button h="1.75rem" size="sm" onClick={handlePasswordShow}>
-                  {show ? "Hide" : "Show"}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+              <InputGroup m={1}>
+                <Input
+                  type={show ? "text" : "password"}
+                  placeholder="Password"
+                  name="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handlePasswordShow}>
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
 
-            {requestState === "error" && (
-              <Text display="block" fontSize="sm" color="tomato">
-                Invalid Credentials
-              </Text>
-            )}
-            <Button
-              colorScheme="teal"
-              size="sm"
-              m={1}
-              mb={4}
-              onClick={signIn}
-              disabled={requestState === "loading" ? 1 : 0}
-            >
-              {requestState === "loading" && <Spinner mr={3} />}Sign In
-            </Button>
-
+              {requestState === "error" && (
+                <Text display="block" fontSize="sm" color="tomato">
+                  Invalid Credentials
+                </Text>
+              )}
+              <Button
+                colorScheme="teal"
+                size="sm"
+                m={1}
+                mb={4}
+                disabled={requestState === "loading" ? 1 : 0}
+                type="submit"
+              >
+                {requestState === "loading" && <Spinner mr={3} />}Sign In
+              </Button>
+            </form>
             <hr style={{ padding: "5px" }} />
 
             <Text fontSize="xs">

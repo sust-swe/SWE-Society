@@ -69,6 +69,7 @@ const MyNavbar = (props) => {
             <MenuItems to="/profile">Profile</MenuItems>
             <MenuItems to="/blog">Blog</MenuItems>
             <MenuItems to="/committee">Committee</MenuItems>
+            <MenuItems to="/batch">Batch</MenuItems>
             {(user.credential.role === "admin" ||
               user.credential.role === "superadmin") && (
               <MenuItems to="/admin">Admin</MenuItems>
@@ -78,7 +79,6 @@ const MyNavbar = (props) => {
         <MenuItems to="/gallary">Gallary</MenuItems>
         <MenuItems to="/noticeboard">Notice</MenuItems>
         <MenuItems to="/event">Event</MenuItems>
-        <MenuItems to="/batch">Batch</MenuItems>
       </Box>
 
       <Box

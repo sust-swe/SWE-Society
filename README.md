@@ -176,6 +176,15 @@
             "role":"admin/superadmin"
         }
         ```
+    * Set An User Teacher / Alumni : `PATCH /api/user/setstatus/`
+
+        ```json
+        Request Body
+        {
+            "reg_no": "2017831003",
+            "status":"teacher/alumni"
+        }
+        ```
     * Remove An User From Admin / Superadmin : `PATCH /api/user/removeadmin/:reg_no/`
 
     * Broadcast Email To All Users : `POST /api/user/broadcast/`
@@ -278,6 +287,8 @@
    * Show All (Approved) Blogs : `GET /api/blogs/true`
        
    * Show A Single Blog : `GET /api/blogs/:id`
+
+   * Show A Single Not Approved Blog : `GET /api/blogs/false/:id`
 
    * Show Specific Users Blog : `GET /api/blogs/:reg_no`
 
@@ -510,4 +521,4 @@
    
 ### ER Diagram
 
-![ER Diagram for SWE Society Website](documents/others/images/ER_Diagram_SWE_Society.png)
+![ER Diagram for SWE Society Website](documents/others/images/erdpg.png)

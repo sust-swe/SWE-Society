@@ -28,7 +28,7 @@ const ApproveBlogCard = (blog) => {
   const { unauthorizedHandler } = useContext(AuthContext);
 
   const gotoFullView = (e) => {
-    history.push("approveblog/" + blog.id);
+    history.push("/approveblog" + blog.id);
   };
 
   const handleDelete = (e) => {
@@ -121,7 +121,11 @@ const ApproveBlogCard = (blog) => {
           <ModalBody>
             <Image src={blog.image[0]} />
             <Text mt={2}>{blog.title}</Text>
-            <Text>{blog.content.replaceAll("&lt;", "<")}</Text>
+            <Text
+              dangerouslySetInnerHTML={{
+                __html: blog.content.replaceAll("&lt;", "<"),
+              }}
+            />
           </ModalBody>
 
           <ModalFooter>

@@ -5,7 +5,7 @@ const LandingCarousal = (props) => {
   return (
     <Carousel>
       {props.items.map((item) => (
-        <Carousel.Item key={uuid()} interval={1000}>
+        <Carousel.Item key={uuid()} interval={2000}>
           <img
             className="d-block"
             style={{ width: "100%", height: "75vh", objectFit: "cover" }}
