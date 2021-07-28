@@ -1,0 +1,21 @@
+version: "3.9"
+services: 
+  db:
+    image: postgres
+    # restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "pass1234"
+      POSTGRES_DB: "swe_society"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes: 
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  web:
+    image: "swe_society"
+    depends_on:
+      - db
+    ports:
+    - "8000:8000"
+    
