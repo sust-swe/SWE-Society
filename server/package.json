@@ -31,7 +31,7 @@
     "nodemailer": "^6.4.17",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
-    "validator": "^13.1.17",
+    "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
